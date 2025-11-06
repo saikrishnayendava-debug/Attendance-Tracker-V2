@@ -117,14 +117,15 @@ const Home = () => {
 
   const redgNo = localStorage.getItem("redgNo");
   const password = localStorage.getItem("password");
-  const url1 = `https://attendance-4dtj.onrender.com/api/attendance?student_id=${redgNo}&password=${password}`
+  const url = `https://apis-whpx.onrender.com/attendance?student_id=${redgNo}&password=${password}`
+  // const url1 = `https://attendance-4dtj.onrender.com/api/attendance?student_id=${redgNo}&password=${password}`
   // const url2 = `https://vignanattendancescraping.onrender.com/attendance?regno=${redgNo}&password=${password}`
 
   const fetchAttendance = async () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(url1);
+      const response = await axios.get(url);
       localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
 
       // const totals = getAttendanceTotals(response.data)
@@ -152,6 +153,7 @@ const Home = () => {
 
       setCnt(result)
       console.log("cnt" + result)
+      
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
 
