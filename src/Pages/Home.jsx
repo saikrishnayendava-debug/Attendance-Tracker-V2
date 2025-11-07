@@ -294,7 +294,7 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
                   item.message ? (
                     <p key={index}>{item.message}</p>
                   ) : (
-                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase() === "A" ? 'bg-red-700' : 'bg-green-700'}  rounded flex gap-1 font-bold px-0.5 text-sm`}>
+                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A")? 'bg-red-700' : 'bg-green-700'}  rounded flex gap-1 font-bold px-0.5 text-sm`}>
                       <span>{item.subject}:</span>
                       <span>{item.attendance_today}</span>
                     </div>
