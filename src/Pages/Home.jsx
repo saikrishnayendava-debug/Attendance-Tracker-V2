@@ -218,7 +218,7 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
       <Header />
 
       <div className='mt-4 mx-1 flex items-center justify-around'>
-        <div className=' bg-pink-800 pt-2 min-h-40 max-h-40 w-40 rounded py-1 font-bold text-sm'>
+        <div className=' bg-pink-800 pt-2 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
 
           {
             totalPercentage >= 75 ? (
@@ -236,7 +236,7 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded bg-purple-900  py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center'>
+        <div className='min-h-40 max-h-40 rounded-3xl bg-purple-900  py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center'>
           <div>Present attendance</div>
           <div>
             {data.total_percentage
