@@ -14,6 +14,7 @@ import FooterComponent from '../Components/FooterComponent'
 import getAttendanceTotals from '../utils/getAttendanceTotals'
 import attendanceTarget from '../utils/AttendanceTarget'
 import { getAttendanceTodayArray } from '../utils/attendanceTodayArray'
+import ChartComponent from '../Components/ChartComponent'
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -153,7 +154,6 @@ const Home = () => {
 
       setCnt(result)
       console.log("cnt" + result)
-      
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
 
@@ -161,7 +161,6 @@ const Home = () => {
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
       if (storedData && lastFetchTime) {
-
         const parsedData = JSON.parse(storedData);
         setLastUpdated(lastFetchTime);
         setAttendanceData(parsedData);
@@ -179,8 +178,6 @@ const Home = () => {
 
         const todayData = getAttendanceTodayArray(parsedData);
         setTodayPeriodsPosted(todayData);
-
-        showToast("Poor internet connection");
       } else {
         showToast("Invalid details");
       }
@@ -221,30 +218,31 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
       <Header />
 
       <div className='mt-4 mx-1 flex items-center justify-around'>
-        <div className=' bg-pink-800 h-13 min-h-13 max-h-13  rounded py-1  font-bold text-sm '>
+        <div className=' bg-pink-800 pt-2 min-h-40 max-h-40 w-40 rounded py-1 font-bold text-sm'>
 
           {
             totalPercentage >= 75 ? (
-              <div className='flex flex-col items-center justify-center px-4 w-40'>
+              <div className='flex flex-col items-center justify-center '>
                 <div>Periods can skip</div>
-                <div>{hoursCanSkip}</div>
+                <div className='text-6xl mt-6 '>{hoursCanSkip}</div>
               </div>
             ) : (
-              <div className='flex flex-col items-center justify-center px-4 w-40'>
+              <div className='flex flex-col items-center justify-center'>
                 <div>Periods to attend</div>
-                <div>{hoursNeeded}</div>
+                <div className='text-6xl mt-6'>{hoursNeeded}</div>
               </div>
             )
           }
 
 
         </div>
-        <div className='bg-purple-950 h-13 min-h-13 max-h-13 rounded py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center'>
+        <div className='min-h-40 max-h-40 rounded bg-purple-900  py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center'>
           <div>Present attendance</div>
           <div>
             {data.total_percentage
-              ? data.total_percentage
-              : JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info?.total_percentage || 0}
+              ? <ChartComponent progress={data.total_percentage} /> 
+              : <ChartComponent progress={ JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info?.total_percentage || 0}/>
+            }
           </div>
         </div>
 
