@@ -179,10 +179,8 @@ const Home = () => {
 
         const todayData = getAttendanceTodayArray(parsedData);
         setTodayPeriodsPosted(todayData);
-
-        showToast("Poor internet connection");
       } else {
-        showToast("Invalid details");
+        showToast("Server Issue. Check your details or try again after 30 seconds");
       }
 
     }
