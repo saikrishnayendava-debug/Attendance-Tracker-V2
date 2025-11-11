@@ -191,6 +191,10 @@ const Home = () => {
 
 
   useEffect(() => {
+    if (!redgNo || !password) {
+      navigate("/");
+      return;
+    }
     fetchAttendance();
     setSelectedPeriods([]);
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
