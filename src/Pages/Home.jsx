@@ -368,7 +368,7 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded'>
+            <div className='grid grid-cols-2 bg-slate-50 border border-slate-300 p-2 rounded'>
               <label className='font-semibold text-sm'>Leave dates</label>
               <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full'>{
                 showLeaveCalendar ? "Submit" : "Calender"
@@ -393,7 +393,7 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded'>
+            <div className='grid grid-cols-2 border bg-slate-50 border-slate-300 p-2 rounded'>
               <label className='font-semibold text-sm'>Holiday dates</label>
               <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full'>
                 {
