@@ -325,7 +325,7 @@ const Home = () => {
                 onChange={handleOnChange}
               />
             </div>
-            <div className='bg-green-100 p-1.5 rounded'>
+            <div className='bg-green-50 p-1.5 rounded border border-slate-300'>
               <div className='text-center text-xs mb-1 font-semibold '>Today attendance status</div>
               <div className='flex gap-2 items-center flex-wrap'>
                 {todayPeriodsPosted?.map((item, index) => (
@@ -368,9 +368,9 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 gap-2'>
+            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded'>
               <label className='font-semibold text-sm'>Leave dates</label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-25'>{
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full'>{
                 showLeaveCalendar ? "Submit" : "Calender"
               }</button>
               {
@@ -393,9 +393,9 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 gap-2'>
+            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded'>
               <label className='font-semibold text-sm'>Holiday dates</label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-25'>
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full'>
                 {
                   showHolidayCalendar ? "Submit" : "Calender"
                   
