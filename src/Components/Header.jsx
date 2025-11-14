@@ -16,7 +16,7 @@ const Header = () => {
       <div className='w-13 h-13 sm:w-10 sm:h-10'>
         <img src={logo} alt="logo" />
       </div>
-      <div className=' flex flex-col sm:flex-row font-bold text-lg lg:text-2xl rounded p-2 '>
+      <div className='font-bold text-sm lg:text-2xl rounded p-2 '>
         <span className='text-[#00ce86] '>Attendance</span>
         <span className='text-slate-900'>Tracker</span>
       </div>
