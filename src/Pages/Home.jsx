@@ -125,9 +125,9 @@ const Home = () => {
   const password = localStorage.getItem("password");
   const code = localStorage.getItem("code");
   const url =
-    code === "VIIT"
-      ? `https://apis-whpx.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-      : `https://womens-api.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
+    code === "VIEW"
+    ? `https://womens-api.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+      : `https://apis-whpx.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
 
 
   const fetchAttendance = async () => {
