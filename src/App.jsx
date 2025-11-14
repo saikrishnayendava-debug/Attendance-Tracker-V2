@@ -5,7 +5,7 @@ import Login from './Pages/Login'
 
 function App() {
     return (
-      <div className='bg-[#0f1720] text-slate-200 h-screen'>
+      <div className='h-screen'>
 
         <Login/>
       </div>

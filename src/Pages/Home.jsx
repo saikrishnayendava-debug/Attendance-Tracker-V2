@@ -12,9 +12,14 @@ import { useNavigate } from 'react-router-dom'
 import getAttendanceCounts from '../utils/helper'
 import FooterComponent from '../Components/FooterComponent'
 import getAttendanceTotals from '../utils/getAttendanceTotals'
+import { PiStudentFill } from "react-icons/pi";
 import attendanceTarget from '../utils/AttendanceTarget'
 import { getAttendanceTodayArray } from '../utils/attendanceTodayArray'
 import ChartComponent from '../Components/ChartComponent'
+import { SlCalender } from "react-icons/sl";
+import { GoGraph } from "react-icons/go";
+import { RiRefreshLine } from "react-icons/ri";
+
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -118,9 +123,12 @@ const Home = () => {
 
   const redgNo = localStorage.getItem("redgNo");
   const password = localStorage.getItem("password");
-  const url = `https://apis-whpx.onrender.com/attendance?student_id=${redgNo}&password=${password}`
-  // const url1 = `https://attendance-4dtj.onrender.com/api/attendance?student_id=${redgNo}&password=${password}`
-  // const url2 = `https://vignanattendancescraping.onrender.com/attendance?regno=${redgNo}&password=${password}`
+  const code = localStorage.getItem("code");
+  const url =
+    code === "VIIT"
+      ? `https://apis-whpx.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+      : `https://womens-api.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
+
 
   const fetchAttendance = async () => {
     try {
@@ -158,12 +166,32 @@ const Home = () => {
       setTodayPeriodsPosted(todayData);
 
     } catch (error) {
+      // Case 1: API sent a response
+      if (error.response) {
+        const body = error.response.data;
+
+        // If API returned HTML instead of JSON → INVALID DETAILS
+        if (typeof body === "string" && body.startsWith("<!doctype html")) {
+          showToast("Invalid details");
+          return;
+        }
+
+        // If status 500
+        if (error.response.status === 500) {
+          showToast("Invalid details");
+          return;
+        }
+      }
+
+      // Case 2: Use cached data if available
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
+
       if (storedData && lastFetchTime) {
         const parsedData = JSON.parse(storedData);
         setLastUpdated(lastFetchTime);
         setAttendanceData(parsedData);
+
         setData(prev => ({
           ...prev,
           present: parsedData.total_info?.total_attended || '',
@@ -178,11 +206,14 @@ const Home = () => {
 
         const todayData = getAttendanceTodayArray(parsedData);
         setTodayPeriodsPosted(todayData);
-      } else {
-        showToast("Invalid details");
+
+        return;
       }
 
+      // Case 3: No cached data → true error
+      showToast("Invalid details");
     }
+
     finally {
       setLoading(false);
     }
@@ -198,31 +229,31 @@ const Home = () => {
     fetchAttendance();
     setSelectedPeriods([]);
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
-  setCachedValues({
-    totalPercentage: storedData.total_percentage || 0,
-    hoursCanSkip: storedData.hours_can_skip || 0,
-    hoursNeeded: storedData.additional_hours_needed || 0
-  });
+    setCachedValues({
+      totalPercentage: storedData.total_percentage || 0,
+      hoursCanSkip: storedData.hours_can_skip || 0,
+      hoursNeeded: storedData.additional_hours_needed || 0
+    });
 
   }, [])
   useEffect(() => {
     setTempCnt(selectedPeriods.length);
   }, [selectedPeriods])
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
-const hoursCanSkip = data.hours_can_skip || cachedValues.hoursCanSkip;
-const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
+  const hoursCanSkip = data.hours_can_skip || cachedValues.hoursCanSkip;
+  const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
 
 
 
   return (
 
-    <section className='bg-[#1a0f20] text-slate-200 min-h-screen'>
+    <section className='bg-slate-200 min-h-screen'>
       <ToastNotification />
       <Header />
 
       <div className='mt-4 mx-1 flex items-center justify-around'>
-        <div className=' bg-pink-800 pt-2 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
+        <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
 
           {
             totalPercentage >= 75 ? (
@@ -240,12 +271,12 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded-3xl bg-purple-900  py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center'>
+        <div className='min-h-40 max-h-40 rounded-3xl bg-black  py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center text-white'>
           <div>Present attendance</div>
           <div>
             {data.total_percentage
-              ? <ChartComponent progress={data.total_percentage} /> 
-              : <ChartComponent progress={ JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info?.total_percentage || 0}/>
+              ? <ChartComponent progress={data.total_percentage} />
+              : <ChartComponent progress={JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info?.total_percentage || 0} />
             }
           </div>
         </div>
@@ -255,18 +286,21 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-5'>
 
-        <div className='border border-purple-950 shadow rounded-3xl w-105'>
-          <form className='grid p-5 rounded-3xl gap-6 bg-[#111214]' onSubmit={handleSubmit}>
-            <div className='font-semibold text-2xl text-slate-200'>Hi, {localStorage.getItem("redgNo")}</div>
+        <div className='border border-slate-200 shadow rounded-3xl w-105'>
+          <form className='grid p-5 rounded-3xl gap-6 bg-white' onSubmit={handleSubmit}>
+            <div className='font-bold text-lg flex gap-2 items-center'>
+              Hi, {localStorage.getItem("redgNo")}
+              <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
+            </div>
             <div className='grid grid-cols-2 gap-2'>
-              <label htmlFor="present" className='font-semibold  text-sm'>
+              <label htmlFor="present" className='text-sm '>
                 Number of periods attended
               </label>
               <input
                 type='number'
                 id='present'
 
-                className='border bg-[#1a0f20] border-purple-900 rounded px-2 py-1  text-sm text-center'
+                className='border bg-slate-100 border-slate-200 font-bold rounded px-2 py-1  text-sm text-center'
                 name='present'
                 value={data.present}
                 readOnly
@@ -277,14 +311,14 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
 
             <div className='grid grid-cols-2 gap-2'>
-              <label htmlFor="held" className='font-semibold  text-sm'>
+              <label htmlFor="held" className='text-sm '>
                 Number of periods held
               </label>
               <input
                 type='number'
                 id='held'
                 readOnly
-                className='border bg-[#1a0f20] border-purple-900 text-center rounded px-2 py-1  text-sm'
+                className='border bg-slate-100 border-slate-200  font-bold rounded px-2 py-1  text-sm text-center'
                 name='held'
                 value={data.held}
                 required
@@ -292,13 +326,13 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
               />
             </div>
             <div>
-              <div className='text-center text-xs mb-1'>Today attendance status</div>
+              <div className='text-center text-xs mb-1  '>Today attendance status</div>
               <div className='flex gap-2 items-center flex-wrap'>
                 {todayPeriodsPosted?.map((item, index) => (
                   item.message ? (
                     <p key={index}>{item.message}</p>
                   ) : (
-                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase() === "A" ? 'bg-red-700' : 'bg-green-700'}  rounded flex gap-1 font-bold px-0.5 text-sm`}>
+                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-[#00ce86] text-white'}  rounded flex gap-1 font-bold px-1 text-sm`}>
                       <span>{item.subject}:</span>
                       <span>{item.attendance_today}</span>
                     </div>
@@ -308,7 +342,7 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
             </div>
 
             <div>
-              <h1 className='text-center font-bold m-2'>Select period to bunk today</h1>
+              <h1 className='text-center font-bold text-slate-900 m-2'>Select period to bunk today</h1>
               <div className='flex justify-evenly flex-wrap'>
                 {emptyArray.map((_, index) => {
                   const isSelected = selectedPeriods.includes(index);
@@ -321,8 +355,8 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
                       disabled={isDisabled}
                       onClick={() => handleTempClick(index)}
                       className={`
-            ${isSelected ? 'bg-blue-400' : 'bg-pink-500'} 
-            text-slate-200 w-6 h-6 rounded flex justify-center items-center font-semibold 
+            ${isSelected ? 'bg-slate-900' : 'bg-[#00ce86]'} 
+            text-white w-6 h-6 rounded flex justify-center items-center font-semibold 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
                     >
@@ -336,7 +370,7 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
             <div className='grid grid-cols-2 gap-2'>
               <label className='font-semibold text-sm'>Leave dates</label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-gray-800 border-gray-50 cursor-pointer rounded py-1 font-semibold text-sm w-25'>{
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-25'>{
                 showLeaveCalendar ? "Submit" : "Calender"
               }</button>
               {
@@ -361,9 +395,12 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
             <div className='grid grid-cols-2 gap-2'>
               <label className='font-semibold text-sm'>Holiday dates</label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-gray-800 border-gray-50 cursor-pointer rounded py-1 font-semibold text-sm w-25'>{
-                showHolidayCalendar ? "Submit" : "Calender"
-              }</button>
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-25'>
+                {
+                  showHolidayCalendar ? "Submit" : "Calender"
+                  
+                }
+              </button>
               {
                 showHolidayCalendar && (
                   <>
@@ -386,7 +423,7 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
 
             </div>
             <div>
-              <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-pink-800 rounded py-2 font-semibold text-sm w-full flex items-center justify-center overflow-hidden`}
+              <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-semibold text-sm w-full flex items-center justify-center overflow-hidden`}
                 disabled={loading}>
                 {loading && (
                   <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
@@ -399,27 +436,29 @@ const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
             </div>
 
             <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' className='cursor-pointer bg-purple-950  rounded py-2 font-semibold text-sm mt- '>
+              <button type='submit' className='cursor-pointer bg-slate-900 text-white  rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
                 Submit
+                <GoGraph className='bg-[#00ce86] rounded-lg p-1 text-white' size={24}/>
               </button>
-              <button type='button' onClick={handleReset} className='cursor-pointer bg-purple-950 rounded py-2 font-semibold text-sm mt- '>
+              <button type='button' onClick={handleReset} className='cursor-pointer bg-slate-900 text-white rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
                 Reset
+                <RiRefreshLine className='bg-[#00ce86] rounded-lg p-1 text-white' size={24} />
               </button>
             </div>
           </form>
         </div>
       </div>
       <div className='mt-10 mb-7'>
-        <h1 className='text-center text-2xl font-bold text-slate-400'>Attendance as per data</h1>
+        <h1 className='text-center text-2xl font-bold text-slate-800'>Attendance as per data</h1>
       </div>
       <div className='flex flex-col items-center justify-center gap-2'>
         {
 
           attendanceArray?.map((item, index) => {
             return (
-              <div key={index} className={`w-70 sm:w-150  ${item.absent ? "" : "bg-[rgba(10, 44, 17, 0.517)]"} ${item.absent ? "text-red-200" : "text-green-200"}  ${item.absent ? "border border-red-600" : "border border-green-400"} py-1.5 shadow font-bold flex justify-around text-sm`}>
+              <div key={index} className={`w-70 sm:w-150   ${item.absent ? "bg-black text-white" : "border border-slate-200 bg-white"} py-1.5  rounded font-semibold flex justify-around text-sm`}>
                 <p>{item.day} th</p>
-                <p>{item.attendence}</p>
+                <p className='font-bold'>{item.attendence} %</p>
                 <p>{item.absent ? "Absent" : "Present"}</p>
               </div>
             )
