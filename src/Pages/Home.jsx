@@ -258,12 +258,12 @@ const Home = () => {
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col items-center justify-center '>
-                <div>Periods can skip</div>
+                <div className='bg-green-500 px-2 py-1 text-white rounded-full'>Periods can skip</div>
                 <div className='text-6xl mt-6 '>{hoursCanSkip}</div>
               </div>
             ) : (
               <div className='flex flex-col items-center justify-center'>
-                <div>Periods to attend</div>
+                <div className='bg-green-500 px-2 py-1 text-white rounded-full'>Periods to attend</div>
                 <div className='text-6xl mt-6'>{hoursNeeded}</div>
               </div>
             )
@@ -271,8 +271,8 @@ const Home = () => {
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded-3xl bg-black  py-1 font-semibold text-sm w-40 flex flex-col items-center justify-center text-white'>
-          <div>Present attendance</div>
+        <div className='min-h-40 max-h-40 rounded-3xl bg-black  py-1 font-semibold text-sm w-42 flex flex-col items-center justify-center text-white'>
+          <div className='bg-green-500 px-1 py-1 text-white rounded-full'>Present attendance</div>
           <div>
             {data.total_percentage
               ? <ChartComponent progress={data.total_percentage} />

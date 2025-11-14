@@ -21,14 +21,16 @@ const Header = () => {
         <span className='text-slate-900'>Tracker</span>
       </div>
       </Link>
+      <>
       {
         (location.pathname != '/') && (
-          <button type='button' onClick={handleClick} className='cursor-pointer  bg-[#00ce86] px-3 font-semibold text-sm rounded-2xl py-2 absolute top-7 sm:top-4 right-5 flex gap-1 items-center justify-center'>
+          <button type='button' onClick={handleClick} className='cursor-pointer  bg-[#00ce86] px-3 font-semibold text-sm rounded-2xl py-2 absolute top-4 sm:top-5 right-5 flex gap-1 items-center justify-center'>
             Logout
             <MdAccountCircle size={20} />
           </button>
         )
       }
+      </>
     </section>
   )
 }
