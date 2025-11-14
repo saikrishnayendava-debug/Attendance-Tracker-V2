@@ -248,7 +248,7 @@ const Home = () => {
 
   return (
 
-    <section className='bg-slate-200 min-h-screen'>
+    <section className='bg-slate-100 min-h-screen'>
       <ToastNotification />
       <Header />
 
@@ -286,14 +286,14 @@ const Home = () => {
 
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-5'>
 
-        <div className='border border-slate-200 shadow rounded-3xl w-105'>
-          <form className='grid p-5 rounded-3xl gap-6 bg-white' onSubmit={handleSubmit}>
-            <div className='font-bold text-lg flex gap-2 items-center'>
+        <div className='border border-slate-200 rounded-md shadow  w-105'>
+          <form className='grid p-5 gap-6 rounded-md bg-white' onSubmit={handleSubmit}>
+            <div className='font-bold text-lg flex gap-2 items-center justify-center'>
               Hi, {localStorage.getItem("redgNo")}
               <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
             </div>
             <div className='grid grid-cols-2 gap-2'>
-              <label htmlFor="present" className='text-sm '>
+              <label htmlFor="present" className='text-sm font-semibold'>
                 Number of periods attended
               </label>
               <input
@@ -311,7 +311,7 @@ const Home = () => {
 
 
             <div className='grid grid-cols-2 gap-2'>
-              <label htmlFor="held" className='text-sm '>
+              <label htmlFor="held" className='text-sm font-semibold '>
                 Number of periods held
               </label>
               <input
@@ -325,8 +325,8 @@ const Home = () => {
                 onChange={handleOnChange}
               />
             </div>
-            <div>
-              <div className='text-center text-xs mb-1  '>Today attendance status</div>
+            <div className='bg-green-100 p-1.5 rounded'>
+              <div className='text-center text-xs mb-1 font-semibold '>Today attendance status</div>
               <div className='flex gap-2 items-center flex-wrap'>
                 {todayPeriodsPosted?.map((item, index) => (
                   item.message ? (
@@ -432,7 +432,7 @@ const Home = () => {
                   {loading ? "Fetching..." : "Fetch Attendance"}
                 </span>
               </button>
-              <p className='text-xs ml-0 mt-1'>Last updated: {lastUpdated}</p>
+              <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
             </div>
 
             <div className='grid grid-cols-2 gap-3'>
