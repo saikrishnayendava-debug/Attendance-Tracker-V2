@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../assets/logo.png'
 import { MdAccountCircle } from "react-icons/md";
 
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,7 +11,8 @@ const Header = () => {
     navigate('/')
   }
   return (
-    <section className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-3 bg-white relative '>
+    <section className='h-fit'>
+      <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-3 bg-white relative '>
       <div className='w-13 h-13 sm:w-10 sm:h-10'>
         <img src={logo} alt="logo" />
       </div>
@@ -19,6 +20,7 @@ const Header = () => {
         <span className='text-[#00ce86] '>Attendance</span>
         <span className='text-slate-900'>Tracker</span>
       </div>
+      </Link>
       {
         (location.pathname != '/') && (
           <button type='button' onClick={handleClick} className='cursor-pointer  bg-[#00ce86] px-3 font-semibold text-sm rounded-2xl py-2 absolute top-7 sm:top-4 right-5 flex gap-1 items-center justify-center'>

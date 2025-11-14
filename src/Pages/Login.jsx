@@ -46,7 +46,7 @@ const Login = () => {
     })
   }
   return (
-    <section className='bg-slate-200 h-screen'>
+    <section className='bg-slate-100 h-screen'>
       <ToastNotification/>
       <Header/>
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center items-end h-105  '>
@@ -66,8 +66,8 @@ const Login = () => {
               <input type='text' id='pass' className='border border-slate-200 text-slate-700 text-center  rounded font-semibold px-2 py-1  text-sm' onChange={handleOnChange} name='password' value={data.password}/>
             </div>
             <div className='flex justify-around gap-2'> 
-              <div className={`${isViit ? "bg-[#00ce86] ": "border border-slate-200 text-black"} w-full rounded-md py-1.5 text-center text-xs font-semibold`} onClick={handleViit}>VIIT</div>
-              <div className={`${!isViit ? "bg-[#00ce86] ": "border border-slate-200 text-black"} w-full rounded-md py-1.5 text-center text-xs font-semibold `} onClick={handleView}>VIEW</div>
+              <div className={`${isViit ? "bg-[#00ce86] text-white ": "border border-slate-200 text-black"} w-full cursor-pointer rounded-md py-1.5 text-center text-xs font-semibold`} onClick={handleViit}>VIIT</div>
+              <div className={`${!isViit ? "bg-[#00ce86] text-white ": "border border-slate-200 text-black"} w-full cursor-pointer rounded-md py-1.5 text-center text-xs font-semibold `} onClick={handleView}>VIEW</div>
             </div>
             <button className='bg-slate-900 text-white cursor-pointer rounded py-1.5 font-semibold text-sm'>Submit</button>
           </form>
