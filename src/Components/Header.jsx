@@ -24,7 +24,7 @@ const Header = () => {
       <>
       {
         (location.pathname != '/') && (
-          <button type='button' onClick={handleClick} className='cursor-pointer  bg-white px-3 font-extrabold text-sm rounded-2xl py-2 absolute top-4 sm:top-5 right-5 flex gap-1 items-center justify-center'>
+          <button type='button' onClick={handleClick} className='cursor-pointer  bg-blue-500 text-white px-3 font-extrabold text-sm rounded-2xl py-2 absolute top-4 sm:top-5 right-5 flex gap-1 items-center justify-center'>
             Logout
             <MdAccountCircle size={20} />
           </button>
