@@ -11,7 +11,7 @@ const Header = () => {
     navigate('/')
   }
   return (
-    <section className='h-fit'>
+    <section className='h-fit border-b border-slate-200'>
       <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-3 bg-white relative '>
       <div className='w-13 h-13 sm:w-10 sm:h-10'>
         <img src={logo} alt="logo" />

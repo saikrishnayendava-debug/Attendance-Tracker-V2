@@ -252,7 +252,7 @@ const Home = () => {
       <ToastNotification />
       <Header />
 
-      <div className='mt-4 mx-1 flex items-center justify-around'>
+      <div className='mt-2 mx-1 flex items-center justify-around'>
         <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
 
           {
@@ -284,13 +284,13 @@ const Home = () => {
       </div>
 
 
-      <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-5'>
+      <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
 
         <div className='border border-slate-200 rounded-md shadow  w-105'>
           <form className='grid p-5 gap-6 rounded-md bg-white' onSubmit={handleSubmit}>
-            <div className='font-bold text-lg flex gap-2 items-center justify-center'>
+            <div className='font-bold text-lg flex gap-2 items-center justify-center bg-green-500 text-white rounded-lg w-fit px-5'>
               Hi, {localStorage.getItem("redgNo")}
-              <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
+              <PiStudentFill className='bg-emerald-200 rounded-lg p-1 my-1 text-black' size={30}/>
             </div>
             <div className='grid grid-cols-2 gap-2'>
               <label htmlFor="present" className='text-sm font-semibold'>
