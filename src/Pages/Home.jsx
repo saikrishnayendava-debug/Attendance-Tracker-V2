@@ -333,7 +333,7 @@ const Home = () => {
                     item.message ? (
                       <p key={index} className='text-xs text-center'>{item.message}</p>
                     ) : (
-                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}  rounded flex gap-1 font-semibold px-1 text-sm`}>
+                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-[#00ce86] text-black'}  rounded flex gap-1 font-bold px-1 text-sm`}>
                         <span>{item.subject}:</span>
                         <span>{item.attendance_today}</span>
                       </div>
@@ -385,7 +385,7 @@ const Home = () => {
 
 
             <div className='grid grid-cols-2 bg-black border  border-[#222528] p-2 rounded '>
-              <label className='font-bold text-sm flex flex-col'>
+              <label className='font-bold text-sm flex flex-col py-1 px-2'>
                 Leave dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
