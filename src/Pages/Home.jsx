@@ -448,13 +448,13 @@ const Home = () => {
 
 
             <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' className='cursor-pointer bg-blue-700 text-white  rounded py-2 font-semibold text-sm flex gap-1 items-center justify-center'>
+              <button type='submit' className='cursor-pointer bg-[#00ce86] text-emerald-950  rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Submit
-                <GoGraph className=' rounded-md p-1 text-white ' size={24} />
+                <GoGraph className=' rounded-md p-1 text-emerald-950 ' size={24} />
               </button>
-              <button type='button' onClick={handleReset} className='cursor-pointer bg-blue-700 text-white rounded py-2 font-semibold text-sm flex gap-1 items-center justify-center'>
+              <button type='button' onClick={handleReset} className='cursor-pointer bg-[#00ce86] text-emerald-950 rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Reset
-                <RiRefreshLine className='text-white rounded-md' size={20} />
+                <RiRefreshLine className='text-emerald-950 rounded-md' size={20} />
               </button>
             </div>
 
