@@ -369,7 +369,7 @@ const Home = () => {
               </div>
 
               <div>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-semibold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-bold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
@@ -377,7 +377,7 @@ const Home = () => {
                   <span className={`relative ${loading ? " " : "text-black"}`}>
                     {loading ? "Fetching..." : "Fetch Attendance"}
                   </span>
-                  <FaHourglassEnd size={15} color='white' />
+                  <FaHourglassEnd size={15} color='black' />
                 </button>
                 <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
               </div>
