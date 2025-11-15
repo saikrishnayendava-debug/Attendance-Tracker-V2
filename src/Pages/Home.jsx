@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
+import { FaHourglassEnd } from "react-icons/fa";
 import axios from 'axios'
 import ToastNotification from '../Components/ToastNotification';
 import { showToast } from '../Components/ToastNotification';
@@ -287,7 +288,7 @@ const Home = () => {
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
 
         <div className='border border-slate-200 rounded-md shadow  w-105'>
-          <form className='grid p-5 gap-6 rounded-md bg-white' onSubmit={handleSubmit}>
+          <form className='grid p-5 gap-5 rounded-md bg-white' onSubmit={handleSubmit}>
             <div className='font-bold flex gap-2 items-center justify-center'>
               Hi, {localStorage.getItem("redgNo")}
               <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
@@ -368,10 +369,10 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 bg-slate-50 border border-slate-300 p-2 rounded gap-2'>
+            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded gap-2'>
               <label className='font-semibold text-sm flex flex-col'>
                 Leave dates
-                <span className='text-xs text-slate-700 font-normal'>(Select dates you wish to put leaves)</span>
+                <span className='text-xs text-slate-700 font-normal'>Select dates you wish to put leaves</span>
               </label>
               <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>{
                 showLeaveCalendar ? "Submit" : "Calender"
@@ -396,10 +397,10 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border bg-slate-50 border-slate-300 p-2 rounded'>
+            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded'>
               <label className='font-semibold text-sm flex flex-col'>
                 Holiday dates
-                <span className='text-xs text-slate-700 font-normal'>(Select dates of public holidays)</span>
+                <span className='text-xs text-slate-700 font-normal'>Select dates of public holidays</span>
 
                 </label>
               <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>
@@ -430,7 +431,7 @@ const Home = () => {
 
             </div>
             <div>
-              <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-semibold text-sm w-full flex items-center justify-center overflow-hidden`}
+              <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-semibold text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
                 disabled={loading}>
                 {loading && (
                   <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
@@ -438,6 +439,7 @@ const Home = () => {
                 <span className={`relative ${loading ? " " : "text-white"}`}>
                   {loading ? "Fetching..." : "Fetch Attendance"}
                 </span>
+                <FaHourglassEnd size={15} color='white'/>
               </button>
               <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
             </div>
