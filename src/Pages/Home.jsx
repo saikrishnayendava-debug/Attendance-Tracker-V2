@@ -127,7 +127,7 @@ const Home = () => {
   const code = localStorage.getItem("code");
   const url =
     code === "VIEW"
-    ? `https://womens-api.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+      ? `https://womens-api.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://apis-whpx.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
 
 
@@ -287,92 +287,108 @@ const Home = () => {
 
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
 
-        <div className='border border-slate-200 rounded-md shadow  w-105'>
-          <form className='grid p-5 gap-5 rounded-md bg-white' onSubmit={handleSubmit}>
-            <div className='font-bold flex gap-2 items-center justify-center'>
-              Hi, {localStorage.getItem("redgNo")}
-              <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
-            </div>
-            <div className='grid grid-cols-2 gap-2'>
-              <label htmlFor="present" className='text-sm font-semibold'>
-                Number of periods attended
-              </label>
-              <input
-                type='number'
-                id='present'
-
-                className='border bg-slate-100 border-slate-200 font-bold rounded px-2 py-1  text-sm text-center'
-                name='present'
-                value={data.present}
-                readOnly
-                required
-                onChange={handleOnChange}
-              />
-            </div>
-
-
-            <div className='grid grid-cols-2 gap-2'>
-              <label htmlFor="held" className='text-sm font-semibold '>
-                Number of periods held
-              </label>
-              <input
-                type='number'
-                id='held'
-                readOnly
-                className='border bg-slate-100 border-slate-200  font-bold rounded px-2 py-1  text-sm text-center'
-                name='held'
-                value={data.held}
-                required
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className='bg-green-50 p-1.5 rounded border border-slate-300'>
-              <div className='text-center text-xs mb-1 font-semibold '>Today attendance status</div>
-              <div className='flex gap-2 items-center flex-wrap'>
-                {todayPeriodsPosted?.map((item, index) => (
-                  item.message ? (
-                    <p key={index}>{item.message}</p>
-                  ) : (
-                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}  rounded flex gap-1 font-semibold px-1 text-sm`}>
-                      <span>{item.subject}:</span>
-                      <span>{item.attendance_today}</span>
-                    </div>
-                  )
-                ))}
+        <div className=' w-105'>
+          <form className='grid gap-5' onSubmit={handleSubmit}>
+            <div className=' grid bg-white p-5 gap-5 rounded-md border border-slate-200  '>
+              <div className='font-bold flex gap-2 items-center justify-center'>
+                Hi, {localStorage.getItem("redgNo")}
+                <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30} />
               </div>
-            </div>
+              <div className='grid grid-cols-2 gap-2'>
+                <label htmlFor="present" className='text-sm font-semibold'>
+                  Number of periods attended
+                </label>
+                <input
+                  type='number'
+                  id='present'
 
-            <div>
-              <h1 className='text-center text-sm font-bold  m-1'>Select period to bunk today</h1>
-              <div className='flex justify-evenly flex-wrap'>
-                {emptyArray.map((_, index) => {
-                  const isSelected = selectedPeriods.includes(index);
-                  const isDisabled = cnt >= index + 1;
+                  className='border bg-slate-100 border-slate-200 font-bold rounded px-2 py-1  text-sm text-center'
+                  name='present'
+                  value={data.present}
+                  readOnly
+                  required
+                  onChange={handleOnChange}
+                />
+              </div>
 
-                  return (
-                    <button
-                      type='button'
-                      key={index}
-                      disabled={isDisabled}
-                      onClick={() => handleTempClick(index)}
-                      className={`
+
+              <div className='grid grid-cols-2 gap-2'>
+                <label htmlFor="held" className='text-sm font-semibold '>
+                  Number of periods held
+                </label>
+                <input
+                  type='number'
+                  id='held'
+                  readOnly
+                  className='border bg-slate-100 border-slate-200  font-bold rounded px-2 py-1  text-sm text-center'
+                  name='held'
+                  value={data.held}
+                  required
+                  onChange={handleOnChange}
+                />
+              </div>
+              <div className='bg-green-50 p-1.5 rounded border border-slate-300'>
+                <div className='text-center text-xs mb-1 font-semibold '>Today attendance status</div>
+                <div className='flex gap-2 items-center flex-wrap'>
+                  {todayPeriodsPosted?.map((item, index) => (
+                    item.message ? (
+                      <p key={index}>{item.message}</p>
+                    ) : (
+                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}  rounded flex gap-1 font-semibold px-1 text-sm`}>
+                        <span>{item.subject}:</span>
+                        <span>{item.attendance_today}</span>
+                      </div>
+                    )
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h1 className='text-center text-sm font-bold  m-1'>Select period to bunk today</h1>
+                <div className='flex justify-evenly flex-wrap'>
+                  {emptyArray.map((_, index) => {
+                    const isSelected = selectedPeriods.includes(index);
+                    const isDisabled = cnt >= index + 1;
+
+                    return (
+                      <button
+                        type='button'
+                        key={index}
+                        disabled={isDisabled}
+                        onClick={() => handleTempClick(index)}
+                        className={`
             ${isSelected ? 'bg-slate-900' : 'bg-[#00ce86]'} 
             text-white w-6 h-6 rounded flex justify-center items-center font-semibold 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
-                    >
-                      {index + 1}
-                    </button>
-                  );
-                })}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-semibold text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                  disabled={loading}>
+                  {loading && (
+                    <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
+                  )}
+                  <span className={`relative ${loading ? " " : "text-white"}`}>
+                    {loading ? "Fetching..." : "Fetch Attendance"}
+                  </span>
+                  <FaHourglassEnd size={15} color='white' />
+                </button>
+                <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
               </div>
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded gap-2'>
+            <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded gap-2'>
               <label className='font-semibold text-sm flex flex-col'>
                 Leave dates
-                <span className='text-xs text-slate-700 font-normal'>Select dates you wish to put leaves</span>
+                <span className='text-xs text-slate-500 font-normal'>Select dates you wish to put leaves</span>
               </label>
               <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>{
                 showLeaveCalendar ? "Submit" : "Calender"
@@ -397,16 +413,16 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 p-2 rounded'>
+            <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded'>
               <label className='font-semibold text-sm flex flex-col'>
                 Holiday dates
-                <span className='text-xs text-slate-700 font-normal'>Select dates of public holidays</span>
+                <span className='text-xs text-slate-500 font-normal'>Select dates of public holidays</span>
 
-                </label>
+              </label>
               <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>
                 {
                   showHolidayCalendar ? "Submit" : "Calender"
-                  
+
                 }
               </button>
               {
@@ -430,33 +446,28 @@ const Home = () => {
               }
 
             </div>
-            <div>
-              <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-semibold text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
-                disabled={loading}>
-                {loading && (
-                  <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
-                )}
-                <span className={`relative ${loading ? " " : "text-white"}`}>
-                  {loading ? "Fetching..." : "Fetch Attendance"}
-                </span>
-                <FaHourglassEnd size={15} color='white'/>
-              </button>
-              <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
-            </div>
+
+
+
 
             <div className='grid grid-cols-2 gap-3'>
               <button type='submit' className='cursor-pointer bg-slate-900 text-white  rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
                 Submit
-                <GoGraph className='bg-[#00ce86] rounded-lg p-1 text-white' size={24}/>
+                <GoGraph className='bg-[#00ce86] rounded-lg p-1 text-white' size={24} />
               </button>
               <button type='button' onClick={handleReset} className='cursor-pointer bg-slate-900 text-white rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
                 Reset
                 <RiRefreshLine className='bg-[#00ce86] rounded-lg p-1 text-white' size={24} />
               </button>
             </div>
+
+
           </form>
         </div>
       </div>
+
+
+
       <div className='mt-10 mb-7'>
         <h1 className='text-center text-2xl font-bold text-slate-800'>Attendance as per data</h1>
       </div>
