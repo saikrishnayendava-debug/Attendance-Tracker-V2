@@ -389,7 +389,7 @@ const Home = () => {
             <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded '>
               <label className='font-semibold text-sm flex flex-col'>
                 Leave dates
-                <span className='text-2xs text-slate-500 font-normal'>Select dates you wish to put leaves</span>
+                <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
               <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg '>{
                 <BsCalendarDateFill className='text-emerald-800  rounded' size={30}/>
@@ -417,7 +417,7 @@ const Home = () => {
             <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded'>
               <label className='font-semibold text-sm flex flex-col'>
                 Holiday dates
-                <span className='text-2xs text-slate-500 font-normal'>Select dates of public holidays</span>
+                <span className='text-2xs text-slate-500 font-semibold'>Select dates of public holidays</span>
 
               </label>
               <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg'>
