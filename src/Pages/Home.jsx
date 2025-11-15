@@ -4,6 +4,7 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { FaHourglassEnd } from "react-icons/fa";
 import axios from 'axios'
+import { BsCalendarDateFill } from "react-icons/bs";
 import ToastNotification from '../Components/ToastNotification';
 import { showToast } from '../Components/ToastNotification';
 import Loading from '../Components/Loading'
@@ -289,7 +290,7 @@ const Home = () => {
 
         <div className=' w-105'>
           <form className='grid gap-5' onSubmit={handleSubmit}>
-            <div className=' grid bg-white p-5 gap-5 rounded-md border border-slate-200  '>
+            <div className=' grid bg-white p-5 gap-5 rounded-md border border-slate-300  '>
               <div className='font-bold flex gap-2 items-center justify-center'>
                 Hi, {localStorage.getItem("redgNo")}
                 <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30} />
@@ -327,7 +328,7 @@ const Home = () => {
                   onChange={handleOnChange}
                 />
               </div>
-              <div className='bg-green-50 p-1.5 rounded border border-slate-300'>
+              <div className='bg-emerald-50 p-1.5 rounded border border-slate-300'>
                 <div className='text-center text-xs mb-1 font-semibold '>Today attendance status</div>
                 <div className='flex gap-2 items-center flex-wrap'>
                   {todayPeriodsPosted?.map((item, index) => (
@@ -385,13 +386,13 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded gap-2'>
+            <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded '>
               <label className='font-semibold text-sm flex flex-col'>
                 Leave dates
-                <span className='text-xs text-slate-500 font-normal'>Select dates you wish to put leaves</span>
+                <span className='text-2xs text-slate-500 font-normal'>Select dates you wish to put leaves</span>
               </label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>{
-                showLeaveCalendar ? "Submit" : "Calender"
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg '>{
+                <BsCalendarDateFill className='text-emerald-800  rounded' size={30}/>
               }</button>
               {
                 showLeaveCalendar && (
@@ -416,14 +417,12 @@ const Home = () => {
             <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded'>
               <label className='font-semibold text-sm flex flex-col'>
                 Holiday dates
-                <span className='text-xs text-slate-500 font-normal'>Select dates of public holidays</span>
+                <span className='text-2xs text-slate-500 font-normal'>Select dates of public holidays</span>
 
               </label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>
-                {
-                  showHolidayCalendar ? "Submit" : "Calender"
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg'>
+                                <BsCalendarDateFill className='text-emerald-800  rounded' size={30}/>
 
-                }
               </button>
               {
                 showHolidayCalendar && (
@@ -453,11 +452,11 @@ const Home = () => {
             <div className='grid grid-cols-2 gap-3'>
               <button type='submit' className='cursor-pointer bg-slate-900 text-white  rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
                 Submit
-                <GoGraph className='bg-[#00ce86] rounded-lg p-1 text-white' size={24} />
+                <GoGraph className='bg-[#00ce86] rounded-md p-1 text-emerald-800' size={24} />
               </button>
               <button type='button' onClick={handleReset} className='cursor-pointer bg-slate-900 text-white rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
                 Reset
-                <RiRefreshLine className='bg-[#00ce86] rounded-lg p-1 text-white' size={24} />
+                <RiRefreshLine className='bg-[#00ce86] rounded-md p-1 text-emerald-800' size={24} />
               </button>
             </div>
 
