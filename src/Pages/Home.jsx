@@ -369,12 +369,12 @@ const Home = () => {
               </div>
 
               <div>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-[#00ce86] rounded py-2 font-bold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer border border-purple-300/70 rounded py-2 font-bold text-[#c9A4FF] text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
                   )}
-                  <span className={`relative ${loading ? " " : "text-black"}`}>
+                  <span className={`relative ${loading ? " " : "text-[#c9A4FF]"}`}>
                     {loading ? "Fetching..." : "Fetch Attendance"}
                   </span>
                   <FaHourglassEnd size={15} color='black' />
