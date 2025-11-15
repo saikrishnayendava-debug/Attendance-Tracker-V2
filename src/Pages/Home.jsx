@@ -374,7 +374,7 @@ const Home = () => {
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
                   )}
-                  <span className={`relative ${loading ? " " : "text-white"}`}>
+                  <span className={`relative ${loading ? " " : "text-black"}`}>
                     {loading ? "Fetching..." : "Fetch Attendance"}
                   </span>
                   <FaHourglassEnd size={15} color='white' />
