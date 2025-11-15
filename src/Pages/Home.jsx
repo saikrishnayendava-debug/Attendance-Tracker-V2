@@ -128,8 +128,8 @@ const Home = () => {
   const code = localStorage.getItem("code");
   const url =
     code === "VIEW"
-      ? `https://womens-api.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-      : `https://apis-whpx.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
+      ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+      : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
 
 
   const fetchAttendance = async () => {
@@ -294,7 +294,7 @@ const Home = () => {
                 Hi, {localStorage.getItem("redgNo")}
               </div>
               <div className='grid grid-cols-2 gap-2'>
-                <label htmlFor="present" className='text-sm font-semibold'>
+                <label htmlFor="present" className='text-xs font-semibold'>
                   Number of periods attended
                 </label>
                 <input
@@ -312,7 +312,7 @@ const Home = () => {
 
 
               <div className='grid grid-cols-2 gap-2'>
-                <label htmlFor="held" className='text-sm font-semibold '>
+                <label htmlFor="held" className='text-xs font-semibold '>
                   Number of periods held
                 </label>
                 <input
@@ -448,11 +448,11 @@ const Home = () => {
 
 
             <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' className='cursor-pointer bg-blue-500 text-white  rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+              <button type='submit' className='cursor-pointer bg-slate-300 text-black  rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Submit
-                <GoGraph className=' rounded-md p-1 text-white ' size={24} />
+                <GoGraph className=' rounded-md p-1 text-black ' size={24} />
               </button>
-              <button type='button' onClick={handleReset} className='cursor-pointer bg-[#00ce86] text-emerald-950 rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+              <button type='button' onClick={handleReset} className='cursor-pointer bg-slate-300 text-black rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Reset
                 <RiRefreshLine className='text-emerald-950 rounded-md' size={20} />
               </button>
