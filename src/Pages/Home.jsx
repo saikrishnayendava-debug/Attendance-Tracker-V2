@@ -288,9 +288,9 @@ const Home = () => {
 
         <div className='border border-slate-200 rounded-md shadow  w-105'>
           <form className='grid p-5 gap-6 rounded-md bg-white' onSubmit={handleSubmit}>
-            <div className='font-bold text-lg flex gap-2 items-center justify-center bg-green-500 text-white rounded-lg w-fit px-5'>
+            <div className='font-bold flex gap-2 items-center justify-center'>
               Hi, {localStorage.getItem("redgNo")}
-              <PiStudentFill className='bg-emerald-200 rounded-lg p-1 my-1 text-black' size={30}/>
+              <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
             </div>
             <div className='grid grid-cols-2 gap-2'>
               <label htmlFor="present" className='text-sm font-semibold'>
