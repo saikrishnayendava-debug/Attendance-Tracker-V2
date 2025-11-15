@@ -287,7 +287,7 @@ const Home = () => {
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
 
         <div className='border border-slate-200 rounded-md shadow  w-105'>
-          <form className='grid p-5 gap-6 rounded-md bg-white' onSubmit={handleSubmit}>
+          <form className='grid p-5 gap-4 rounded-md bg-white' onSubmit={handleSubmit}>
             <div className='font-bold flex gap-2 items-center justify-center'>
               Hi, {localStorage.getItem("redgNo")}
               <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30}/>
@@ -342,7 +342,7 @@ const Home = () => {
             </div>
 
             <div>
-              <h1 className='text-center font-bold text-slate-900 m-2'>Select period to bunk today</h1>
+              <h1 className='text-center text-sm font-bold  m-1'>Select period to bunk today</h1>
               <div className='flex justify-evenly flex-wrap'>
                 {emptyArray.map((_, index) => {
                   const isSelected = selectedPeriods.includes(index);
