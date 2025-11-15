@@ -11,20 +11,20 @@ const Header = () => {
     navigate('/')
   }
   return (
-    <section className='h-fit border-b border-slate-200'>
-      <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-3 bg-white relative '>
+    <section className='h-fit border-b border-[#222528]'>
+      <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-3 bg-black relative '>
       <div className='w-13 h-13 sm:w-10 sm:h-10'>
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" className='rounded-md'/>
       </div>
       <div className='font-bold text-sm lg:text-2xl rounded p-2 '>
         <span className='text-[#00ce86] '>Attendance</span>
-        <span className='text-slate-900'>Tracker</span>
+        <span className='text-slate-200'>Tracker</span>
       </div>
       </Link>
       <>
       {
         (location.pathname != '/') && (
-          <button type='button' onClick={handleClick} className='cursor-pointer  bg-[#00ce86] px-3 font-semibold text-sm rounded-2xl py-2 absolute top-4 sm:top-5 right-5 flex gap-1 items-center justify-center'>
+          <button type='button' onClick={handleClick} className='cursor-pointer  bg-white px-3 font-semibold text-sm rounded-2xl py-2 absolute top-4 sm:top-5 right-5 flex gap-1 items-center justify-center'>
             Logout
             <MdAccountCircle size={20} />
           </button>

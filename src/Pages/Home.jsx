@@ -250,13 +250,12 @@ const Home = () => {
 
   return (
 
-    <section className='bg-slate-100 min-h-screen-'>
+    <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
 
       <div className='mt-2 mx-1 flex items-center justify-around'>
         <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
-
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col items-center justify-center '>
@@ -288,12 +287,11 @@ const Home = () => {
 
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
 
-        <div className=' w-105'>
+        <div className=' w-105 text-slate-200'>
           <form className='grid gap-5' onSubmit={handleSubmit}>
-            <div className=' grid bg-white p-5 gap-5 rounded-md border border-slate-300  '>
+            <div className=' grid p-5 gap-5 rounded-md border border-[#222528] text-slate-200'>
               <div className='font-bold flex gap-2 items-center justify-center'>
                 Hi, {localStorage.getItem("redgNo")}
-                <PiStudentFill className='bg-emerald-200 rounded-lg p-1 text-black' size={30} />
               </div>
               <div className='grid grid-cols-2 gap-2'>
                 <label htmlFor="present" className='text-sm font-semibold'>
@@ -303,7 +301,7 @@ const Home = () => {
                   type='number'
                   id='present'
 
-                  className='border bg-slate-100 border-slate-200 font-bold rounded px-2 py-1  text-sm text-center'
+                  className='bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center'
                   name='present'
                   value={data.present}
                   readOnly
@@ -321,19 +319,19 @@ const Home = () => {
                   type='number'
                   id='held'
                   readOnly
-                  className='border bg-slate-100 border-slate-200  font-bold rounded px-2 py-1  text-sm text-center'
+                  className='bg-black border  border-[#222528]  font-bold rounded px-2 py-1  text-sm text-center'
                   name='held'
                   value={data.held}
                   required
                   onChange={handleOnChange}
                 />
               </div>
-              <div className='bg-emerald-50 p-1.5 rounded border border-slate-300'>
-                <div className='text-center text-xs mb-1 font-semibold '>Today attendance status</div>
+              <div className='bg-black border  border-[#222528] p-1.5 rounded'>
+                <div className='text-center text-xs mb-1 font-bold '>Today attendance status</div>
                 <div className='flex gap-2 items-center flex-wrap'>
                   {todayPeriodsPosted?.map((item, index) => (
                     item.message ? (
-                      <p key={index}>{item.message}</p>
+                      <p key={index} className='text-xs text-center'>{item.message}</p>
                     ) : (
                       <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}  rounded flex gap-1 font-semibold px-1 text-sm`}>
                         <span>{item.subject}:</span>
@@ -358,7 +356,7 @@ const Home = () => {
                         disabled={isDisabled}
                         onClick={() => handleTempClick(index)}
                         className={`
-            ${isSelected ? 'bg-slate-900' : 'bg-[#00ce86]'} 
+            ${isSelected ? 'bg-blue-700' : 'bg-[#00ce86]'} 
             text-white w-6 h-6 rounded flex justify-center items-center font-semibold 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
@@ -386,8 +384,8 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded '>
-              <label className='font-semibold text-sm flex flex-col'>
+            <div className='grid grid-cols-2 bg-black border  border-[#222528] p-2 rounded '>
+              <label className='font-bold text-sm flex flex-col'>
                 Leave dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
@@ -414,8 +412,8 @@ const Home = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 border border-slate-300 bg-white p-2 rounded'>
-              <label className='font-semibold text-sm flex flex-col'>
+            <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
+              <label className='font-semibold text-sm flex flex-col py-1 px-2'>
                 Holiday dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates of public holidays</span>
 
@@ -450,13 +448,13 @@ const Home = () => {
 
 
             <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' className='cursor-pointer bg-slate-900 text-white  rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
+              <button type='submit' className='cursor-pointer bg-blue-700 text-white  rounded py-2 font-semibold text-sm flex gap-1 items-center justify-center'>
                 Submit
-                <GoGraph className='bg-[#00ce86] rounded-md p-1 text-emerald-800' size={24} />
+                <GoGraph className=' rounded-md p-1 text-white ' size={24} />
               </button>
-              <button type='button' onClick={handleReset} className='cursor-pointer bg-slate-900 text-white rounded py-2 font-semibold text-sm flex gap-2 items-center justify-center'>
+              <button type='button' onClick={handleReset} className='cursor-pointer bg-blue-700 text-white rounded py-2 font-semibold text-sm flex gap-1 items-center justify-center'>
                 Reset
-                <RiRefreshLine className='bg-[#00ce86] rounded-md p-1 text-emerald-800' size={24} />
+                <RiRefreshLine className='text-white rounded-md' size={20} />
               </button>
             </div>
 
@@ -468,14 +466,14 @@ const Home = () => {
 
 
       <div className='mt-10 mb-7'>
-        <h1 className='text-center text-2xl font-bold text-slate-800'>Attendance as per data</h1>
+        <h1 className='text-center text-2xl font-bold text-slate-200'>Attendance as per data</h1>
       </div>
       <div className='flex flex-col items-center justify-center gap-2'>
         {
 
           attendanceArray?.map((item, index) => {
             return (
-              <div key={index} className={`w-70 sm:w-150   ${item.absent ? "bg-black " : "  bg-[#00ce86]"} py-1.5  rounded font-bold flex justify-around text-xs text-white`}>
+              <div key={index} className={`w-70 sm:w-150   ${item.absent ? "text-red-300 " : "text-green-300 "} bg-black border border-[#222528] py-1.5  rounded font-bold flex justify-around text-xs `}>
                 <p>{item.day} th</p>
                 <p className='font-extrabold'>{item.attendence} %</p>
                 <p>{item.absent ? "Absent" : "Present"}</p>
