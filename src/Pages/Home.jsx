@@ -333,7 +333,7 @@ const Home = () => {
                     item.message ? (
                       <p key={index} className='text-xs text-center'>{item.message}</p>
                     ) : (
-                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-[#00ce86] text-black'}  rounded flex gap-1 font-bold px-1 text-sm`}>
+                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 ' : 'bg-[#00ce86] '} text-black rounded flex gap-1 font-bold px-1 text-sm`}>
                         <span>{item.subject}:</span>
                         <span>{item.attendance_today}</span>
                       </div>
