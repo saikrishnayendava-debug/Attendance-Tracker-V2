@@ -271,7 +271,7 @@ const Home = () => {
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded-3xl bg-black py-1 font-bold text-sm w-40 flex flex-col items-center justify-center text-white'>
+        <div className='min-h-40 max-h-40 rounded-3xl bg-emerald-900 py-1 font-bold text-sm w-40 flex flex-col items-center justify-center text-white'>
           <div>Present attendance</div>
           <div>
             {data.total_percentage
@@ -332,7 +332,7 @@ const Home = () => {
                   item.message ? (
                     <p key={index}>{item.message}</p>
                   ) : (
-                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}  rounded-lg flex gap-1 font-bold px-1 text-sm`}>
+                    <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}  rounded flex gap-1 font-semibold px-1 text-sm`}>
                       <span>{item.subject}:</span>
                       <span>{item.attendance_today}</span>
                     </div>
@@ -371,7 +371,7 @@ const Home = () => {
             <div className='grid grid-cols-2 bg-slate-50 border border-slate-300 p-2 rounded gap-2'>
               <label className='font-semibold text-sm flex flex-col'>
                 Leave dates
-                <span className='text-xs text-slate-500 font-semibold'>(Select dates you wish to put leaves)</span>
+                <span className='text-xs text-slate-700 font-normal'>(Select dates you wish to put leaves)</span>
               </label>
               <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>{
                 showLeaveCalendar ? "Submit" : "Calender"
@@ -399,7 +399,7 @@ const Home = () => {
             <div className='grid grid-cols-2 border bg-slate-50 border-slate-300 p-2 rounded'>
               <label className='font-semibold text-sm flex flex-col'>
                 Holiday dates
-                <span className='text-xs text-slate-500 font-semibold'>(Select dates of public holidays)</span>
+                <span className='text-xs text-slate-700 font-normal'>(Select dates of public holidays)</span>
 
                 </label>
               <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className='border bg-slate-900  cursor-pointer rounded py-1 text-white font-semibold text-sm w-full h-8'>
