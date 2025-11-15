@@ -254,7 +254,7 @@ const Home = () => {
       <ToastNotification />
       <Header />
 
-      <div className='mt-2 mx-1 flex items-center justify-around'>
+      <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
         <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
           {
             totalPercentage >= 75 ? (
@@ -333,7 +333,7 @@ const Home = () => {
                     item.message ? (
                       <p key={index} className='text-xs text-center'>{item.message}</p>
                     ) : (
-                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 ' : 'bg-[#00ce86] '} text-black rounded flex gap-1 font-bold px-1 text-sm`}>
+                      <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 ' : 'bg-[#00ce86] '} text-black rounded flex gap-1 font-extrabold px-1 text-sm`}>
                         <span>{item.subject}:</span>
                         <span>{item.attendance_today}</span>
                       </div>
@@ -452,7 +452,7 @@ const Home = () => {
                 Submit
                 <GoGraph className=' rounded-md p-1 text-white ' size={24} />
               </button>
-              <button type='button' onClick={handleReset} className='cursor-pointer bg-gray-600 text-white rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+              <button type='button' onClick={handleReset} className='cursor-pointer bg-gray-700 text-white rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Reset
                 <RiRefreshLine className='text-white rounded-md' size={20} />
               </button>
