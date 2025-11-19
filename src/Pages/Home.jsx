@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
+import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHourglassEnd } from "react-icons/fa";
 import axios from 'axios'
 import { BsCalendarDateFill } from "react-icons/bs";
@@ -21,6 +22,7 @@ import ChartComponent from '../Components/ChartComponent'
 import { SlCalender } from "react-icons/sl";
 import { GoGraph } from "react-icons/go";
 import { RiRefreshLine } from "react-icons/ri";
+import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 
 const Home = () => {
   const navigate = useNavigate()
@@ -31,7 +33,8 @@ const Home = () => {
     holidays: [],
     hours_can_skip: "",
     hours_needed: "",
-    total_percentage: ""
+    total_percentage: "",
+    subjectwiseSummary: []
   })
   const [loading, setLoading] = useState(false)
   const [tempCnt, setTempCnt] = useState(0);
@@ -57,7 +60,7 @@ const Home = () => {
     hoursCanSkip: 0,
     hoursNeeded: 0
   });
-
+  const [openSubjsectWise, setOpenSubjectWise] = useState(false);
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -107,8 +110,7 @@ const Home = () => {
     holidaysArray = data.holidays.map(d => d.getDate());
     const result = attendenceCalculator(holidaysArray, leavesArray, 28, data.present - (tempCnt + cnt), data.held - cnt, today.getDate(), sundayArray, 7)
     setAttendanceArray(result)
-
-    console.log(tempCnt)
+    console.log(data)
   }
   const handleReset = () => {
     setData(prev => ({
@@ -158,7 +160,8 @@ const Home = () => {
         held: response.data.total_info?.total_held || '',
         hours_can_skip: response.data.total_info?.hours_can_skip || '',
         hours_needed: response.data.total_info?.additional_hours_needed || '',
-        total_percentage: response.data.total_info?.total_percentage || ''
+        total_percentage: response.data.total_info?.total_percentage || '',
+        subjectwiseSummary: response.data?.subjectwise_summary || [],
       }));
       const result = getAttendanceCounts(response.data)
 
@@ -168,24 +171,7 @@ const Home = () => {
       setTodayPeriodsPosted(todayData);
 
     } catch (error) {
-      // Case 1: API sent a response
-      if (error.response) {
-        const body = error.response.data;
-
-        // If API returned HTML instead of JSON → INVALID DETAILS
-        if (typeof body === "string" && body.startsWith("<!doctype html")) {
-          showToast("Invalid details");
-          return;
-        }
-
-        // If status 500
-        if (error.response.status === 500) {
-          showToast("Invalid details");
-          return;
-        }
-      }
-
-      // Case 2: Use cached data if available
+      showToast("Failed to fetch data");
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
 
@@ -200,7 +186,7 @@ const Home = () => {
           held: parsedData.total_info?.total_held || '',
           hours_can_skip: parsedData.total_info?.hours_can_skip || '',
           hours_needed: parsedData.total_info?.additional_hours_needed || '',
-          total_percentage: parsedData.total_info?.total_percentage || ''
+          total_percentage: parsedData.total_info?.total_percentage || '',
         }));
 
         const result = getAttendanceCounts(parsedData);
@@ -211,9 +197,6 @@ const Home = () => {
 
         return;
       }
-
-      // Case 3: No cached data → true error
-      showToast("Invalid details");
     }
 
     finally {
@@ -377,7 +360,7 @@ const Home = () => {
                   <span className={`relative ${loading ? " " : ""}`}>
                     {loading ? "Fetching..." : "Fetch Attendance"}
                   </span>
-                  <FaHourglassEnd size={14}  />
+                  <FaHourglassEnd size={14} />
                 </button>
                 <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
               </div>
@@ -390,7 +373,7 @@ const Home = () => {
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
               <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg '>{
-                <BsCalendarDateFill className='text-emerald-800  rounded' size={30}/>
+                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
               }</button>
               {
                 showLeaveCalendar && (
@@ -419,7 +402,7 @@ const Home = () => {
 
               </label>
               <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg'>
-                                <BsCalendarDateFill className='text-emerald-800  rounded' size={30}/>
+                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
 
               </button>
               {
@@ -483,6 +466,33 @@ const Home = () => {
 
         }
       </div>
+
+      <div className='flex justify-center mt-15'>
+        <div className='w-105 text-slate-200'>
+
+          <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
+            <label className=' flex flex-col py-1 px-2'>
+              <div className='font-semibold text-sm'>
+                Subject-wise attendance
+                <span className='bg-green-400 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+              </div>
+              <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
+
+            </label>
+            <button type='button' onClick={() => setOpenSubjectWise(true)} className=' cursor-pointer ml-40 p-2  w-fit rounded-lg'>
+              <IoMdArrowDropdown className='text-emerald-300' size={30} />
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+
+      {
+        openSubjsectWise && (
+          <SubjectWiseComponent data={data.subjectwiseSummary} close={() => setOpenSubjectWise(false)} />
+        )
+      }
       <FooterComponent />
     </section>
 
