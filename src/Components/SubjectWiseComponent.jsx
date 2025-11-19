@@ -9,13 +9,16 @@ const SubjectWiseComponent = ({ data, close }) => {
         </button>
         <div className='flex flex-col items-center justify-center gap-5'>
           {
-            data?.map((item, index) => (
-              <div key={index} className={`grid grid-cols-3 border ${item.percentage < 75 ? "border-red-900" : "border-[#222528]"}  p-2 rounded w-50 lg:w-105 text-xs font-bold`}>
+            Array.isArray(data) && data.length > 0 ? (
+
+              data.map((item, index) => (
+                <div key={index} className={`grid grid-cols-3 border ${item.percentage < 75 ? "border-red-900" : "border-[#222528]"}  p-2 rounded w-50 lg:w-105 text-xs font-bold`}>
                 <p className='font-extrabold text-pink-300'>{item.subject_name}</p>
                 <p>{item.attended_held}</p>
                 <p>{item.percentage}%</p>
-              </div>
-            ))
+                </div>
+              ))
+            ) : <p className='text-xs text-slate-200 font-bold'>No Data Available</p>
           }
         </div>
       </div>
