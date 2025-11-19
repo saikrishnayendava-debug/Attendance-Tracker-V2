@@ -474,13 +474,13 @@ const Home = () => {
             <label className=' flex flex-col py-1 px-2'>
               <div className='font-semibold text-sm'>
                 Subject-wise attendance summary
-                <span className='bg-blue-400 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
               </div>
               <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
 
             </label>
             <button type='button' onClick={() => setOpenSubjectWise(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
-              <IoMdArrowDropdown className='text-emerald-300' size={30} />
+              <p className='text-emerald-300 text-sm font-extrabold'>click</p>
             </button>
 
 
