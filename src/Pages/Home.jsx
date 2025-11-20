@@ -356,8 +356,8 @@ const Home = () => {
                         disabled={isDisabled}
                         onClick={() => handleTempClick(index)}
                         className={`
-            ${isSelected ? 'bg-blue-700' : 'bg-[#00ce86]'} 
-            text-white w-6 h-6 rounded flex justify-center items-center font-semibold 
+            ${isSelected ? 'bg-lime-500' : 'bg-[#00ce86]'} 
+            text-lime-100 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
                       >
