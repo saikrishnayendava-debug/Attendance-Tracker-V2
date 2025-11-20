@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
+import { IoMdBatteryFull } from "react-icons/io";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHourglassEnd } from "react-icons/fa";
 import axios from 'axios'
+import { MdBatteryAlert } from "react-icons/md";
+import { PiBatteryVerticalLowBold } from "react-icons/pi"
 import { BsCalendarDateFill } from "react-icons/bs";
 import ToastNotification from '../Components/ToastNotification';
 import { showToast } from '../Components/ToastNotification';
@@ -23,7 +26,7 @@ import { SlCalender } from "react-icons/sl";
 import { GoGraph } from "react-icons/go";
 import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
-
+import { ImPower } from "react-icons/im";
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -238,24 +241,38 @@ const Home = () => {
       <Header />
 
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
-        <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
+        <div className=' bg-emerald-200 pt-2  text-black min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
           {
             totalPercentage >= 75 ? (
-              <div className='flex flex-col items-center justify-center '>
+              <div className='flex flex-col font-extrabold items-center justify-center '>
                 <div>Periods can skip</div>
-                <div className='text-6xl mt-6 '>{hoursCanSkip}</div>
+                <div className="flex flex-row w-full items-center justify-center">
+                  <div className='text-6xl mt-6 '>
+                    {hoursCanSkip}
+                  </div>
+                  <IoMdBatteryFull size={25} className='text-green-500' />
+                  <ImPower />
+                </div>
+                <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
+
               </div>
             ) : (
-              <div className='flex flex-col items-center justify-center'>
+              <div className='flex flex-col font-bold items-center justify-center'>
                 <div>Periods to attend</div>
-                <div className='text-6xl mt-6'>{hoursNeeded}</div>
+                <div className="flex flex-row w-full items-center justify-center">
+
+                  <div className='text-6xl mt-6'>{hoursNeeded}</div>
+                  <MdBatteryAlert size={25} className='text-red-600'  />
+                  
+                </div>
+                <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
               </div>
             )
           }
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded-3xl bg-emerald-900 py-1 font-bold text-sm w-40 flex flex-col items-center justify-center text-white'>
+        <div className='min-h-40 max-h-40 rounded-3xl bg-emerald-900 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-emerald-200'>
           <div>Present attendance</div>
           <div>
             {data.total_percentage
