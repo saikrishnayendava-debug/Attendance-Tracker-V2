@@ -37,7 +37,7 @@ const ChartComponent = ({ progress, size = 120 }) => {
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
-          className="transition-all duration-500 ease-out"
+          className="transition-all duration-2000 ease-out"
         />
       </svg>
 
