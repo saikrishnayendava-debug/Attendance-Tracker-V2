@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <section className='h-fit border-b border-[#222528] fixed top-0 w-full z-10'>
       <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-2 bg-black relative '>
-      <div className='w-10 h-10'>
+      <div className='w-13 h-13'>
         <img src={logo} alt="logo" className='rounded-lg'/>
       </div>
       <div className='font-bold text-sm lg:text-2xl rounded px-2 '>

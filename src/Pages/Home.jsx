@@ -272,7 +272,7 @@ const Home = () => {
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded-3xl bg-emerald-900 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-emerald-200'>
+        <div className='min-h-40 max-h-40 rounded-3xl bg-gray-900 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-emerald-200'>
           <div>Present attendance</div>
           <div>
             {data.total_percentage
