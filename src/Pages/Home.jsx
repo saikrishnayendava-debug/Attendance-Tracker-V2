@@ -345,7 +345,7 @@ const Home = () => {
                   type='number'
                   id='present'
 
-                  className='bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500'
+                  className='bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500'
                   name='present'
                   value={data.present}
                   readOnly
@@ -363,7 +363,7 @@ const Home = () => {
                   type='number'
                   id='held'
                   readOnly
-                  className='bg-black border  border-[#222528]  font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500'
+                  className='bg-black border  border-[#222528]  font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500'
                   name='held'
                   value={data.held}
                   required
@@ -562,13 +562,13 @@ const Home = () => {
           <div className='flex items-center justify-around gap-1 mt-2'>
             <div className='flex flex-col gap-3'>
 
-              <input type="text" className='w-40 bg-black border   border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500' value={frnd_data.frnd_redgNo} onChange={handleFrndChange} name='frnd_redgNo'/>
-              <input type="text" className='w-40 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500' value={frnd_data.frnd_password} onChange={handleFrndChange} name='frnd_password'/>
+              <input type="text" className='w-40 bg-black border   border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500' value={frnd_data.frnd_redgNo} onChange={handleFrndChange} name='frnd_redgNo'/>
+              <input type="text" className='w-40 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500' value={frnd_data.frnd_password} onChange={handleFrndChange} name='frnd_password'/>
 
             </div>
             <div className='flex flex-col gap-3'>
               <button className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-emerald-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
-              <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500 text-red-500' value={frndAttendanceData} readOnly />
+              <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500 text-white' value={frndAttendanceData} readOnly />
             </div>
 
           </div>
