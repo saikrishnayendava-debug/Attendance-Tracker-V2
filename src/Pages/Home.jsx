@@ -39,6 +39,10 @@ const Home = () => {
     total_percentage: "",
     subjectwiseSummary: []
   })
+  const [frnd_data, setFrnd_Data] = useState({
+    frnd_redgNo: localStorage.getItem("frnd_redgNo") || "",
+    frnd_password: localStorage.getItem("frnd_password") || "",
+  })
   const [loading, setLoading] = useState(false)
   const [tempCnt, setTempCnt] = useState(0);
   const [attendanceData, setAttendanceData] = useState()
@@ -63,7 +67,11 @@ const Home = () => {
     hoursCanSkip: 0,
     hoursNeeded: 0
   });
+  const [miniloading, setMiniLoading] = useState(false);
   const [openSubjsectWise, setOpenSubjectWise] = useState(false);
+  const[frndAttendanceData,setFrndAttendanceData]=useState(
+    localStorage.getItem("frnd_latestAttendanceData") || ""
+  );
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -80,6 +88,13 @@ const Home = () => {
       ...prev,
       [name]: value
     }))
+  }
+  const handleFrndChange = (e) => {
+    const { name, value } = e.target
+    setFrnd_Data(prev => ({
+      ...prev,
+      [name]: value
+    })) 
   }
 
 
@@ -206,6 +221,35 @@ const Home = () => {
       setLoading(false);
     }
   }
+  const fetch_frnd_Attendance = async () => {
+    try {
+      setMiniLoading(true);
+      const frnd_num = frnd_data.frnd_redgNo;
+      const frnd_pass = frnd_data.frnd_password;
+      
+        localStorage.setItem("frnd_redgNo", frnd_num);
+        localStorage.setItem("frnd_password", frnd_pass);
+      
+      const url =
+    code === "VIEW"
+      ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`
+      : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`;
+
+      const response = await axios.get(url);
+      setFrndAttendanceData(response.data.total_info?.total_percentage || '');
+      localStorage.setItem("frnd_latestAttendanceData", JSON.stringify(response.data.total_info?.total_percentage));
+      
+
+    } catch (error) {
+      showToast("Failed to fetch data");
+      return;
+      
+    }
+
+    finally {
+      setMiniLoading(false);
+    }
+  }
 
 
 
@@ -241,16 +285,16 @@ const Home = () => {
       <Header />
 
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
-        <div className=' bg-emerald-200 pt-2  text-black min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm'>
+        <div className=' bg-red-500 pt-2  text-black min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col font-extrabold items-center justify-center '>
                 <div>Periods can skip</div>
                 <div className="flex flex-row w-full items-center justify-center">
-                  <div className='text-6xl mt-6 '>
+                  <div className='text-6xl mt-6 text-white'>
                     {hoursCanSkip}
                   </div>
-                  <IoMdBatteryFull size={25} className='text-green-500' />
+                  {/* <IoMdBatteryFull size={25} className='text-green-500' /> */}
                   <ImPower />
                 </div>
                 <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
@@ -262,8 +306,8 @@ const Home = () => {
                 <div className="flex flex-row w-full items-center justify-center">
 
                   <div className='text-6xl mt-6'>{hoursNeeded}</div>
-                  <MdBatteryAlert size={25} className='text-red-600'  />
-                  
+                  <MdBatteryAlert size={25} className='text-black' />
+
                 </div>
                 <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
               </div>
@@ -272,8 +316,8 @@ const Home = () => {
 
 
         </div>
-        <div className='min-h-40 max-h-40 rounded-3xl bg-gray-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-emerald-200'>
-          <div>Present attendance</div>
+        <div className='min-h-40 max-h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
+          <div className='bg-red-500 text-black rounded-2xl px-1'>Present attendance</div>
           <div>
             {data.total_percentage
               ? <ChartComponent progress={data.total_percentage} />
@@ -301,7 +345,7 @@ const Home = () => {
                   type='number'
                   id='present'
 
-                  className='bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center'
+                  className='bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500'
                   name='present'
                   value={data.present}
                   readOnly
@@ -319,7 +363,7 @@ const Home = () => {
                   type='number'
                   id='held'
                   readOnly
-                  className='bg-black border  border-[#222528]  font-bold rounded px-2 py-1  text-sm text-center'
+                  className='bg-black border  border-[#222528]  font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500'
                   name='held'
                   value={data.held}
                   required
@@ -356,8 +400,8 @@ const Home = () => {
                         disabled={isDisabled}
                         onClick={() => handleTempClick(index)}
                         className={`
-            ${isSelected ? 'bg-lime-500' : 'bg-[#00ce86]'} 
-            text-lime-100 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
+            ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-red-500'} 
+            text-gray-900 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
                       >
@@ -369,7 +413,7 @@ const Home = () => {
               </div>
 
               <div>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-slate-200 rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-red-600 rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
@@ -389,8 +433,8 @@ const Home = () => {
                 Leave dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg '>{
-                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-red-500 w-fit rounded-2xl '>{
+                <BsCalendarDateFill className='text-black  rounded' size={30} />
               }</button>
               {
                 showLeaveCalendar && (
@@ -418,8 +462,8 @@ const Home = () => {
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates of public holidays</span>
 
               </label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-lg'>
-                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-red-500 w-fit rounded-2xl'>
+                <BsCalendarDateFill className='text-black  rounded' size={30} />
 
               </button>
               {
@@ -497,9 +541,35 @@ const Home = () => {
 
             </label>
             <button type='button' onClick={() => setOpenSubjectWise(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
-              <p className='text-emerald-300 text-sm font-extrabold'>click</p>
+              <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
+
+          </div>
+        </div>
+      </div>
+      <div className='flex justify-center mt-4'>
+        <div className='w-105 text-slate-200 bg-black border  border-[#222528]  p-2 rounded'>
+
+          <label className=' flex flex-col py-1 px-2'>
+            <div className='font-semibold text-sm'>
+              Check your friend's attendance
+              <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+            </div>
+            <span className='text-2xs text-slate-500 font-semibold'>login once, use it forever</span>
+
+          </label>
+          <div className='flex items-center justify-around gap-1 mt-2'>
+            <div className='flex flex-col gap-3'>
+
+              <input type="text" className='w-40 bg-black border   border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500' value={frnd_data.frnd_redgNo} onChange={handleFrndChange} name='frnd_redgNo'/>
+              <input type="text" className='w-40 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500' value={frnd_data.frnd_password} onChange={handleFrndChange} name='frnd_password'/>
+
+            </div>
+            <div className='flex flex-col gap-3'>
+              <button className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-red-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
+              <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500 text-red-500' value={frndAttendanceData} readOnly />
+            </div>
 
           </div>
         </div>
