@@ -17,14 +17,14 @@ const Header = () => {
           <img src={logo} alt="logo" className='rounded-lg' />
         </div>
         <div className='font-bold text-sm lg:text-2xl rounded px-2 '>
-          <span className='text-[#e63b2e] '>Attendance</span>
+          <span className='text-[#00ce86] '>Attendance</span>
           <span className='text-slate-300'>Tracker</span>
         </div>
       </Link>
       <>
         {
           (location.pathname != '/') && (
-            <button type='button' onClick={handleClick} className='cursor-pointer  bg-red-500 text-slate-100 px-3 font-bold text-sm rounded-lg py-2  flex gap-1 items-center justify-center'>
+            <button type='button' onClick={handleClick} className='cursor-pointer  bg-blue-500 text-slate-100 px-3 font-bold text-sm rounded-lg py-2  flex gap-1 items-center justify-center'>
               Logout
               <MdAccountCircle size={20} />
             </button>

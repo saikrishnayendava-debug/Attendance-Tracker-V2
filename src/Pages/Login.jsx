@@ -69,7 +69,7 @@ const Login = () => {
               <div className={`${isViit ? "bg-white text-black": "border border-[#222528] "} w-full cursor-pointer rounded-2xl py-1.5 text-center text-xs font-semibold`} onClick={handleViit}>VIIT</div>
               <div className={`${!isViit ? "bg-white text-black": "border border-[#222528] "} w-full cursor-pointer rounded-2xl py-1.5 text-center text-xs font-semibold `} onClick={handleView}>VIEW</div>
             </div>
-            <button className='bg-red-500 text-white cursor-pointer rounded py-1.5 font-semibold text-sm'>Submit</button>
+            <button className='bg-blue-500 text-white cursor-pointer rounded py-1.5 font-semibold text-sm'>Submit</button>
           </form>
         </div>
       </div>

@@ -7,9 +7,9 @@ const ChartComponent = ({ progress, size = 120 }) => {
 
   // Progress-based color selection
   const getColor = () => {
-    if (progress < 50) return "#a1aaaf";          // red
+    if (progress < 50) return "#EF4444";          // red
     if (progress < 75) return "#F97316";          // orange
-    return "#fb2a23";          // green
+    return "#00ce86";          // green
                                 // mint green
   };
 

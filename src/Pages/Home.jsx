@@ -285,13 +285,13 @@ const Home = () => {
       <Header />
 
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
-        <div className=' bg-red-400 pt-2  text-black min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
+        <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col font-extrabold items-center justify-center '>
                 <div>Periods can skip</div>
                 <div className="flex flex-row w-full items-center justify-center">
-                  <div className='text-6xl mt-6 text-white'>
+                  <div className='text-6xl mt-6'>
                     {hoursCanSkip}
                   </div>
                   {/* <IoMdBatteryFull size={25} className='text-green-500' /> */}
@@ -306,7 +306,7 @@ const Home = () => {
                 <div className="flex flex-row w-full items-center justify-center">
 
                   <div className='text-6xl mt-6'>{hoursNeeded}</div>
-                  <MdBatteryAlert size={25} className='text-black' />
+                  <MdBatteryAlert size={25} className='text-red-500' />
 
                 </div>
                 <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
@@ -317,7 +317,7 @@ const Home = () => {
 
         </div>
         <div className='min-h-40 max-h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
-          <div className='bg-red-500 text-black rounded-2xl px-1'>Present attendance</div>
+          <div className='bg-emerald-200 text-black rounded-2xl px-1'>Present attendance</div>
           <div>
             {data.total_percentage
               ? <ChartComponent progress={data.total_percentage} />
@@ -400,7 +400,7 @@ const Home = () => {
                         disabled={isDisabled}
                         onClick={() => handleTempClick(index)}
                         className={`
-            ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-red-500'} 
+            ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-slate-200'} 
             text-gray-900 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
@@ -433,8 +433,8 @@ const Home = () => {
                 Leave dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-red-500 w-fit rounded-2xl '>{
-                <BsCalendarDateFill className='text-black  rounded' size={30} />
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-2xl '>{
+                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
               }</button>
               {
                 showLeaveCalendar && (
@@ -462,8 +462,8 @@ const Home = () => {
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates of public holidays</span>
 
               </label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-red-500 w-fit rounded-2xl'>
-                <BsCalendarDateFill className='text-black  rounded' size={30} />
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-2xl'>
+                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
 
               </button>
               {
@@ -567,7 +567,7 @@ const Home = () => {
 
             </div>
             <div className='flex flex-col gap-3'>
-              <button className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-red-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
+              <button className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-emerald-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
               <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-red-500 text-red-500' value={frndAttendanceData} readOnly />
             </div>
 
