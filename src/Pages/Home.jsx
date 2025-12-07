@@ -413,7 +413,7 @@ const Home = () => {
               </div>
 
               <div>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-red-600 rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
