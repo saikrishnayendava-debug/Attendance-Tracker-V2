@@ -285,7 +285,7 @@ const Home = () => {
       <Header />
 
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
-        <div className=' bg-red-500 pt-2  text-black min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
+        <div className=' bg-red-400 pt-2  text-black min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col font-extrabold items-center justify-center '>
