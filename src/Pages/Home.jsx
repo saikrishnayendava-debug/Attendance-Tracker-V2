@@ -309,7 +309,7 @@ const Home = () => {
                   <MdBatteryAlert size={25} className='text-red-500' />
 
                 </div>
-                <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
+                <div className='mt-4'>{Math.floor(hoursNeeded / 7)} days, {hoursNeeded % 7} periods</div>
               </div>
             )
           }
