@@ -69,7 +69,7 @@ const Home = () => {
   });
   const [miniloading, setMiniLoading] = useState(false);
   const [openSubjsectWise, setOpenSubjectWise] = useState(false);
-  const[frndAttendanceData,setFrndAttendanceData]=useState(
+  const [frndAttendanceData, setFrndAttendanceData] = useState(
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
   const handleTempClick = (index) => {
@@ -94,7 +94,7 @@ const Home = () => {
     setFrnd_Data(prev => ({
       ...prev,
       [name]: value
-    })) 
+    }))
   }
 
 
@@ -226,24 +226,24 @@ const Home = () => {
       setMiniLoading(true);
       const frnd_num = frnd_data.frnd_redgNo;
       const frnd_pass = frnd_data.frnd_password;
-      
-        localStorage.setItem("frnd_redgNo", frnd_num);
-        localStorage.setItem("frnd_password", frnd_pass);
-      
+
+      localStorage.setItem("frnd_redgNo", frnd_num);
+      localStorage.setItem("frnd_password", frnd_pass);
+
       const url =
-    code === "VIEW"
-      ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`
-      : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`;
+        code === "VIEW"
+          ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`
+          : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`;
 
       const response = await axios.get(url);
       setFrndAttendanceData(response.data.total_info?.total_percentage || '');
       localStorage.setItem("frnd_latestAttendanceData", JSON.stringify(response.data.total_info?.total_percentage));
-      
+
 
     } catch (error) {
       showToast("Failed to fetch data");
       return;
-      
+
     }
 
     finally {
@@ -254,6 +254,13 @@ const Home = () => {
 
 
   useEffect(() => {
+    const sendLog = async () => {
+      try {
+        await axios.post("https://logs-9btd.onrender.com/log", { number: redgNo });
+      } catch (error) {
+        console.error(error);
+      }
+    };
     if (!redgNo || !password) {
       navigate("/");
       return;
@@ -266,6 +273,7 @@ const Home = () => {
       hoursCanSkip: storedData.hours_can_skip || 0,
       hoursNeeded: storedData.additional_hours_needed || 0
     });
+    sendLog();
 
   }, [])
   useEffect(() => {
@@ -562,8 +570,8 @@ const Home = () => {
           <div className='flex items-center justify-around gap-1 mt-2'>
             <div className='flex flex-col gap-3'>
 
-              <input type="text" className='w-40 bg-black border   border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500' value={frnd_data.frnd_redgNo} onChange={handleFrndChange} name='frnd_redgNo'/>
-              <input type="text" className='w-40 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500' value={frnd_data.frnd_password} onChange={handleFrndChange} name='frnd_password'/>
+              <input type="text" className='w-40 bg-black border   border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500' value={frnd_data.frnd_redgNo} onChange={handleFrndChange} name='frnd_redgNo' />
+              <input type="text" className='w-40 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500' value={frnd_data.frnd_password} onChange={handleFrndChange} name='frnd_password' />
 
             </div>
             <div className='flex flex-col gap-3'>
