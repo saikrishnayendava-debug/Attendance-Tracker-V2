@@ -9,7 +9,7 @@ const Table = ({ data, close }) => {
         if (value === 'P' || value.includes('P')) return 'bg-green-100';
         if (value === 'A' || value.includes('A')) return 'bg-red-100';
         if (value === '-') return 'bg-gray-50';
-        return 'bg-white';
+        return 'bg-slate-text-slate-200';
     };
 
     return (
@@ -27,17 +27,17 @@ const Table = ({ data, close }) => {
                     (
                         <div className="w-full overflow-x-auto p-4">
                             <div className="bg-black rounded-lg shadow-lg">
-                                <div className="p-4 bg-black text-white rounded-t-lg border-b border-[#222528]">
+                                <div className="p-4 bg-black text-slate-200 rounded-t-lg border-b border-[#222528]">
                                     <h2 className="text-xl font-bold">Attendance Record</h2>
                                 </div>
                                 <div className="overflow-x-auto">
-                                    <table className="w-full border-collapse text-sm">
+                                    <table className="w-full border-collapse text-sm font-semibold">
                                         <thead>
                                             <tr className="bg-black">
                                                 {headers.map((header, idx) => (
                                                     <th
                                                         key={idx}
-                                                        className="border border-[#222528] px-3 py-2 text-left font-semibold text-white sticky top-0 bg-black"
+                                                        className="border border-[#222528] px-3 py-2 text-left font-bold text-slate-200 sticky top-0 bg-black"
                                                     >
                                                         {header}
                                                     </th>
@@ -51,10 +51,10 @@ const Table = ({ data, close }) => {
                                                         <td
                                                             key={cellIdx}
                                                             className={`border border-[#222528] px-3 py-2 ${cellIdx < 2 || cellIdx >= row.length - 2
-                                                                ? 'font-semibold text-white'
+                                                                ? 'font-semibold text-slate-200'
                                                                 : cell === 'A' || cell.includes('A')
                                                                     ? 'text-pink-300'
-                                                                    : 'text-white'
+                                                                    : 'text-slate-200'
                                                                 }`}
                                                         >
                                                             {cell}

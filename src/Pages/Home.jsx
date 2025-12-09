@@ -28,6 +28,7 @@ import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
 import Table from '../Components/Table';
+import TimeTable from '../Components/TimeTable';
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -75,6 +76,13 @@ const Home = () => {
   );
   const [register, setRegister] = useState();
   const [openRegister, setOpenRegister] = useState(false);
+
+  const [timetable, setTimetable] = useState(() => {
+    const stored = localStorage.getItem("timetable");
+    return stored ? JSON.parse(stored) : null
+  });
+  const [openTimetable, setOpenTimetable] = useState(false);
+
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -155,6 +163,8 @@ const Home = () => {
       : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
   const microsrvice_url =
     code === "VIEW" ? "" : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+  const timetable_url =
+    code === "VIEW" ? "" : `https://periods-microservice.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
 
   const fetchAttendance = async () => {
     try {
@@ -238,6 +248,22 @@ const Home = () => {
       showToast("Failed to fetch data");
     }
   }
+  const fetchTimeTable = async () => {
+    try {
+      
+      const res = await axios.get(timetable_url);
+      const timetableData = res?.data?.timetable;
+      console.log(timetableData);
+      if (timetableData && timetableData.length > 0) {
+        setTimetable(timetableData);
+        localStorage.setItem("timetable", JSON.stringify(timetableData));
+      }
+
+    } catch (error) {
+      console.log("Failed to fetch timetable data");
+    }
+   
+  }
   const fetch_frnd_Attendance = async () => {
     try {
       setMiniLoading(true);
@@ -283,7 +309,9 @@ const Home = () => {
       return;
     }
     fetchAttendance();
+    fetchTimeTable();
     fetchRegister();
+
     setSelectedPeriods([]);
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
     setCachedValues({
@@ -342,6 +370,9 @@ const Home = () => {
 
 
         </div>
+
+        
+
         <div className='min-h-40 max-h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
           <div className='bg-emerald-200 text-black rounded-2xl px-1'>Present attendance</div>
           <div>
@@ -352,6 +383,27 @@ const Home = () => {
           </div>
         </div>
 
+      </div>
+
+      <div className='flex justify-center mt-4'>
+        <div className='w-105 text-slate-200'>
+
+          <div className='grid grid-cols-2  bg-black border  border-emerald-500  p-2 rounded'>
+            <label className=' flex flex-col py-1 px-2'>
+              <div className='font-semibold text-sm'>
+                Time Table
+                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+              </div>
+              <span className='text-2xs text-slate-500 font-semibold'>Full Academic time Table</span>
+
+            </label>
+            <button type='button' onClick={() => setOpenTimetable(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+              <p className='text-red-300 text-sm font-extrabold'>click</p>
+            </button>
+
+
+          </div>
+        </div>
       </div>
 
 
@@ -554,7 +606,29 @@ const Home = () => {
         }
       </div>
 
-      <div className='flex justify-center mt-15'>
+
+      
+      <div className='flex justify-center mt-4'>
+        <div className='w-105 text-slate-200'>
+
+          <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
+            <label className=' flex flex-col py-1 px-2'>
+              <div className='font-semibold text-sm'>
+                Check full attendance register
+                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+              </div>
+              <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
+
+            </label>
+            <button type='button' onClick={() => setOpenRegister(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+              <p className='text-red-300 text-sm font-extrabold'>click</p>
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+      <div className='flex justify-center mt-4'>
         <div className='w-105 text-slate-200'>
 
           <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
@@ -600,26 +674,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='flex justify-center mt-4'>
-        <div className='w-105 text-slate-200'>
 
-          <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
-            <label className=' flex flex-col py-1 px-2'>
-              <div className='font-semibold text-sm'>
-                Check full attendance register
-                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
-              </div>
-              <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
-
-            </label>
-            <button type='button' onClick={() => setOpenRegister(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
-              <p className='text-red-300 text-sm font-extrabold'>click</p>
-            </button>
-
-
-          </div>
-        </div>
-      </div>
 
 
       {
@@ -629,6 +684,11 @@ const Home = () => {
       } {
         openRegister && (
           <Table data={register} close={() => setOpenRegister(false)} />
+        )
+      }
+      {
+        openTimetable && (
+          <TimeTable timetable={timetable} close={() => setOpenTimetable(false)} />
         )
       }
       <FooterComponent />
