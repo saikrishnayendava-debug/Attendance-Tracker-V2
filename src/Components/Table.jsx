@@ -19,9 +19,9 @@ const Table = ({ data, close }) => {
                     <MdCancel size={30} color='#5ee9b5' />
                 </button>
 
-                {!data.length ?
+                {!data ?
                     (
-                        <div className='text-center text-slate-200'>No data found</div>
+                        <p className='text-xs text-slate-200 font-bold text-center'>No Data Available</p>
                     )
                     :
                     (
