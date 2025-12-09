@@ -27,6 +27,7 @@ import { GoGraph } from "react-icons/go";
 import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
+import Table from '../Components/Table';
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -72,6 +73,8 @@ const Home = () => {
   const [frndAttendanceData, setFrndAttendanceData] = useState(
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
+  const [register, setRegister] = useState();
+  const[openRegister,setOpenRegister]=useState(false);
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -150,7 +153,8 @@ const Home = () => {
     code === "VIEW"
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
-
+  const microsrvice_url = 
+    code === "VIEW" ? "" : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
 
   const fetchAttendance = async () => {
     try {
@@ -187,6 +191,11 @@ const Home = () => {
       console.log("cnt" + result)
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
+
+      const registerData = await axios.get(microsrvice_url);
+      setRegister(registerData.data.attendance_table.rows);
+      console.log(registerData.data.attendance_table.rows);
+      
 
     } catch (error) {
       showToast("Failed to fetch data");
@@ -582,10 +591,35 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className='flex justify-center mt-4'>
+        <div className='w-105 text-slate-200'>
+
+          <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
+            <label className=' flex flex-col py-1 px-2'>
+              <div className='font-semibold text-sm'>
+                Check full attendance register
+                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+              </div>
+              <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
+
+            </label>
+            <button type='button' onClick={() => setOpenRegister(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+              <p className='text-red-300 text-sm font-extrabold'>click</p>
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+      
 
       {
         openSubjsectWise && (
           <SubjectWiseComponent data={data.subjectwiseSummary} close={() => setOpenSubjectWise(false)} />
+        )
+      } {
+        openRegister && (
+          <Table data={register} close={() => setOpenRegister(false)}/>
         )
       }
       <FooterComponent />
