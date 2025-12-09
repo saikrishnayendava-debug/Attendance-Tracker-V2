@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 const FooterComponent = () => {
   return (
     <section className='mt-10  '>
-      <div className="flex flex-col items-center justify-center gap-4 py-5">
-        {/* <div className="flex items-center gap-2">
-          <p>All Study Materials</p>
-          <Link to="https://btechvault.vercel.app">click</Link>
-        </div> */}
-        <Link to='https://github.com/tarunsaiy' className='text-2xs text-slate-900  '>github </Link>
-        {/* <p className='text-xs font-bold text-pink-400/40'>#Salaar #Shouryanga</p> */}
+      <div className="flex flex-col justify-center px-2 py-5 text-slate-500 text-2xs">
+        
+        <p>The Attendance Tracker APK is completely <span className='bg-blue-300 text-black font-bold'>safe to use</span></p>
+        <p>It is developed solely to help you <span className='bg-blue-300 text-black font-bold'>track your attendance</span> efficiently.</p>
+        <p><span className='bg-blue-300 text-black font-bold'>All data is stored locally</span> on your device, <span>nothing is uploaded or stored</span> elsewhere.</p>
+        <p>The service is free, original, and <span className='bg-blue-300 text-black font-bold'>completely ad-free.</span></p>
+        <p>If you prefer not to use the APK file, you can also access the <span className='bg-blue-300 text-black font-bold'>service via the web</span>: <Link>https://attendancetracker-six.vercel.app/</Link></p>
       </div>
     </section>
   )
