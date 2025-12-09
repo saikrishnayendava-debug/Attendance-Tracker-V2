@@ -74,7 +74,7 @@ const Home = () => {
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
   const [register, setRegister] = useState();
-  const[openRegister,setOpenRegister]=useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -153,7 +153,7 @@ const Home = () => {
     code === "VIEW"
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
-  const microsrvice_url = 
+  const microsrvice_url =
     code === "VIEW" ? "" : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
 
   const fetchAttendance = async () => {
@@ -192,10 +192,9 @@ const Home = () => {
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
 
-      const registerData = await axios.get(microsrvice_url);
-      setRegister(registerData.data.attendance_table.rows);
-      console.log(registerData.data.attendance_table.rows);
-      
+
+
+
 
     } catch (error) {
       showToast("Failed to fetch data");
@@ -226,8 +225,17 @@ const Home = () => {
       }
     }
 
+
     finally {
       setLoading(false);
+    }
+  }
+  const fetchRegister = async () => {
+    try {
+      const registerData = await axios.get(microsrvice_url);
+      setRegister(registerData.data.attendance_table.rows);
+    } catch (error) {
+      showToast("Failed to fetch data");
     }
   }
   const fetch_frnd_Attendance = async () => {
@@ -275,6 +283,7 @@ const Home = () => {
       return;
     }
     fetchAttendance();
+    fetchRegister();
     setSelectedPeriods([]);
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
     setCachedValues({
@@ -611,7 +620,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      
+
 
       {
         openSubjsectWise && (
@@ -619,7 +628,7 @@ const Home = () => {
         )
       } {
         openRegister && (
-          <Table data={register} close={() => setOpenRegister(false)}/>
+          <Table data={register} close={() => setOpenRegister(false)} />
         )
       }
       <FooterComponent />

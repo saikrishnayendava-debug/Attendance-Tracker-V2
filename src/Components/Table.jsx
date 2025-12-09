@@ -14,7 +14,7 @@ const Table = ({ data, close }) => {
 
     return (
         <section className='fixed top-20 bottom-0 left-0 right-0 flex  justify-center bg-black/70'>
-            <div className='bg-black w-5/6 p-4 rounded-2xl text-slate-200 border border-[#222528] overflow-y-auto max-h-[90vh]'>
+            <div className='bg-black w-29/30 p-4 rounded-2xl text-slate-200 border border-[#222528] overflow-y-auto max-h-[90vh]'>
                 <button onClick={close} className='block ml-auto cursor-pointer'>
                     <MdCancel size={30} color='#5ee9b5' />
                 </button>
