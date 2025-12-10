@@ -63,7 +63,7 @@ const Login = () => {
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor="pass" className='font-semibold t text-sm'>Password</label>
-              <input type='text' id='pass' placeholder='26102005' className='border border-[#222528] bg-black text-center  rounded font-semibold px-2 py-1  text-sm' onChange={handleOnChange} name='password' value={data.password}/>
+              <input type='text' id='pass' placeholder='26112007' className='border border-[#222528] bg-black text-center  rounded font-semibold px-2 py-1  text-sm' onChange={handleOnChange} name='password' value={data.password}/>
             </div>
             <div className='flex justify-around gap-2'> 
               <div className={`${isViit ? "bg-white text-black": "border border-[#222528] "} w-full cursor-pointer rounded-2xl py-1.5 text-center text-xs font-semibold`} onClick={handleViit}>VIIT</div>
