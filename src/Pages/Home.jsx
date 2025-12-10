@@ -388,7 +388,7 @@ const Home = () => {
       <div className='flex justify-center mt-4'>
         <div className='w-105 text-slate-200'>
 
-          <div className='grid grid-cols-2  bg-black border  border-emerald-500  p-2 rounded'>
+          <div className='grid grid-cols-2  bg-black border  border-emerald-500  p-2 rounded animate-pulse'>
             <label className=' flex flex-col py-1 px-2'>
               <div className='font-semibold text-sm'>
                 Time Table

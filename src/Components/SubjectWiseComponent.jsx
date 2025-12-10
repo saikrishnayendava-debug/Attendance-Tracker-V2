@@ -7,6 +7,8 @@ const SubjectWiseComponent = ({ data, close }) => {
         <button onClick={close} className='block ml-auto cursor-pointer'>
           <MdCancel size={30} color='#5ee9b5'/>
         </button>
+    <h2 className="text-xl font-bold mb-1">Subject wise Attendance:</h2>
+
         <div className='flex flex-col items-center justify-center gap-2.5'>
           {
             Array.isArray(data) && data.length > 0 ? (

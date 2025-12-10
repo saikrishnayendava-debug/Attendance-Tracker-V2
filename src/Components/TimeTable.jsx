@@ -32,6 +32,7 @@ const TimeTable = ({ timetable, close }) => {
         <button onClick={close} className='block ml-auto'>
           <MdCancel size={30} color='#5ee9b5' />
         </button>
+    <h2 className="text-xl font-bold mb-1">Time Table:</h2>
 
         <div className="border border-[#222528] rounded-lg overflow-hidden text-xs font-semibold">
           <div className="overflow-x-auto">

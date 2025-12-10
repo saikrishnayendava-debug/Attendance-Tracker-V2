@@ -27,11 +27,11 @@ const Table = ({ data, close }) => {
                     (
                         <div className="w-full overflow-x-auto p-4">
                             <div className="bg-black rounded-lg shadow-lg">
-                                <div className="p-4 bg-black text-slate-200 rounded-t-lg border-b border-[#222528]">
-                                    <h2 className="text-xl font-bold">Attendance Record</h2>
-                                </div>
+
+                                <h2 className="text-xl font-bold mb-1">Attendance Record:</h2>
+
                                 <div className="overflow-x-auto">
-                                    <table className="w-full border-collapse text-sm font-semibold">
+                                    <table className="w-full border-collapse text-xs font-semibold">
                                         <thead>
                                             <tr className="bg-black">
                                                 {headers.map((header, idx) => (
