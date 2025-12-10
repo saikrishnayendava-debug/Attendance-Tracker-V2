@@ -69,15 +69,15 @@ const TimeTable = ({ timetable, close }) => {
           <div className='w-105 text-slate-200 bg-black border  border-[#222528]  p-2 rounded'>
 
             <label className=' flex flex-col py-1 px-2'>
-              <div className='font-extrabold text-sm mb-2'>
+              <div className='font-bold text-sm mb-2'>
                 Today's periods
 
               </div>
               {
                 todayData.length > 0 ? (
-                  <div className='grid grid-cols-4 gap-0.5'>
+                  <div className='grid grid-cols-5 gap-0.5'>
                     {todayData.map((period, index) => (
-                      <p key={index} className='text-xs mt-1 font-extrabold  text-pink-300 rounded-md p-1 px-2 w-fit border border-pink-950'>{index + 1} - {period}</p>
+                      <p key={index} className='text-xs mt-1 font-extrabold  text-pink-300 rounded-md  w-fit '>{index + 1} - {period}</p>
                     ))}
                   </div>
                 ) : (
