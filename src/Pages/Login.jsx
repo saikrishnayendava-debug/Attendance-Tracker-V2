@@ -59,11 +59,11 @@ const Login = () => {
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor="RedgNo" className=' font-semibold text-sm'>Registration Number</label>
-              <input type='text' id='RedgNo' className='bg-black border border-[#222528]  text-center font-semibold rounded px-2 py-1 text-sm' onChange={handleOnChange} name="redgNo" value={data.redgNo}/>
+              <input type='text' id='RedgNo' placeholder='22L31A05O8' className='bg-black border border-[#222528]  text-center font-semibold rounded px-2 py-1 text-sm' onChange={handleOnChange} name="redgNo" value={data.redgNo}/>
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor="pass" className='font-semibold t text-sm'>Password</label>
-              <input type='text' id='pass' className='border border-[#222528] bg-black text-center  rounded font-semibold px-2 py-1  text-sm' onChange={handleOnChange} name='password' value={data.password}/>
+              <input type='text' id='pass' placeholder='password' className='border border-[#222528] bg-black text-center  rounded font-semibold px-2 py-1  text-sm' onChange={handleOnChange} name='password' value={data.password}/>
             </div>
             <div className='flex justify-around gap-2'> 
               <div className={`${isViit ? "bg-white text-black": "border border-[#222528] "} w-full cursor-pointer rounded-2xl py-1.5 text-center text-xs font-semibold`} onClick={handleViit}>VIIT</div>
