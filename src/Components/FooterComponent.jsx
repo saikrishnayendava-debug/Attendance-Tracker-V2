@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 const FooterComponent = () => {
   return (
-    <section className='mt-10 border-t border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-950  '>
+    <section className='mt-10 border-t border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-gray-950  '>
       <div className="flex flex-col justify-center px-2 py-5 text-slate-500 text-2xs ">
         
         <p>The Attendance Tracker APK is completely <span className='bg-blue-300 text-black font-bold'>safe to use</span></p>

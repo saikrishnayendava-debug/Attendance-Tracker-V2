@@ -388,8 +388,8 @@ const Home = () => {
       <div className='flex justify-center mt-4'>
         <div className='w-105 text-slate-200'>
 
-          <div className='grid grid-cols-2  bg-black border  border-emerald-500  p-2 rounded animate-pulse'>
-            <label className=' flex flex-col py-1 px-2'>
+          <div className='grid grid-cols-2  bg-black border px-4 py-3  border-[#222528] rounded '>
+            <label className=' flex flex-col'>
               <div className='font-semibold text-sm'>
                 Time Table
                 <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
@@ -397,7 +397,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Full Academic time Table</span>
 
             </label>
-            <button type='button' onClick={() => setOpenTimetable(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+            <button type='button' onClick={() => setOpenTimetable(true)} className=' cursor-pointer ml-30  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
