@@ -44,7 +44,7 @@ const TimeTable = ({ timetable, close }) => {
                       key={idx}
                       className="px-4 py-3 text-left font-bold border-r border-[#222528]"
                     >
-                      {header === "Day of week" ? "Day" : header}
+                      {header === "Day of week" ? "Day" : header[0] === "P" ? header.substring(0, 8) : "Break"}
                     </th>
                   ))}
                 </tr>
