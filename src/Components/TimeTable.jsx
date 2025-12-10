@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MdCancel } from "react-icons/md";
 const TimeTable = ({ timetable, close }) => {
 
@@ -8,8 +8,8 @@ const TimeTable = ({ timetable, close }) => {
         <div className='bg-black w-29/30 p-4 rounded-2xl text-xs text-slate-200 border border-[#222528]  overflow-y-auto max-h-[90vh] text-center'>
           No timetable data available
           <button onClick={close} className='block ml-auto'>
-          <MdCancel size={30} color='#5ee9b5' />
-        </button>
+            <MdCancel size={30} color='#5ee9b5' />
+          </button>
         </div>
       </section>
     );
@@ -17,6 +17,13 @@ const TimeTable = ({ timetable, close }) => {
 
   const headers = timetable[0];
   const rows = timetable.slice(1);
+
+  const today = new Date().toLocaleDateString('en-US', { weekday: 'short' });
+
+  const todayRow = rows.find((row, index) => {
+    return index !== 0 && row[0] === today
+  })
+  const todayData = todayRow ? todayRow.slice(1).filter(item => item && item !== "-") : [];
 
   return (
     <section className='fixed top-20 bottom-0 left-0 right-0 flex justify-center bg-black/70'>
@@ -57,7 +64,39 @@ const TimeTable = ({ timetable, close }) => {
           </div>
         </div>
 
+
+        <div className='flex justify-center mt-4'>
+          <div className='w-105 text-slate-200 bg-black border  border-[#222528]  p-2 rounded'>
+
+            <label className=' flex flex-col py-1 px-2'>
+              <div className='font-extrabold text-sm mb-2'>
+                Today's periods
+
+              </div>
+              {
+                todayData.length > 0 ? (
+                  <div className='grid grid-cols-4 gap-0.5'>
+                    {todayData.map((period, index) => (
+                      <p key={index} className='text-xs mt-1 font-extrabold  text-pink-300 rounded-md p-1 px-2 w-fit border border-pink-950'>{index + 1} - {period}</p>
+                    ))}
+                  </div>
+                ) : (
+
+                  <p className='text-xs mt-1'>No classes scheduled for today.</p>
+
+                )
+              }
+
+            </label>
+            <div className='flex items-center justify-around gap-1 mt-2'>
+
+
+
+            </div>
+          </div>
+        </div>
       </div>
+
     </section>
   );
 };
