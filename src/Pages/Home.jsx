@@ -339,7 +339,7 @@ const Home = () => {
       <Header />
 
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
-        <div className=' bg-emerald-200 pt-2  text-slate-900 min-h-40 max-h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
+        <div className=' bg-emerald-200 pt-2  text-slate-900 h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col font-extrabold items-center justify-center '>
@@ -373,7 +373,7 @@ const Home = () => {
 
         
 
-        <div className='min-h-40 max-h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
+        <div className='h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
           <div className='bg-emerald-200 text-black rounded-2xl px-1'>Present attendance</div>
           <div>
             {data.total_percentage
