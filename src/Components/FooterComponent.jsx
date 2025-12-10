@@ -9,7 +9,7 @@ const FooterComponent = () => {
         <p>It is developed solely to help you <span className='bg-blue-300 text-black font-bold'>track your attendance</span> efficiently.</p>
         <p><span className='bg-blue-300 text-black font-bold'>All data is stored locally</span> on your device, <span>nothing is uploaded or stored</span> elsewhere.</p>
         <p>The service is free, original, and <span className='bg-blue-300 text-black font-bold'>completely ad-free.</span></p>
-        <p>If you prefer not to use the APK file, you can also access the <span className='bg-blue-300 text-black font-bold'>service via the web</span>: <a href='/https://attendancetracker-six.vercel.app/' className='text-red-500'>https://attendancetracker-six.vercel.app/</a></p>
+        <p>If you prefer not to use the APK file, you can also access the <span className='bg-blue-300 text-black font-bold'>service via the web</span>: <a href='https://attendancetracker-six.vercel.app/' className='text-red-500'>https://attendancetracker-six.vercel.app/</a></p>
       </div>
     </section>
   )
