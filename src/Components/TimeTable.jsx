@@ -42,7 +42,7 @@ const TimeTable = ({ timetable, close }) => {
                   {headers.map((header, idx) => (
                     <th
                       key={idx}
-                      className="px-4 py-3 text-left font-bold border-r border-[#222528]"
+                      className="px-1 py-3 text-center  font-extrabold border border-[#222528]"
                     >
                       {header === "Day of week" ? "Day" : header[0] === "P" ? header.substring(0, 8) : "Break"}
                     </th>
