@@ -678,7 +678,7 @@ const Home = () => {
           <div className='bg-black border  border-[#222528] p-1.5 rounded mt-3'>
             <div className='text-center text-xs mb-1 font-bold '>Today attendance status</div>
             <div className='flex gap-2 items-center flex-wrap'>
-              {frnd_attendance?.map((item, index) => (
+              {frndPeriods?.map((item, index) => (
                 item.message ? (
                   <p key={index} className='text-xs text-center'>{item.message}</p>
                 ) : (
