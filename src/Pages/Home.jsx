@@ -395,7 +395,7 @@ const Home = () => {
             <label className=' flex flex-col'>
               <div className='font-semibold text-sm'>
                 Time Table
-                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+                <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
               </div>
               <span className='text-2xs text-slate-500 font-semibold'>Full Academic time Table</span>
 
@@ -618,7 +618,7 @@ const Home = () => {
             <label className=' flex flex-col py-1 px-2'>
               <div className='font-semibold text-sm'>
                 Check full attendance register
-                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+                <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
               </div>
               <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
 
@@ -638,7 +638,7 @@ const Home = () => {
             <label className=' flex flex-col py-1 px-2'>
               <div className='font-semibold text-sm'>
                 Subject-wise attendance summary
-                <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+                
               </div>
               <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
 
@@ -657,7 +657,7 @@ const Home = () => {
           <label className=' flex flex-col py-1 px-2'>
             <div className='font-semibold text-sm'>
               Check your friend's attendance
-              <span className='bg-blue-600 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+              <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
             </div>
             <span className='text-2xs text-slate-500 font-semibold'>login once, use it forever</span>
 
