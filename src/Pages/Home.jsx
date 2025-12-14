@@ -82,7 +82,7 @@ const Home = () => {
     return stored ? JSON.parse(stored) : null
   });
   const [openTimetable, setOpenTimetable] = useState(false);
-
+  const [frndPeriods, setFrndPeriods] = useState(null);
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -250,7 +250,7 @@ const Home = () => {
   }
   const fetchTimeTable = async () => {
     try {
-      
+
       const res = await axios.get(timetable_url);
       const timetableData = res?.data?.timetable;
       console.log(timetableData);
@@ -262,7 +262,7 @@ const Home = () => {
     } catch (error) {
       console.log("Failed to fetch timetable data");
     }
-   
+
   }
   const fetch_frnd_Attendance = async () => {
     try {
@@ -280,7 +280,10 @@ const Home = () => {
 
       const response = await axios.get(url);
       setFrndAttendanceData(response.data.total_info?.total_percentage || '');
+      const todayData = getAttendanceTodayArray(response.data);
+      setFrndPeriods(todayData);
       localStorage.setItem("frnd_latestAttendanceData", JSON.stringify(response.data.total_info?.total_percentage));
+
 
 
     } catch (error) {
@@ -371,7 +374,7 @@ const Home = () => {
 
         </div>
 
-        
+
 
         <div className='h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
           <div className='bg-emerald-200 text-black rounded-2xl px-1'>Present attendance</div>
@@ -607,7 +610,7 @@ const Home = () => {
       </div>
 
 
-      
+
       <div className='flex justify-center mt-4'>
         <div className='w-105 text-slate-200'>
 
@@ -671,6 +674,21 @@ const Home = () => {
               <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500 text-white' value={frndAttendanceData} readOnly />
             </div>
 
+          </div>
+          <div className='bg-black border  border-[#222528] p-1.5 rounded mt-3'>
+            <div className='text-center text-xs mb-1 font-bold '>Today attendance status</div>
+            <div className='flex gap-2 items-center flex-wrap'>
+              {frnd_attendance?.map((item, index) => (
+                item.message ? (
+                  <p key={index} className='text-xs text-center'>{item.message}</p>
+                ) : (
+                  <div key={index} className={`${item.attendance_today?.trim().toUpperCase().includes("A") ? 'bg-red-500 ' : 'bg-[#00ce86] '} text-black rounded flex gap-1 font-extrabold px-1 text-sm`}>
+                    <span>{item.subject}:</span>
+                    <span>{item.attendance_today}</span>
+                  </div>
+                )
+              ))}
+            </div>
           </div>
         </div>
       </div>
