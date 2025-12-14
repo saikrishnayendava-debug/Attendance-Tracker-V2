@@ -468,7 +468,21 @@ const Home = () => {
               </div>
 
               <div>
-                <h1 className='text-center text-sm font-bold  m-1'>Select period to bunk today</h1>
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                  disabled={loading}>
+                  {loading && (
+                    <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
+                  )}
+                  <span className={`relative ${loading ? " " : ""}`}>
+                    {loading ? "Fetching..." : "Fetch Attendance"}
+                  </span>
+                  <FaHourglassEnd size={14} />
+                </button>
+                <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
+              </div>
+
+              <div className='border border-[#222528] p-1 py-2 rounded-md'>
+                <h1 className='text-center text-sm font-bold  mb-3'>Select period to bunk today</h1>
                 <div className='flex justify-evenly flex-wrap'>
                   {emptyArray.map((_, index) => {
                     const isSelected = selectedPeriods.includes(index);
@@ -493,19 +507,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
-                  disabled={loading}>
-                  {loading && (
-                    <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
-                  )}
-                  <span className={`relative ${loading ? " " : ""}`}>
-                    {loading ? "Fetching..." : "Fetch Attendance"}
-                  </span>
-                  <FaHourglassEnd size={14} />
-                </button>
-                <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
-              </div>
+
             </div>
 
 
@@ -638,7 +640,7 @@ const Home = () => {
             <label className=' flex flex-col py-1 px-2'>
               <div className='font-semibold text-sm'>
                 Subject-wise attendance summary
-                
+
               </div>
               <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
 
