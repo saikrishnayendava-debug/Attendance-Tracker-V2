@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Header from '../Components/Header'
 import { IoMdBatteryFull } from "react-icons/io";
 import Calendar from 'react-calendar'
@@ -30,6 +30,7 @@ import { ImPower } from "react-icons/im";
 import Table from '../Components/Table';
 import TimeTable from '../Components/TimeTable';
 const Home = () => {
+  const scrollToDown = useRef(null);
   const navigate = useNavigate()
   const [data, setData] = useState({
     present: '',
@@ -83,7 +84,9 @@ const Home = () => {
   });
   const [openTimetable, setOpenTimetable] = useState(false);
   const [frndPeriods, setFrndPeriods] = useState(null);
+  const [animationClick, setAnimationClick] = useState(false);
   const handleTempClick = (index) => {
+    DownScroll();
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
         return prev.filter(i => i !== index); // unselect
@@ -139,7 +142,7 @@ const Home = () => {
     holidaysArray = data.holidays.map(d => d.getDate());
     const result = attendenceCalculator(holidaysArray, leavesArray, 28, data.present - (tempCnt + cnt), data.held - cnt, today.getDate(), sundayArray, 7)
     setAttendanceArray(result)
-    console.log(data)
+    setAnimationClick(false);
   }
   const handleReset = () => {
     setData(prev => ({
@@ -153,7 +156,12 @@ const Home = () => {
     setShowLeaveCalendar(false);
     setShowHolidayCalendar(false);
   }
-
+  const DownScroll = () => {
+    scrollToDown.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "center" // Changed from "start" to "center"
+  });
+  }
   const redgNo = localStorage.getItem("redgNo");
   const password = localStorage.getItem("password");
   const code = localStorage.getItem("code");
@@ -331,6 +339,7 @@ const Home = () => {
   }, [])
   useEffect(() => {
     setTempCnt(selectedPeriods.length);
+    setAnimationClick(selectedPeriods.length > 0);
   }, [selectedPeriods])
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
   const hoursCanSkip = data.hours_can_skip || cachedValues.hoursCanSkip;
@@ -578,8 +587,8 @@ const Home = () => {
 
 
 
-            <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' className='cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+            <div className='grid grid-cols-2 gap-3' ref={scrollToDown}>
+              <button type='submit' className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`}>
                 Submit
                 <GoGraph className=' rounded-md p-1 text-white ' size={24} />
               </button>
