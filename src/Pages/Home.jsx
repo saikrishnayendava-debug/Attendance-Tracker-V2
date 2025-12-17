@@ -30,7 +30,6 @@ import { ImPower } from "react-icons/im";
 import Table from '../Components/Table';
 import TimeTable from '../Components/TimeTable';
 const Home = () => {
-  const scrollToDown = useRef(null);
   const navigate = useNavigate()
   const [data, setData] = useState({
     present: '',
@@ -86,7 +85,6 @@ const Home = () => {
   const [frndPeriods, setFrndPeriods] = useState(null);
   const [animationClick, setAnimationClick] = useState(false);
   const handleTempClick = (index) => {
-    DownScroll();
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
         return prev.filter(i => i !== index); // unselect
@@ -156,12 +154,7 @@ const Home = () => {
     setShowLeaveCalendar(false);
     setShowHolidayCalendar(false);
   }
-  const DownScroll = () => {
-    scrollToDown.current?.scrollIntoView({
-    behavior: "smooth",
-    block: "center" // Changed from "start" to "center"
-  });
-  }
+  
   const redgNo = localStorage.getItem("redgNo");
   const password = localStorage.getItem("password");
   const code = localStorage.getItem("code");
@@ -587,7 +580,7 @@ const Home = () => {
 
 
 
-            <div className='grid grid-cols-2 gap-3' ref={scrollToDown}>
+            <div className='grid grid-cols-2 gap-3'>
               <button type='submit' className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`}>
                 Submit
                 <GoGraph className=' rounded-md p-1 text-white ' size={24} />
