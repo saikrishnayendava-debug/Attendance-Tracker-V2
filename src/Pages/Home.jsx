@@ -162,9 +162,13 @@ const Home = () => {
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
   const microsrvice_url =
-    code === "VIEW" ? "" : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+    code === "VIEW" 
+    ? `https://women-register-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+    : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
   const timetable_url =
-    code === "VIEW" ? "" : `https://periods-microservice.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+    code === "VIEW" 
+    ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}` 
+    : `https://periods-microservice.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
 
   const fetchAttendance = async () => {
     try {
