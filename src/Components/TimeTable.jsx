@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
-import { MdCancel } from "react-icons/md";
-const TimeTable = ({ timetable, close }) => {
-
+import { FaRegFaceSadCry } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
+import { useLocation, useNavigate } from 'react-router-dom';
+import Header from './Header';
+const TimeTable = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { timetable } = location.state || {};
   if (!timetable || timetable.length === 0) {
     return (
-      <section className='fixed top-20 bottom-0 left-0 right-0 flex justify-center items-center bg-black/70'>
-        <div className='bg-black w-29/30 p-4 rounded-2xl text-xs text-slate-200 border border-[#222528]  overflow-y-auto max-h-[90vh] text-center'>
-          No timetable data available
-          <button onClick={close} className='block ml-auto'>
-            <MdCancel size={30} color='#5ee9b5' />
+      
+      <section className=' flex justify-center bg-black h-full'>
+        <Header/>
+        <div className='bg-black  mt-25 p-4  flex flex-col items-center justify-start gap-30'>
+          <button onClick={() => navigate(-1)} className='fixed top-15 left-0 p-5'>
+            <FaArrowLeft size={20} color='white' />
           </button>
+          <p className='text-xs text-slate-200 font-bold text-center'>No Data Available</p>
+
+          <FaRegFaceSadCry size={80} color='grey' />
         </div>
       </section>
     );
@@ -17,24 +26,23 @@ const TimeTable = ({ timetable, close }) => {
 
   const headers = timetable[0];
   const rows = timetable.slice(1);
-
   const today = new Date().toLocaleDateString('en-US', { weekday: 'short' });
-
   const todayRow = rows.find((row, index) => {
     return index !== 0 && row[0] === today
   })
   const todayData = todayRow ? todayRow.slice(1).filter(item => item && item !== "-") : [];
 
   return (
-    <section className='fixed top-20 bottom-0 left-0 right-0 flex justify-center bg-black/70'>
-      <div className='bg-black w-29/30 p-4 rounded-2xl text-slate-200 border border-[#222528] overflow-y-auto max-h-[90vh]'>
+    <section className='flex justify-center bg-black h-full'>
+      <Header/>
+      <div className='bg-black mt-15  p-4  text-slate-200 overflow-y-auto'>
 
-        <button onClick={close} className='block ml-auto'>
-          <MdCancel size={30} color='#5ee9b5' />
+        <button onClick={() => navigate(-1)} className='fixed top-15 left-0 p-5'>
+          <FaArrowLeft size={20} color='white' />
         </button>
-    <h2 className="text-xl font-bold mb-1">Time Table:</h2>
+        <h2 className="text-xl font-bold  mb-1 text-center">Time Table:</h2>
 
-        <div className="border border-[#222528] rounded-lg overflow-hidden text-xs font-semibold">
+        <div className="border border-[#222528] rounded-lg overflow-hidden text-xs font-semibold mt-6">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -96,8 +104,8 @@ const TimeTable = ({ timetable, close }) => {
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </section>
   );
 };

@@ -28,7 +28,6 @@ import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
 import Table from '../Components/Table';
-import TimeTable from '../Components/TimeTable';
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -75,13 +74,10 @@ const Home = () => {
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
   const [register, setRegister] = useState();
-  const [openRegister, setOpenRegister] = useState(false);
-
   const [timetable, setTimetable] = useState(() => {
     const stored = localStorage.getItem("timetable");
     return stored ? JSON.parse(stored) : null
   });
-  const [openTimetable, setOpenTimetable] = useState(false);
   const [frndPeriods, setFrndPeriods] = useState(null);
   const [animationClick, setAnimationClick] = useState(false);
   const handleTempClick = (index) => {
@@ -406,7 +402,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Full Academic time Table</span>
 
             </label>
-            <button type='button' onClick={() => setOpenTimetable(true)} className=' cursor-pointer ml-30  w-fit rounded-lg'>
+            <button type='button' onClick={() => navigate('/timetable', {state : {timetable : timetable}})} className=' cursor-pointer ml-30  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -631,7 +627,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
 
             </label>
-            <button type='button' onClick={() => setOpenRegister(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+            <button type='button' onClick={() => navigate('/register', {state : {data : register}})} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -651,7 +647,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
 
             </label>
-            <button type='button' onClick={() => setOpenSubjectWise(true)} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+            <button type='button' onClick={() => navigate('/subjectwise', {state : {data : data.subjectwiseSummary}})} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -703,20 +699,8 @@ const Home = () => {
 
 
 
-      {
-        openSubjsectWise && (
-          <SubjectWiseComponent data={data.subjectwiseSummary} close={() => setOpenSubjectWise(false)} />
-        )
-      } {
-        openRegister && (
-          <Table data={register} close={() => setOpenRegister(false)} />
-        )
-      }
-      {
-        openTimetable && (
-          <TimeTable timetable={timetable} close={() => setOpenTimetable(false)} />
-        )
-      }
+       
+      
       <FooterComponent />
     </section>
 

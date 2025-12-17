@@ -1,7 +1,12 @@
 import React from 'react'
-import { MdCancel } from "react-icons/md";
-const Table = ({ data, close }) => {
-
+import { FaRegFaceSadCry } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
+import { useLocation, useNavigate } from 'react-router-dom';
+import Header from './Header';
+const Table = ({ }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { data } = location.state || {};
     const headers = data?.[0] || [];
     const bodyRows = data?.slice(1) || [];
 
@@ -13,24 +18,29 @@ const Table = ({ data, close }) => {
     };
 
     return (
-        <section className='fixed top-20 bottom-0 left-0 right-0 flex  justify-center bg-black/70'>
-            <div className='bg-black w-29/30 p-4 rounded-2xl text-slate-200 border border-[#222528] overflow-y-auto max-h-[90vh]'>
-                <button onClick={close} className='block ml-auto cursor-pointer'>
-                    <MdCancel size={30} color='#5ee9b5' />
+        <section className='flex  justify-center bg-black h-full'>
+            <Header/>
+            <div className='bg-black mt-15  p-4 text-slate-200  overflow-y-auto '>
+                <button onClick={() => navigate(-1)} className='fixed top-15 left-0 p-5'>
+                    <FaArrowLeft size={20} color='white' />
                 </button>
 
                 {!data ?
                     (
-                        <p className='text-xs text-slate-200 font-bold text-center'>No Data Available</p>
+                        <div className='mt-10 flex flex-col items-center justify-start gap-30'>
+                            <p className='text-xs text-slate-200 font-bold text-center'>No Data Available</p>
+                            <FaRegFaceSadCry size={80} color='grey' />
+                        </div>
+
                     )
                     :
                     (
-                        <div className="w-full overflow-x-auto p-4">
+                        <div className="w-full overflow-x-auto px-4">
                             <div className="bg-black rounded-lg shadow-lg">
 
-                                <h2 className="text-xl font-bold mb-1">Attendance Record:</h2>
+                                <h2 className="text-xl font-bold mb-1 text-center">Attendance Record:</h2>
 
-                                <div className="overflow-x-auto">
+                                <div className="overflow-x-auto mt-6">
                                     <table className="w-full border-collapse text-xs font-semibold">
                                         <thead>
                                             <tr className="bg-black">
