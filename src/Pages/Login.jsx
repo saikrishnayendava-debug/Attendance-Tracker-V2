@@ -5,7 +5,7 @@ import ToastNotification, { showToast } from '../Components/ToastNotification';
 import { MdAccountBox } from "react-icons/md"
 import logo from '../assets/logo.png'
 import FooterComponent from '../Components/FooterComponent';
-
+import { BsServer } from "react-icons/bs";
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -83,8 +83,12 @@ const Login = () => {
         <p className='text-2xs text-slate-400 text-center font-bold'>If server-1 fails, use server-2</p>
 
         <div className='flex justify-center gap-5 text-sm font-bold'>
-          <button className={`${isServer && "border border-emerald-500"} bg-black text-white py-1 px-3 rounded text-xs`} onClick={() => {setServer(1); setIsServer(true)}}>Server 1</button>
-          <button className={`${!isServer && "border border-emerald-500"} bg-black text-white py-1 px-3 rounded text-xs`} onClick={() => {setServer(2); setIsServer(false)}}>Server 2</button>
+          <button className={`${isServer && "border border-emerald-500"} bg-black text-white py-1 px-3 rounded text-xs flex items-center  gap-1`} onClick={() => {setServer(1); setIsServer(true)}}>Server 1
+            <BsServer />
+          </button>
+          <button className={`${!isServer && "border border-emerald-500"} bg-black text-white py-1 px-3 rounded text-xs flex items-center gap-1`} onClick={() => {setServer(2); setIsServer(false)}}>Server 2
+            <BsServer />
+          </button>
         </div>
       </div>
       {/* <FooterComponent /> */}
