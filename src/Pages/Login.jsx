@@ -52,7 +52,7 @@ const Login = () => {
   }
   return (
 
-    <section className='bg-black h-screen text-slate-200 flex flex-col items-center'>
+    <section className='bg-black min-h-screen text-slate-200 flex flex-col items-center'>
       <ToastNotification />
       <Header />
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center items-end h-105  '>
