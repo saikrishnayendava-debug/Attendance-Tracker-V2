@@ -280,7 +280,7 @@ const Home = () => {
       navigate("/");
       return;
     }
-    // fetchAttendance();
+    fetchAttendance();
     
     
 
@@ -293,7 +293,7 @@ const Home = () => {
       hoursNeeded: storedData.additional_hours_needed || 0,
       
     });
-    // sendLog();
+    sendLog();
 
   }, [])
   useEffect(() => {
