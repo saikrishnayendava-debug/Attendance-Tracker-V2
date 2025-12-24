@@ -1,35 +1,97 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { FaRegFaceSadCry } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
-const Table = ({ }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { data } = location.state || {};
+const Table = () => {
+      const navigate = useNavigate();
+    
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState([]);
+    const [progress, setProgress] = useState(0);
+
+    const code = localStorage.getItem("code");
+    const redgNo = localStorage.getItem("redgNo");
+    const password = localStorage.getItem("password");
+
+    const register_api =
+        code === "VIEW"
+            ? `https://women-register-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+            : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+
+
+
+
+    useEffect(() => {
+        let interval;
+
+        const fetchTimetable = async () => {
+
+
+
+            try {
+                setLoading(true);
+                interval = setInterval(() => {
+                    setProgress((p) => (p >= 90 ? 90 : p + 10));
+                }, 200);
+                const registerData = await axios.get(register_api);
+                setData(registerData.data.attendance_table.rows);
+            } catch (err) {
+                console.error("Timetable fetch failed");
+            } finally {
+
+                clearInterval(interval);
+                setProgress(100);
+                setTimeout(() => {
+                    setLoading(false);
+                    setProgress(0);
+                }, 300);
+
+            }
+        };
+
+        fetchTimetable();
+    }, []);
+
     const headers = data?.[0] || [];
     const bodyRows = data?.slice(1) || [];
 
-    const getCellColor = (value) => {
-        if (value === 'P' || value.includes('P')) return 'bg-green-100';
-        if (value === 'A' || value.includes('A')) return 'bg-red-100';
-        if (value === '-') return 'bg-gray-50';
-        return 'bg-slate-text-slate-200';
-    };
+    if (loading) {
+        return (
+            <section className="flex justify-center bg-black  min-h-screen">
+                <Header />
+               
+                <div className="fixed top-20 left-0 right-0 z-50 p-4 bg-black flex justify-center">
+                    <div className="flex items-center gap-3 w-80">
+                        <div className="flex-1 bg-gray-700 rounded-full h-2">
+                            <div
+                                className="bg-emerald-500 h-full rounded transition-all duration-900 ease-in-out"
+                                style={{ width: `${progress}%` }}
+                            />
+                        </div>
+                        <span className="text-sm text-white w-12 font-bold">{progress}%</span>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
-        <section className='flex  justify-center bg-black h-full'>
-            <Header/>
-            <div className='bg-black mt-15  p-4 text-slate-200  overflow-y-auto '>
+
+        <section className='flex  justify-center bg-black min-h-screen'>
+            <Header />
+            <div className='bg-black mt-20  p-4 text-slate-200  overflow-y-auto '>
                 <button onClick={() => navigate(-1)} className='fixed top-15 left-0 p-5'>
                     <FaArrowLeft size={20} color='white' />
                 </button>
 
-                {!data ?
+                {data.length === 0 ?
                     (
-                        <div className='mt-10 flex flex-col items-center justify-start gap-30'>
-                            <p className='text-xs text-slate-200 font-bold text-center'>No Data Available</p>
-                            <FaRegFaceSadCry size={80} color='grey' />
+                        <div className=" flex flex-col items-center gap-6 text-slate-200">
+
+                            <p className="text-xs font-bold mb-15">No Data Available</p>
+                            <FaRegFaceSadCry size={80} color="grey" />
                         </div>
 
                     )

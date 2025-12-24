@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from '../assets/logo.png'
 import { MdAccountCircle } from "react-icons/md";
+import { FaArrowLeft } from "react-icons/fa";
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 const Header = () => {
@@ -10,10 +11,19 @@ const Header = () => {
     localStorage.clear();
     navigate('/')
   }
+  const presentlocation = location.pathname.split('/')[1];
+
   return (
     <section className='h-fit border-b border-[#222528] fixed top-0 w-full z-10 flex items-center justify-between bg-black px-2'>
-      <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r px-2 py-2  '>
-        <div className='w-13 h-13'>
+      <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r  py-2  '>
+        {
+          presentlocation === 'home' && (
+            <button onClick={() => navigate(-1)} className=''>
+              <FaArrowLeft size={20} color='white' />
+            </button>
+          )
+        }
+        <div className='w-13 h-13 pl-1'>
           <img src={logo} alt="logo" className='rounded-lg' />
         </div>
         <div className='font-bold text-sm lg:text-2xl rounded px-2 '>

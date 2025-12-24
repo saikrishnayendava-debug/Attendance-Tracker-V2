@@ -3,7 +3,6 @@ import Header from '../Components/Header'
 import { IoMdBatteryFull } from "react-icons/io";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHourglassEnd } from "react-icons/fa";
 import axios from 'axios'
 import { MdBatteryAlert } from "react-icons/md";
@@ -27,6 +26,7 @@ import { GoGraph } from "react-icons/go";
 import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
+
 import Table from '../Components/Table';
 const Home = () => {
   const navigate = useNavigate()
@@ -74,10 +74,7 @@ const Home = () => {
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
   const [register, setRegister] = useState();
-  const [timetable, setTimetable] = useState(() => {
-    const stored = localStorage.getItem("timetable");
-    return stored ? JSON.parse(stored) : null
-  });
+  
   const [frndPeriods, setFrndPeriods] = useState(null);
   const [animationClick, setAnimationClick] = useState(false);
   const handleTempClick = (index) => {
@@ -158,14 +155,7 @@ const Home = () => {
     code === "VIEW"
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
-  const microsrvice_url =
-    code === "VIEW" 
-    ? `https://women-register-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-    : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-  const timetable_url =
-    code === "VIEW" 
-    ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}` 
-    : `https://periods-microservice.onrender.com/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+  
 
   const fetchAttendance = async () => {
     try {
@@ -241,30 +231,8 @@ const Home = () => {
       setLoading(false);
     }
   }
-  const fetchRegister = async () => {
-    try {
-      const registerData = await axios.get(microsrvice_url);
-      setRegister(registerData.data.attendance_table.rows);
-    } catch (error) {
-      showToast("Failed to fetch data");
-    }
-  }
-  const fetchTimeTable = async () => {
-    try {
-
-      const res = await axios.get(timetable_url);
-      const timetableData = res?.data?.timetable;
-      console.log(timetableData);
-      if (timetableData && timetableData.length > 0) {
-        setTimetable(timetableData);
-        localStorage.setItem("timetable", JSON.stringify(timetableData));
-      }
-
-    } catch (error) {
-      console.log("Failed to fetch timetable data");
-    }
-
-  }
+ 
+  
   const fetch_frnd_Attendance = async () => {
     try {
       setMiniLoading(true);
@@ -312,18 +280,20 @@ const Home = () => {
       navigate("/");
       return;
     }
-    fetchAttendance();
-    fetchTimeTable();
-    fetchRegister();
+    // fetchAttendance();
+    
+    
 
     setSelectedPeriods([]);
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
+    
     setCachedValues({
       totalPercentage: storedData.total_percentage || 0,
       hoursCanSkip: storedData.hours_can_skip || 0,
-      hoursNeeded: storedData.additional_hours_needed || 0
+      hoursNeeded: storedData.additional_hours_needed || 0,
+      
     });
-    sendLog();
+    // sendLog();
 
   }, [])
   useEffect(() => {
@@ -333,6 +303,9 @@ const Home = () => {
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
   const hoursCanSkip = data.hours_can_skip || cachedValues.hoursCanSkip;
   const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
+  const total_held = data.held || cachedValues.total_held;
+  const total_attended = data.present || cachedValues.total_attended;
+  
 
 
 
@@ -342,7 +315,7 @@ const Home = () => {
     <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
-
+      
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
         <div className=' bg-emerald-200 pt-2  text-slate-900 h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
@@ -402,7 +375,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Full Academic time Table</span>
 
             </label>
-            <button type='button' onClick={() => navigate('/timetable', {state : {timetable : timetable}})} className=' cursor-pointer ml-30  w-fit rounded-lg'>
+            <button type='button' onClick={() => navigate('/timetable')} className=' cursor-pointer ml-30  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -494,7 +467,7 @@ const Home = () => {
                       <button
                         type='button'
                         key={index}
-                        disabled={isDisabled}
+                        disabled={isDisabled || loading}
                         onClick={() => handleTempClick(index)}
                         className={`
             ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-slate-200'} 
@@ -577,7 +550,7 @@ const Home = () => {
 
 
             <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`}>
+              <button type='submit' disabled={loading} className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`}>
                 Submit
                 <GoGraph className=' rounded-md p-1 text-white ' size={24} />
               </button>
@@ -627,7 +600,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
 
             </label>
-            <button type='button' onClick={() => navigate('/register', {state : {data : register}})} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+            <button type='button' onClick={() => navigate('/register')} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -647,7 +620,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
 
             </label>
-            <button type='button' onClick={() => navigate('/subjectwise', {state : {data : data.subjectwiseSummary}})} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+            <button type='button' disabled={loading} onClick={() => navigate('/subjectwise', {state : {data : data.subjectwiseSummary}})} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -674,7 +647,7 @@ const Home = () => {
 
             </div>
             <div className='flex flex-col gap-3'>
-              <button className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-emerald-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
+              <button disabled={loading} className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-emerald-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
               <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500 text-white' value={frndAttendanceData} readOnly />
             </div>
 
@@ -701,7 +674,7 @@ const Home = () => {
 
        
       
-      <FooterComponent />
+      
     </section>
 
   )
