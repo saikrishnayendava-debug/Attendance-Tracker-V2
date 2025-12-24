@@ -271,7 +271,7 @@ const Home = () => {
   useEffect(() => {
     const sendLog = async () => {
       try {
-        await axios.post("https://logs-9btd.onrender.com/log", { number: redgNo });
+        await axios.post("https://logs-uhwy.onrender.com/log", { number: redgNo });
       } catch (error) {
         console.error(error);
       }
