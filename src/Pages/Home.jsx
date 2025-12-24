@@ -625,7 +625,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='flex justify-center mt-4'>
+      <div className='flex justify-center mt-4 mb-5'>
         <div className='w-105 text-slate-200 bg-black border  border-[#222528]  p-2 rounded'>
 
           <label className=' flex flex-col py-1 px-2'>
@@ -667,7 +667,7 @@ const Home = () => {
         </div>
       </div>
 
-
+      <FooterComponent/>
 
        
       

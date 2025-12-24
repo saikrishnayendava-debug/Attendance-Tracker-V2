@@ -11,7 +11,7 @@ function App() {
       <main className="flex-grow">
         <Outlet />
       </main>
-      <FooterComponent />
+      
     </div>
   );
 }
