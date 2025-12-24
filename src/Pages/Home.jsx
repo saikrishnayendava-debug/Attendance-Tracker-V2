@@ -546,9 +546,6 @@ const Home = () => {
 
             </div>
 
-
-
-
             <div className='grid grid-cols-2 gap-3'>
               <button type='submit' disabled={loading} className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`}>
                 Submit
