@@ -75,7 +75,7 @@ const TimeTable = () => {
 
   if (loading) {
     return (
-      <section className="flex justify-center bg-black  min-h-screen">
+      <section className="flex justify-center bg-black min-h-screen">
         <Header />
         <button onClick={() => navigate(-1)} className="fixed top-20 left-0 p-5">
           <FaArrowLeft size={20} color="white" />
@@ -116,7 +116,7 @@ const TimeTable = () => {
   return (
     <section className="flex justify-center bg-black min-h-screen">
       <Header />
-      <div className="bg-black mt-15 p-4 text-slate-200 overflow-y-auto">
+      <div className="bg-black mt-15 p-4 text-slate-200">
         <button onClick={() => navigate(-1)} className="fixed top-15 left-0 p-5">
           <FaArrowLeft size={20} color="white" />
         </button>
