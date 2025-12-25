@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
+import ImageComponent from "./ImageComponent";
 
 const TimeTable = () => {
   const navigate = useNavigate();
@@ -22,11 +23,11 @@ const TimeTable = () => {
   const timetable_api =
     code === "VIEW"
       ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(
-          redgNo
-        )}&password=${encodeURIComponent(password)}`
+        redgNo
+      )}&password=${encodeURIComponent(password)}`
       : `https://viit-timetable-api.onrender.com/attendance?student_id=${encodeURIComponent(
-          redgNo
-        )}&password=${encodeURIComponent(password)}`;
+        redgNo
+      )}&password=${encodeURIComponent(password)}`;
 
   useEffect(() => {
     let interval;
@@ -70,7 +71,7 @@ const TimeTable = () => {
   })
   const todayData = todayRow ? todayRow.slice(1).filter(item => item && item !== "-") : [];
 
-  
+
   /* ---------- UI STATES ---------- */
 
   if (loading) {
@@ -99,7 +100,7 @@ const TimeTable = () => {
     return (
       <section className="flex justify-center bg-black min-h-screen">
         <Header />
-        
+
         <div className="mt-24 flex flex-col items-center gap-6 text-slate-200">
           <button onClick={() => navigate(-1)} className="fixed top-15 left-0 p-5">
             <FaArrowLeft size={20} color="white" />
@@ -136,8 +137,8 @@ const TimeTable = () => {
                       {header === "Day of week"
                         ? "Day"
                         : header.startsWith("P")
-                        ? header.substring(0, 8)
-                        : "Break"}
+                          ? header.substring(0, 8)
+                          : "Break"}
                     </th>
                   ))}
                 </tr>
@@ -161,7 +162,7 @@ const TimeTable = () => {
           </div>
         </div>
 
-        <div className='flex justify-center mt-4'>
+        <div className='flex justify-center my-4'>
           <div className='w-105 text-slate-200 bg-black border  border-[#222528]  p-2 rounded'>
 
             <label className=' flex flex-col py-1 px-2'>
@@ -191,8 +192,9 @@ const TimeTable = () => {
             </div>
           </div>
         </div>
-      
 
+
+        <ImageComponent />
       </div>
     </section>
   );

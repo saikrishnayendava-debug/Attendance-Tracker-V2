@@ -2,13 +2,14 @@ import React from 'react'
 import logo from '../assets/logo.png'
 import { MdAccountCircle } from "react-icons/md";
 import { FaArrowLeft } from "react-icons/fa";
-
+import { isCalled } from '../Pages/Home';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const handleClick = () => {
     localStorage.clear();
+    isCalled(false)
     navigate('/')
   }
   const presentlocation = location.pathname.split('/')[1];
@@ -18,7 +19,7 @@ const Header = () => {
       <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r  py-2  '>
         {
           presentlocation === 'home' && (
-            <button onClick={() => navigate(-1)} className=''>
+            <button onClick={() => {navigate(-1); isCalled(false)}} className=''>
               <FaArrowLeft size={20} color='white' />
             </button>
           )

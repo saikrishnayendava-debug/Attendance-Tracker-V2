@@ -28,6 +28,10 @@ import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
 
 import Table from '../Components/Table';
+let called = false
+export function isCalled(value) {
+  called = value
+}
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -49,9 +53,9 @@ const Home = () => {
   const [attendanceData, setAttendanceData] = useState()
   const [showLeaveCalendar, setShowLeaveCalendar] = useState(false)
   const [showHolidayCalendar, setShowHolidayCalendar] = useState(false)
-  const [todayPeriodsPosted, setTodayPeriodsPosted] = useState(null)
+  const [todayPeriodsPosted, setTodayPeriodsPosted] = useState()
   var leavesArray = [];
-  const [lastUpdated, setLastUpdated] = useState(null)
+  const [lastUpdated, setLastUpdated] = useState(localStorage.getItem("lastFetchTime"))
   var holidaysArray = [];
   const [attendanceArray, setAttendanceArray] = useState([]);
   const [cnt, setCnt] = useState(0)
@@ -74,7 +78,7 @@ const Home = () => {
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
   const [register, setRegister] = useState();
-  
+
   const [frndPeriods, setFrndPeriods] = useState(null);
   const [animationClick, setAnimationClick] = useState(false);
   const handleTempClick = (index) => {
@@ -147,7 +151,7 @@ const Home = () => {
     setShowLeaveCalendar(false);
     setShowHolidayCalendar(false);
   }
-  
+
   const redgNo = localStorage.getItem("redgNo");
   const password = localStorage.getItem("password");
   const code = localStorage.getItem("code");
@@ -155,7 +159,7 @@ const Home = () => {
     code === "VIEW"
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
-  
+
 
   const fetchAttendance = async () => {
     try {
@@ -231,8 +235,8 @@ const Home = () => {
       setLoading(false);
     }
   }
- 
-  
+
+
   const fetch_frnd_Attendance = async () => {
     try {
       setMiniLoading(true);
@@ -280,32 +284,50 @@ const Home = () => {
       navigate("/");
       return;
     }
-    fetchAttendance();
-    
-    
 
     setSelectedPeriods([]);
+
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
-    
+
     setCachedValues({
       totalPercentage: storedData.total_percentage || 0,
       hoursCanSkip: storedData.hours_can_skip || 0,
       hoursNeeded: storedData.additional_hours_needed || 0,
-      
     });
-    sendLog();
+    const cached = JSON.parse(localStorage.getItem("latestAttendanceData"));
+    if (cached?.total_info) {
+      setData(prev => ({
+        ...prev,
+        present: cached.total_info.total_attended || '',
+        held: cached.total_info.total_held || '',
+      }));
+    }
+    if (cached) {
+      setTodayPeriodsPosted(
+        getAttendanceTodayArray(cached)
+      );
+    }
+    if (!called) {
+
+      fetchAttendance();
+      isCalled(true)
+      sendLog();
+    }
 
   }, [])
+
+
   useEffect(() => {
     setTempCnt(selectedPeriods.length);
     setAnimationClick(selectedPeriods.length > 0);
   }, [selectedPeriods])
+
+
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
   const hoursCanSkip = data.hours_can_skip || cachedValues.hoursCanSkip;
   const hoursNeeded = data.hours_needed || cachedValues.hoursNeeded;
-  const total_held = data.held || cachedValues.total_held;
-  const total_attended = data.present || cachedValues.total_attended;
-  
+
+
 
 
 
@@ -315,7 +337,7 @@ const Home = () => {
     <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
-      
+
       <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
         <div className=' bg-emerald-200 pt-2  text-slate-900 h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
@@ -617,7 +639,7 @@ const Home = () => {
               <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
 
             </label>
-            <button type='button' disabled={loading} onClick={() => navigate('/subjectwise', {state : {data : data.subjectwiseSummary}})} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
+            <button type='button' disabled={loading} onClick={() => navigate('/subjectwise', { state: { data: data.subjectwiseSummary } })} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
               <p className='text-red-300 text-sm font-extrabold'>click</p>
             </button>
 
@@ -667,11 +689,11 @@ const Home = () => {
         </div>
       </div>
 
-      <FooterComponent/>
+      <FooterComponent />
 
-       
-      
-      
+
+
+
     </section>
 
   )
