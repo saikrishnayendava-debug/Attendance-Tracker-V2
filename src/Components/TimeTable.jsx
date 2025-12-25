@@ -25,9 +25,9 @@ const TimeTable = () => {
       ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(
         redgNo
       )}&password=${encodeURIComponent(password)}`
-      : `https://viit-timetable-api.onrender.com/attendance?student_id=${encodeURIComponent(
+      : `https://timetable-api-39mm.onrender.com/attendance?student_id=${encodeURIComponent(
         redgNo
-      )}&password=${encodeURIComponent(password)}`;
+      )}&password=${encodeURIComponent(password)}`;  /*saikrishna */
 
   useEffect(() => {
     let interval;
@@ -197,6 +197,7 @@ const TimeTable = () => {
         <ImageComponent />
       </div>
     </section>
+    
   );
 };
 

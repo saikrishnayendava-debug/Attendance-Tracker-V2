@@ -158,7 +158,7 @@ const Home = () => {
   const url =
     code === "VIEW"
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-      : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
+      : `https://viit-main-api-teal.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`; /*saikrishna */
 
 
   const fetchAttendance = async () => {
@@ -614,7 +614,7 @@ const Home = () => {
             <label className=' flex flex-col py-1 px-2'>
               <div className='font-semibold text-sm'>
                 Check full attendance register
-                <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+                {/* <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span> */}
               </div>
               <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
 
@@ -653,7 +653,7 @@ const Home = () => {
           <label className=' flex flex-col py-1 px-2'>
             <div className='font-semibold text-sm'>
               Check your friend's attendance
-              <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
+              {/* <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span> */}
             </div>
             <span className='text-2xs text-slate-500 font-semibold'>login once, use it forever</span>
 

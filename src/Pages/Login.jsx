@@ -79,19 +79,8 @@ const Login = () => {
         </div>
       </div>
       <div className='font-bold text-center mt-10'>Login once, use it forever</div>
-      <div className='absolute bottom-10 flex flex-col border border-[#222528] w-fit rounded px-20 py-2 justify-center items-center gap-1'>
-        <p className='text-2xs text-slate-400 text-center font-bold'>If server-1 fails, use server-2</p>
-
-        <div className='flex justify-center gap-5 text-sm font-bold'>
-          <button className={`${isServer && "border border-emerald-500"} bg-black text-white py-1 px-3 rounded text-xs flex items-center  gap-1`} onClick={() => {setServer(1); setIsServer(true)}}>Server 1
-            <BsServer />
-          </button>
-          <button className={`${!isServer && "border border-emerald-500"} bg-black text-white py-1 px-3 rounded text-xs flex items-center gap-1`} onClick={() => {setServer(2); setIsServer(false)}}>Server 2
-            <BsServer />
-          </button>
-        </div>
-      </div>
-      {/* <FooterComponent /> */}
+      
+      
     </section>
 
 
