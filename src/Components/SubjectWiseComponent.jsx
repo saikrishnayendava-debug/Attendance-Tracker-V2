@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const SubjectWiseComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data } = location.state || {};
+  const data = localStorage.getItem("latestAttendanceData") ? JSON.parse(localStorage.getItem("latestAttendanceData")).subjectwise_summary : [];
   return (
     <section className='flex justify-center bg-black min-h-screen'>
       <Header />
