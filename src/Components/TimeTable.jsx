@@ -24,7 +24,7 @@ const TimeTable = () => {
       ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(
           redgNo
         )}&password=${encodeURIComponent(password)}`
-      : `https://periods-microservice-x3tx.onrender.com/attendance?student_id=${encodeURIComponent(
+      : `https://viit-timetable-api.onrender.com/attendance?student_id=${encodeURIComponent(
           redgNo
         )}&password=${encodeURIComponent(password)}`;
 
