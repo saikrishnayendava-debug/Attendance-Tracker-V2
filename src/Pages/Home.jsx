@@ -594,10 +594,28 @@ const Home = () => {
 
           attendanceArray?.map((item, index) => {
             return (
-              <div key={index} className={`w-70 sm:w-150   ${item.absent ? "text-red-300 " : "text-green-300 "} bg-black border border-[#222528] py-1.5  rounded font-bold flex justify-around text-xs `}>
+              <div key={index} className={`w-70 sm:w-150   ${item.absent ? "text-[#fc9999] border border-[rgb(249, 6, 6)]" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-xs `}>
                 <p>{item.day} th</p>
+
+
                 <p className='font-extrabold'>{item.attendence} %</p>
-                <p>{item.absent ? "Absent" : "Present"}</p>
+                {(index === 0 && selectedPeriods.length > 0) ? (
+
+                  <div className='font-extrabold flex gap-5 text-[#fc9999]'>
+
+                    <p>{7 - selectedPeriods.length} / 7</p>
+                    <p>
+                      -{selectedPeriods.length}
+                    </p>
+
+                  </div>
+
+                ) : (
+
+                  <p>{item.absent ? "Absent" : "Present"}</p>
+                )
+                }
+
               </div>
             )
           })
