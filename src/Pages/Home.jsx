@@ -60,13 +60,17 @@ const Home = () => {
   const [attendanceArray, setAttendanceArray] = useState([]);
   const [cnt, setCnt] = useState(0)
   const [skip, setSkip] = useState(null)
+  const [selectedPeriods, setSelectedPeriods] = useState([]);
   const today = new Date();
+  const minDate =
+    (selectedPeriods.length > 0)
+      ? new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
+      : today;
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 1);
   const sundays = getSundays(today);
   const sundayArray = sundays.map(sun => sun.getDate());
   const emptyArray = new Array(7).fill(null);
-  const [selectedPeriods, setSelectedPeriods] = useState([]);
   const [cachedValues, setCachedValues] = useState({
     totalPercentage: 0,
     hoursCanSkip: 0,
@@ -131,11 +135,12 @@ const Home = () => {
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = () => {
+
     leavesArray = data.leaves.map(d => d.getDate());
     holidaysArray = data.holidays.map(d => d.getDate());
     const result = attendenceCalculator(holidaysArray, leavesArray, 28, data.present - (tempCnt + cnt), data.held - cnt, today.getDate(), sundayArray, 7)
+    console.log(leavesArray, holidaysArray, selectedPeriods)
     setAttendanceArray(result)
     setAnimationClick(false);
   }
@@ -319,8 +324,10 @@ const Home = () => {
 
   useEffect(() => {
     setTempCnt(selectedPeriods.length);
+    console.log(tempCnt)
     setAnimationClick(selectedPeriods.length > 0);
-  }, [selectedPeriods])
+    handleSubmit(null);
+  }, [selectedPeriods, tempCnt])
 
 
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
@@ -410,7 +417,7 @@ const Home = () => {
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
 
         <div className=' w-105 text-slate-200'>
-          <form className='grid gap-5' onSubmit={handleSubmit}>
+          <form className='grid gap-5'>
             <div className=' grid p-5 gap-5 rounded-md border border-[#222528] text-slate-200'>
               <div className='font-bold flex gap-2 items-center justify-center'>
                 Hi, {localStorage.getItem("redgNo")}
@@ -528,7 +535,7 @@ const Home = () => {
                         ? 'bg-red-500 text-white rounded-full'
                         : ''
                     }
-                    minDate={today}
+                    minDate={minDate}
                     maxDate={maxDate}
                   />
                 )
@@ -558,7 +565,7 @@ const Home = () => {
                           ? 'bg-green-500 text-white rounded-full'
                           : ''
                       }
-                      minDate={today}
+                      minDate={minDate}
                       maxDate={maxDate}
                     />
 
@@ -569,7 +576,7 @@ const Home = () => {
             </div>
 
             <div className='grid grid-cols-2 gap-3'>
-              <button type='submit' disabled={loading} className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`}>
+              <button type='button' disabled={loading} className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`} onClick={handleSubmit}>
                 Submit
                 <GoGraph className=' rounded-md p-1 text-white ' size={24} />
               </button>
@@ -594,25 +601,32 @@ const Home = () => {
 
           attendanceArray?.map((item, index) => {
             return (
-              <div key={index} className={`w-80   ${item.absent ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
-                <p>{item.day} th</p>
+              <div key={index} >
 
-
-                <p className='font-extrabold'>{item.attendence} %</p>
                 {(index === 0 && selectedPeriods.length > 0) ? (
+                  <div className={`w-80 mb-8  ${(tempCnt === 7) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>  
+                    <p>{item.day} th</p>
 
-                  <div className='font-extrabold flex gap-5 text-[#fc9999]'>
 
-                    <p>{7 - selectedPeriods.length} / 7</p>
-                    <p>
-                      -{selectedPeriods.length}
-                    </p>
+                    <p className='font-extrabold'>{item.attendence} %</p>
+                    <div className='font-extrabold flex gap-5 text-[#fc9999]'>
 
+                      <p>{7 - selectedPeriods.length} / 7</p>
+                      <p>
+                        -{selectedPeriods.length}
+                      </p>
+
+                    </div>
                   </div>
 
                 ) : (
+                  <div className={`w-80 ${index === 0 && "mb-8"}  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                    <p>{item.day} th</p>
 
-                  <p>{item.absent ? "Absent" : "Present"}</p>
+
+                    <p className='font-extrabold'>{item.attendence} %</p>
+                    <p>{item.absent ? "Absent" : "Present"}</p>
+                  </div>
                 )
                 }
 
