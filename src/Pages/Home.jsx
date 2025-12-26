@@ -309,9 +309,9 @@ const Home = () => {
     }
     if (!called) {
 
-      // fetchAttendance();
+      fetchAttendance();
       isCalled(true)
-      // sendLog();
+      sendLog();
     }
 
   }, [])
