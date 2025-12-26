@@ -309,9 +309,9 @@ const Home = () => {
     }
     if (!called) {
 
-      fetchAttendance();
+      // fetchAttendance();
       isCalled(true)
-      sendLog();
+      // sendLog();
     }
 
   }, [])
@@ -594,7 +594,7 @@ const Home = () => {
 
           attendanceArray?.map((item, index) => {
             return (
-              <div key={index} className={`w-70 sm:w-150   ${item.absent ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-xs `}>
+              <div key={index} className={`w-80   ${item.absent ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
                 <p>{item.day} th</p>
 
 
