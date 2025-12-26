@@ -140,7 +140,7 @@ const Home = () => {
     leavesArray = data.leaves.map(d => d.getDate());
     holidaysArray = data.holidays.map(d => d.getDate());
     const result = attendenceCalculator(holidaysArray, leavesArray, 28, data.present - (tempCnt + cnt), data.held - cnt, today.getDate(), sundayArray, 7)
-    console.log(leavesArray, holidaysArray, selectedPeriods)
+    // console.log(leavesArray, holidaysArray, selectedPeriods)
     setAttendanceArray(result)
     setAnimationClick(false);
   }
@@ -198,7 +198,7 @@ const Home = () => {
       const result = getAttendanceCounts(response.data)
 
       setCnt(result)
-      console.log("cnt" + result)
+      console.log("vachadamma web developer peekadaniki" + result)
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
 
@@ -324,7 +324,7 @@ const Home = () => {
 
   useEffect(() => {
     setTempCnt(selectedPeriods.length);
-    console.log(tempCnt)
+    // console.log(tempCnt)
     setAnimationClick(selectedPeriods.length > 0);
     handleSubmit(null);
   }, [selectedPeriods, tempCnt])
