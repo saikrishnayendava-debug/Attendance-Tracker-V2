@@ -497,7 +497,7 @@ const Home = () => {
                         type='button'
                         key={index}
                         disabled={isDisabled || loading}
-                        onClick={() => handleTempClick(index)}
+                        onClick={() => {handleTempClick(index); setShowHolidayCalendar(false); setShowLeaveCalendar(false);}}
                         className={`
             ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-slate-200'} 
             text-gray-900 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
