@@ -327,7 +327,7 @@ const Home = () => {
     // console.log(tempCnt)
     setAnimationClick(selectedPeriods.length > 0);
     handleSubmit(null);
-  }, [selectedPeriods, tempCnt])
+  }, [selectedPeriods, tempCnt, data])
 
 
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
@@ -575,12 +575,9 @@ const Home = () => {
 
             </div>
 
-            <div className='grid grid-cols-2 gap-3'>
-              <button type='button' disabled={loading} className={`${animationClick ? "animate-pulse" : ""} cursor-pointer bg-gray-700 text-white  rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center`} onClick={handleSubmit}>
-                Submit
-                <GoGraph className=' rounded-md p-1 text-white ' size={24} />
-              </button>
-              <button type='button' onClick={handleReset} className='cursor-pointer bg-gray-700 text-white rounded-lg py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+            <div className='grid'>
+              
+              <button type='button' disabled={!(selectedPeriods.length > 0 || data.leaves.length > 0 || data.holidays.length > 0)  || loading} onClick={handleReset} className='cursor-pointer bg-gray-700 text-white rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Reset
                 <RiRefreshLine className='text-white rounded-md' size={20} />
               </button>
@@ -592,49 +589,50 @@ const Home = () => {
       </div>
 
 
+      <div className='border border-[#222528] w-85 sm:105 mx-auto mt-5 rounded-md p-2'>
+        <div className='my-5'>
+          <h1 className='text-center text-2xl font-bold text-slate-200'>Attendance as per data</h1>
+        </div>
+        <div className='flex flex-col items-center justify-center gap-2'>
+          {
 
-      <div className='mt-10 mb-7'>
-        <h1 className='text-center text-2xl font-bold text-slate-200'>Attendance as per data</h1>
-      </div>
-      <div className='flex flex-col items-center justify-center gap-2'>
-        {
+            attendanceArray?.map((item, index) => {
+              return (
+                <div key={index} >
 
-          attendanceArray?.map((item, index) => {
-            return (
-              <div key={index} >
-
-                {(index === 0 && selectedPeriods.length > 0) ? (
-                  <div className={`w-80 mb-8  ${(tempCnt === 7) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>  
-                    <p>{item.day} th</p>
+                  {(index === 0 && selectedPeriods.length > 0) ? (
+                    <div className={`w-80 mb-8  ${(tempCnt === 7) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                      <p>{item.day} th</p>
 
 
-                    <p className='font-extrabold'>{item.attendence} %</p>
-                    <div className='font-extrabold flex gap-5 text-[#fc9999]'>
+                      <p className='font-extrabold'>{item.attendence} %</p>
+                      <div className='font-extrabold flex gap-5 text-[#fc9999]'>
 
-                      <p>{7 - selectedPeriods.length} / 7</p>
-                      <p>
-                        -{selectedPeriods.length}
-                      </p>
+                        <p>{7 - selectedPeriods.length} / 7</p>
+                        <p>
+                          -{selectedPeriods.length}
+                        </p>
 
+                      </div>
                     </div>
-                  </div>
 
-                ) : (
-                  <div className={`w-80 ${index === 0 && "mb-8"}  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
-                    <p>{item.day} th</p>
+                  ) : (
+                    <div className={`w-80 ${index === 0 && "mb-8"}  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                      <p>{item.day} th</p>
 
 
-                    <p className='font-extrabold'>{item.attendence} %</p>
-                    <p>{item.absent ? "Absent" : "Present"}</p>
-                  </div>
-                )
-                }
+                      <p className='font-extrabold'>{item.attendence} %</p>
+                      <p>{item.absent ? "Absent" : "Present"}</p>
+                    </div>
+                  )
+                  }
 
-              </div>
-            )
-          })
+                </div>
+              )
+            })
 
-        }
+          }
+        </div>
       </div>
 
 
