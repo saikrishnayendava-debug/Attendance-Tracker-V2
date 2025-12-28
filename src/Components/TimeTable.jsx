@@ -30,6 +30,10 @@ const TimeTable = () => {
       )}&password=${encodeURIComponent(password)}`;  /*saikrishna */
 
   useEffect(() => {
+    if (!redgNo || !password) {
+      // navigate("/");
+      return;
+    }
     let interval;
 
     const fetchTimetable = async () => {

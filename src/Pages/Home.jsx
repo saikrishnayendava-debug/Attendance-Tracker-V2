@@ -286,7 +286,7 @@ const Home = () => {
       }
     };
     if (!redgNo || !password) {
-      navigate("/");
+      // navigate("/");
       return;
     }
 
@@ -323,6 +323,10 @@ const Home = () => {
 
 
   useEffect(() => {
+    if (!redgNo || !password) {
+      // navigate("/");
+      return;
+    }
     setTempCnt(selectedPeriods.length);
     // console.log(tempCnt)
     setAnimationClick(selectedPeriods.length > 0);

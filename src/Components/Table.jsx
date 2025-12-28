@@ -5,8 +5,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
 const Table = () => {
-      const navigate = useNavigate();
-    
+    const navigate = useNavigate();
+
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [progress, setProgress] = useState(0);
@@ -25,7 +25,10 @@ const Table = () => {
 
     useEffect(() => {
         let interval;
-
+        if (!redgNo || !password) {
+            // navigate("/");
+            return;
+        }
         const fetchTimetable = async () => {
 
 
@@ -61,7 +64,7 @@ const Table = () => {
         return (
             <section className="flex justify-center bg-black  min-h-screen">
                 <Header />
-               
+
                 <div className="fixed top-20 left-0 right-0 z-50 p-4 bg-black flex justify-center">
                     <div className="flex items-center gap-3 w-80">
                         <div className="flex-1 bg-gray-700 rounded-full h-2">
