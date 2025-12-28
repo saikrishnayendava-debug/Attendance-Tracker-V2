@@ -327,7 +327,7 @@ const Home = () => {
     // console.log(tempCnt)
     setAnimationClick(selectedPeriods.length > 0);
     handleSubmit(null);
-  }, [selectedPeriods, tempCnt, data])
+  }, [selectedPeriods, tempCnt, data, attendanceArray])
 
 
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
