@@ -285,7 +285,10 @@ const Home = () => {
         console.error(error);
       }
     };
-    
+    if (!redgNo || !password) {
+      
+      return;
+    }
 
     setSelectedPeriods([]);
 
