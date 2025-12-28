@@ -15,7 +15,7 @@ const Header = () => {
   const presentlocation = location.pathname.split('/')[1];
 
   return (
-    <section className='h-15 border-b border-[#222528]  top-0 w-full flex items-center justify-between bg-black px-2'>
+    <section className='h-15 border-b border-[#222528] fixed top-0 w-full z-10 flex items-center justify-between bg-black px-2'>
       <Link to='/' className='flex items-center lg:justify-center lg:gap-2 bg-gradient-to-r  py-2  '>
         
         <div className='w-10 h-10 pl-1'>
