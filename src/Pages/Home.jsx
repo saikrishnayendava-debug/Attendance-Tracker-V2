@@ -286,7 +286,7 @@ const Home = () => {
       }
     };
     if (!redgNo || !password) {
-      // navigate("/");
+    
       return;
     }
 
@@ -324,7 +324,6 @@ const Home = () => {
 
   useEffect(() => {
     if (!redgNo || !password) {
-      // navigate("/");
       return;
     }
     setTempCnt(selectedPeriods.length);
