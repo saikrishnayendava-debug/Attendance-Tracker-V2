@@ -285,10 +285,7 @@ const Home = () => {
         console.error(error);
       }
     };
-    if (!redgNo || !password) {
-      navigate("/");
-      return;
-    }
+    
 
     setSelectedPeriods([]);
 
