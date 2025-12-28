@@ -21,6 +21,7 @@ const TimeTable = () => {
   const password = localStorage.getItem("password");
 
   const timetable_api =
+  
     code === "VIEW"
       ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(
         redgNo
