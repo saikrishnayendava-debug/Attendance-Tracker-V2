@@ -347,8 +347,10 @@ const Home = () => {
     <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
+      <p className={`pt-16 h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Dont reload the page, click the fetch attendance button below</p>
 
-      <div className='mt-2 mx-1 flex items-center justify-around pt-19'>
+      <div className='mt-2 mx-1 flex items-center justify-around'>
+        
         <div className=' bg-emerald-200 pt-2  text-slate-900 h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
             totalPercentage >= 75 ? (
