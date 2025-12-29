@@ -497,7 +497,7 @@ const sundayArray = useMemo(() => {
 
               <div>
                 <p className={`text-xs font-bold animate-bounce text-center`}>Dont reload the page, click the button below</p>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 ${animate && "animate-pulse"}`}
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 `}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
@@ -614,7 +614,7 @@ const sundayArray = useMemo(() => {
       </div>
 
 
-      <div className='border border-[#222528] sm:105  mt-5 rounded-md p-2'>
+      <div className=' sm:105  mt-5 rounded-md'>
         <div className='my-5'>
           <h1 className='text-center text-2xl font-bold text-slate-200'>Attendance as per data</h1>
         </div>
