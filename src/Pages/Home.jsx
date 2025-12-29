@@ -48,7 +48,7 @@ const Home = () => {
   var leavesArray = [];
   const [lastUpdated, setLastUpdated] = useState(localStorage.getItem("lastFetchTime"))
   var holidaysArray = [];
-
+  const [animate, setAnimate] = useState(false);
   const [cnt, setCnt] = useState(0)
   const [selectedPeriods, setSelectedPeriods] = useState([]);
   const tempCnt = selectedPeriods.length;
@@ -178,7 +178,7 @@ const Home = () => {
   const fetchAttendance = async () => {
     try {
       setLoading(true);
-
+      
       const response = await axios.get(url);
       localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
 
@@ -246,6 +246,7 @@ const Home = () => {
 
 
     finally {
+      setAnimate(false);
       setLoading(false);
     }
   }
@@ -298,7 +299,7 @@ const Home = () => {
 
       return;
     }
-
+    setAnimate(true);
     setSelectedPeriods([]);
 
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
@@ -474,8 +475,8 @@ const Home = () => {
               </div>
 
               <div>
-                <p className='text-xs font-bold animate-bounce text-center'>Dont reload the page, click the button below</p>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 animate-pulse`}
+                <p className={`text-xs font-bold animate-bounce text-center`}>Dont reload the page, click the button below</p>
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 ${animate && "animate-pulse"}`}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
