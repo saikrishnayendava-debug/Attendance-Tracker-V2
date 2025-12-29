@@ -45,11 +45,17 @@ const Home = () => {
   const [showLeaveCalendar, setShowLeaveCalendar] = useState(false)
   const [showHolidayCalendar, setShowHolidayCalendar] = useState(false)
   const [todayPeriodsPosted, setTodayPeriodsPosted] = useState()
-  var leavesArray = [];
+
   const [lastUpdated, setLastUpdated] = useState(localStorage.getItem("lastFetchTime"))
-  var holidaysArray = [];
+
   const [animate, setAnimate] = useState(false);
-  const [cnt, setCnt] = useState(0)
+  const [attendanceRaw, setAttendanceRaw] = useState(null);
+
+  const cnt = useMemo(() => {
+  if (!attendanceRaw) return 0;
+  return getAttendanceCounts(attendanceRaw);
+}, [attendanceRaw]);
+
   const [selectedPeriods, setSelectedPeriods] = useState([]);
   const tempCnt = selectedPeriods.length;
   const today = new Date();
@@ -59,8 +65,10 @@ const Home = () => {
       : today;
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 1);
-  const sundays = getSundays(today);
-  const sundayArray = sundays.map(sun => sun.getDate());
+const sundayArray = useMemo(() => {
+  return getSundays(today).map(sun => sun.getDate());
+}, []);
+
   const emptyArray = new Array(7).fill(null);
   const [cachedValues, setCachedValues] = useState({
     totalPercentage: 0,
@@ -86,31 +94,32 @@ const Home = () => {
 
 
   const attendanceArray = useMemo(() => {
-    if (!data.present || !data.held) return [];
+    if (!attendanceRaw || !data.present || !data.held) return [];
 
-    const leavesArray = data.leaves.map(d => d.getDate());
-    const holidaysArray = data.holidays.map(d => d.getDate());
 
+    const leavesArray = [...data.leaves]; // Date[]
+  const holidaysArray = [...data.holidays];
     return attendenceCalculator(
       holidaysArray,
       leavesArray,
       28,
       data.present - (tempCnt + cnt),
       data.held - cnt,
-      new Date().getDate(),
+      new Date(),
       sundayArray,
       7
     );
   }, [
-    data.leaves,
-    data.holidays,
-    data.present,
-    data.held,
-    tempCnt,
-    cnt,
-    sundayArray
+    attendanceRaw,
+  data.leaves,
+  data.holidays,
+  data.present,
+  data.held,
+  tempCnt,
+  cnt,
+  sundayArray
   ]);
-
+  // console.log(attendanceArray);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target
@@ -194,6 +203,7 @@ const Home = () => {
       })
       localStorage.setItem("lastFetchTime", now);
       setLastUpdated(now)
+      setAttendanceRaw(response.data);
       setAttendanceData(response.data)
       setData(prev => ({
         ...prev,
@@ -204,12 +214,11 @@ const Home = () => {
         total_percentage: response.data.total_info?.total_percentage || '',
         subjectwiseSummary: response.data?.subjectwise_summary || [],
       }));
-      const result = getAttendanceCounts(response.data)
-
-      setCnt(result)
-      console.log("vachadamma web developer peekadaniki" + result)
+      
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
+      // console.log(result)
+     
 
 
 
@@ -224,7 +233,7 @@ const Home = () => {
         const parsedData = JSON.parse(storedData);
         setLastUpdated(lastFetchTime);
         setAttendanceData(parsedData);
-
+          setAttendanceRaw(parsedData);
         setData(prev => ({
           ...prev,
           present: parsedData.total_info?.total_attended || '',
@@ -234,8 +243,7 @@ const Home = () => {
           total_percentage: parsedData.total_info?.total_percentage || '',
         }));
 
-        const result = getAttendanceCounts(parsedData);
-        setCnt(result);
+        
 
         const todayData = getAttendanceTodayArray(parsedData);
         setTodayPeriodsPosted(todayData);
@@ -317,11 +325,22 @@ const Home = () => {
         held: cached.total_info.total_held || '',
       }));
     }
+    setData(prev => ({
+    ...prev,
+    present: cached.total_info.total_attended || '',
+    held: cached.total_info.total_held || '',
+    hours_can_skip: cached.total_info.hours_can_skip || '',
+    hours_needed: cached.total_info.additional_hours_needed || '',
+    total_percentage: cached.total_info.total_percentage || '',
+    subjectwiseSummary: cached.subjectwise_summary || [],
+  }));
     if (cached) {
+      setAttendanceRaw(cached);
       setTodayPeriodsPosted(
         getAttendanceTodayArray(cached)
       );
-      setCnt(getAttendanceCounts(cached));
+      // setCnt(getAttendanceCounts(cached));
+      // console.log(getAttendanceCounts(cached))
     }
         
       sendLog();
@@ -595,7 +614,7 @@ const Home = () => {
       </div>
 
 
-      <div className='border border-[#222528] w-85 sm:105 mx-auto mt-5 rounded-md p-2'>
+      <div className='border border-[#222528] sm:105  mt-5 rounded-md p-2'>
         <div className='my-5'>
           <h1 className='text-center text-2xl font-bold text-slate-200'>Attendance as per data</h1>
         </div>
@@ -607,8 +626,8 @@ const Home = () => {
                 <div key={index} >
 
                   {(index === 0 && selectedPeriods.length > 0) ? (
-                    <div className={`w-80 mb-8  ${(tempCnt === 7) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
-                      <p>{item.day} th</p>
+                    <div className={`w-90 mb-8  ${(tempCnt === 7) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                      <p>{item.day}</p>
 
 
                       <p className='font-extrabold'>{item.attendence} %</p>
@@ -623,8 +642,8 @@ const Home = () => {
                     </div>
 
                   ) : (
-                    <div className={`w-80 ${index === 0 && "mb-8"}  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
-                      <p>{item.day} th</p>
+                    <div className={`w-90 ${index === 0 && "mb-8"}  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                      <p>{item.day} </p>
 
 
                       <p className='font-extrabold'>{item.attendence} %</p>

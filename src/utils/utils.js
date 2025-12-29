@@ -37,16 +37,26 @@ export function getMaxDaysInMonth(month, year) {
     return new Date(year, month + 1, 0).getDate();
 }
 
+function sameDate(a, b) {
+    return (
+        a.getDate() === b.getDate() &&
+        a.getMonth() === b.getMonth() &&
+        a.getFullYear() === b.getFullYear()
+    );
+}
+
 export function holidayChecker(holidays, date) {
-    return holidays.includes(date);
-    
+    return holidays.some(d => sameDate(d, date));
 }
+
 export function sundayChecker(sun, date) {
-    return sun.includes(date);
+    return sun.some(d => sameDate(d, date));
 }
+
 export function absentChecker(leaves, date) {
-    return leaves.includes(date);
+    return leaves.some(d => sameDate(d, date));
 }
+
 
 export function attendencePerform(periodsPresent, totalPeriods) {
     let attendance = (periodsPresent / totalPeriods) * 100;
