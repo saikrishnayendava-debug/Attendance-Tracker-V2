@@ -2,14 +2,12 @@ import React from 'react'
 import logo from '../assets/logo.png'
 import { MdAccountCircle } from "react-icons/md";
 import { FaArrowLeft } from "react-icons/fa";
-import { isCalled } from '../Pages/Home';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const handleClick = () => {
     localStorage.clear();
-    isCalled(false)
     navigate('/')
   }
   const presentlocation = location.pathname.split('/')[1];

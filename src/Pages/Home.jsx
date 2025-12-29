@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Header from '../Components/Header'
-import { IoMdBatteryFull } from "react-icons/io";
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { FaHourglassEnd } from "react-icons/fa";
 import axios from 'axios'
 import { MdBatteryAlert } from "react-icons/md";
-import { PiBatteryVerticalLowBold } from "react-icons/pi"
 import { BsCalendarDateFill } from "react-icons/bs";
 import ToastNotification from '../Components/ToastNotification';
 import { showToast } from '../Components/ToastNotification';
-import Loading from '../Components/Loading'
 import attendenceCalculator from '../utils/main'
 import { attendencePerform, getSundays } from '../utils/utils'
 import { useNavigate } from 'react-router-dom'
@@ -21,17 +18,12 @@ import { PiStudentFill } from "react-icons/pi";
 import attendanceTarget from '../utils/AttendanceTarget'
 import { getAttendanceTodayArray } from '../utils/attendanceTodayArray'
 import ChartComponent from '../Components/ChartComponent'
-import { SlCalender } from "react-icons/sl";
-import { GoGraph } from "react-icons/go";
 import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
 
 import Table from '../Components/Table';
-let called = false
-export function isCalled(value) {
-  called = value
-}
+
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -49,7 +41,6 @@ const Home = () => {
     frnd_password: localStorage.getItem("frnd_password") || "",
   })
   const [loading, setLoading] = useState(false)
-  const [tempCnt, setTempCnt] = useState(0);
   const [attendanceData, setAttendanceData] = useState()
   const [showLeaveCalendar, setShowLeaveCalendar] = useState(false)
   const [showHolidayCalendar, setShowHolidayCalendar] = useState(false)
@@ -57,10 +48,10 @@ const Home = () => {
   var leavesArray = [];
   const [lastUpdated, setLastUpdated] = useState(localStorage.getItem("lastFetchTime"))
   var holidaysArray = [];
-  const [attendanceArray, setAttendanceArray] = useState([]);
+
   const [cnt, setCnt] = useState(0)
-  const [skip, setSkip] = useState(null)
   const [selectedPeriods, setSelectedPeriods] = useState([]);
+  const tempCnt = selectedPeriods.length;
   const today = new Date();
   const minDate =
     (selectedPeriods.length > 0)
@@ -77,14 +68,12 @@ const Home = () => {
     hoursNeeded: 0
   });
   const [miniloading, setMiniLoading] = useState(false);
-  const [openSubjsectWise, setOpenSubjectWise] = useState(false);
   const [frndAttendanceData, setFrndAttendanceData] = useState(
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
-  const [register, setRegister] = useState();
 
   const [frndPeriods, setFrndPeriods] = useState(null);
-  const [animationClick, setAnimationClick] = useState(false);
+  // const [animationClick, setAnimationClick] = useState(false);
   const handleTempClick = (index) => {
     setSelectedPeriods(prev => {
       if (prev.includes(index)) {
@@ -94,6 +83,34 @@ const Home = () => {
       }
     });
   };
+
+
+  const attendanceArray = useMemo(() => {
+    if (!data.present || !data.held) return [];
+
+    const leavesArray = data.leaves.map(d => d.getDate());
+    const holidaysArray = data.holidays.map(d => d.getDate());
+
+    return attendenceCalculator(
+      holidaysArray,
+      leavesArray,
+      28,
+      data.present - (tempCnt + cnt),
+      data.held - cnt,
+      new Date().getDate(),
+      sundayArray,
+      7
+    );
+  }, [
+    data.leaves,
+    data.holidays,
+    data.present,
+    data.held,
+    tempCnt,
+    cnt,
+    sundayArray
+  ]);
+
 
   const handleOnChange = (e) => {
     const { name, value } = e.target
@@ -135,23 +152,15 @@ const Home = () => {
     })
   }
 
-  const handleSubmit = () => {
 
-    leavesArray = data.leaves.map(d => d.getDate());
-    holidaysArray = data.holidays.map(d => d.getDate());
-    const result = attendenceCalculator(holidaysArray, leavesArray, 28, data.present - (tempCnt + cnt), data.held - cnt, today.getDate(), sundayArray, 7)
-    // console.log(leavesArray, holidaysArray, selectedPeriods)
-    setAttendanceArray(result)
-    setAnimationClick(false);
-  }
   const handleReset = () => {
     setData(prev => ({
       ...prev,
       leaves: [],
       holidays: []
     }));
-    setAttendanceArray([])
-    setTempCnt(0);
+
+
     setSelectedPeriods([]);
     setShowLeaveCalendar(false);
     setShowHolidayCalendar(false);
@@ -286,7 +295,7 @@ const Home = () => {
       }
     };
     if (!redgNo || !password) {
-      
+
       return;
     }
 
@@ -311,26 +320,16 @@ const Home = () => {
       setTodayPeriodsPosted(
         getAttendanceTodayArray(cached)
       );
+      setCnt(getAttendanceCounts(cached));
     }
-    if (!called) {
-
-      fetchAttendance();
-      isCalled(true)
+        
       sendLog();
-    }
+    
 
   }, [])
 
 
-  useEffect(() => {
-    if (!redgNo || !password) {
-      return;
-    }
-    setTempCnt(selectedPeriods.length);
-    // console.log(tempCnt)
-    setAnimationClick(selectedPeriods.length > 0);
-    handleSubmit(null);
-  }, [selectedPeriods, tempCnt, data, attendanceArray])
+
 
 
   const totalPercentage = data.total_percentage || cachedValues.totalPercentage;
@@ -369,8 +368,8 @@ const Home = () => {
                 <div>Periods to attend</div>
                 <div className="flex flex-row w-full items-center justify-center">
 
-                  <div className='text-6xl mt-6'>{hoursNeeded}</div>
-                  <MdBatteryAlert size={25} className='text-red-500' />
+                  <div className='text-6xl mt-6 text-red-500'>{hoursNeeded}</div>
+                  {/* <MdBatteryAlert size={25} className='text-red-500' /> */}
 
                 </div>
                 <div className='mt-4'>{Math.floor(hoursNeeded / 7)} days, {hoursNeeded % 7} periods</div>
@@ -475,7 +474,8 @@ const Home = () => {
               </div>
 
               <div>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5`}
+                <p className='text-xs font-bold animate-bounce text-center'>Dont reload the page, click the button below</p>
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 animate-pulse`}
                   disabled={loading}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
@@ -500,7 +500,7 @@ const Home = () => {
                         type='button'
                         key={index}
                         disabled={isDisabled || loading}
-                        onClick={() => {handleTempClick(index); setShowHolidayCalendar(false); setShowLeaveCalendar(false);}}
+                        onClick={() => { handleTempClick(index); setShowHolidayCalendar(false); setShowLeaveCalendar(false); }}
                         className={`
             ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-slate-200'} 
             text-gray-900 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
@@ -579,8 +579,8 @@ const Home = () => {
             </div>
 
             <div className='grid'>
-              
-              <button type='button' disabled={!(selectedPeriods.length > 0 || data.leaves.length > 0 || data.holidays.length > 0)  || loading} onClick={handleReset} className='cursor-pointer bg-gray-700 text-white rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+
+              <button type='button' disabled={!(selectedPeriods.length > 0 || data.leaves.length > 0 || data.holidays.length > 0) || loading} onClick={handleReset} className='cursor-pointer bg-gray-700 text-white rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
                 Reset
                 <RiRefreshLine className='text-white rounded-md' size={20} />
               </button>
