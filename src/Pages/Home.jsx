@@ -304,7 +304,7 @@ const sundayArray = useMemo(() => {
       }
     };
     if (!redgNo || !password) {
-
+      navigate('/');
       return;
     }
     setAnimate(true);
