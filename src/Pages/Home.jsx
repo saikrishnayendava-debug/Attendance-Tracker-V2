@@ -52,9 +52,9 @@ const Home = () => {
   const [attendanceRaw, setAttendanceRaw] = useState(null);
 
   const cnt = useMemo(() => {
-  if (!attendanceRaw) return 0;
-  return getAttendanceCounts(attendanceRaw);
-}, [attendanceRaw]);
+    if (!attendanceRaw) return 0;
+    return getAttendanceCounts(attendanceRaw);
+  }, [attendanceRaw]);
 
   const [selectedPeriods, setSelectedPeriods] = useState([]);
   const tempCnt = selectedPeriods.length;
@@ -65,9 +65,9 @@ const Home = () => {
       : today;
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 1);
-const sundayArray = useMemo(() => {
-  return getSundays(today).map(sun => sun.getDate());
-}, []);
+  const sundayArray = useMemo(() => {
+    return getSundays(today).map(sun => sun.getDate());
+  }, []);
 
   const emptyArray = new Array(7).fill(null);
   const [cachedValues, setCachedValues] = useState({
@@ -98,7 +98,7 @@ const sundayArray = useMemo(() => {
 
 
     const leavesArray = [...data.leaves]; // Date[]
-  const holidaysArray = [...data.holidays];
+    const holidaysArray = [...data.holidays];
     return attendenceCalculator(
       holidaysArray,
       leavesArray,
@@ -111,13 +111,13 @@ const sundayArray = useMemo(() => {
     );
   }, [
     attendanceRaw,
-  data.leaves,
-  data.holidays,
-  data.present,
-  data.held,
-  tempCnt,
-  cnt,
-  sundayArray
+    data.leaves,
+    data.holidays,
+    data.present,
+    data.held,
+    tempCnt,
+    cnt,
+    sundayArray
   ]);
   // console.log(attendanceArray);
 
@@ -187,7 +187,7 @@ const sundayArray = useMemo(() => {
   const fetchAttendance = async () => {
     try {
       setLoading(true);
-      
+
       const response = await axios.get(url);
       localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
 
@@ -214,18 +214,18 @@ const sundayArray = useMemo(() => {
         total_percentage: response.data.total_info?.total_percentage || '',
         subjectwiseSummary: response.data?.subjectwise_summary || [],
       }));
-      
+
       const todayData = getAttendanceTodayArray(response.data);
       setTodayPeriodsPosted(todayData);
       // console.log(result)
-     
+
 
 
 
 
 
     } catch (error) {
-            showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
+      showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
 
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
@@ -234,7 +234,7 @@ const sundayArray = useMemo(() => {
         const parsedData = JSON.parse(storedData);
         setLastUpdated(lastFetchTime);
         setAttendanceData(parsedData);
-          setAttendanceRaw(parsedData);
+        setAttendanceRaw(parsedData);
         setData(prev => ({
           ...prev,
           present: parsedData.total_info?.total_attended || '',
@@ -244,7 +244,7 @@ const sundayArray = useMemo(() => {
           total_percentage: parsedData.total_info?.total_percentage || '',
         }));
 
-        
+
 
         const todayData = getAttendanceTodayArray(parsedData);
         setTodayPeriodsPosted(todayData);
@@ -314,35 +314,35 @@ const sundayArray = useMemo(() => {
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
 
     const cached = localStorage.getItem("latestAttendanceData");
-  const parsedData = cached ? JSON.parse(cached) : null;
+    const parsedData = cached ? JSON.parse(cached) : null;
 
-  if (parsedData?.total_info) {
-    const storedData = parsedData.total_info;
-    
-    setCachedValues({
-      totalPercentage: storedData.total_percentage || 0,
-      hoursCanSkip: storedData.hours_can_skip || 0,
-      hoursNeeded: storedData.additional_hours_needed || 0,
-    });
+    if (parsedData?.total_info) {
+      const storedData = parsedData.total_info;
 
-    setData(prev => ({
-      ...prev,
-      present: storedData.total_attended || '',
-      held: storedData.total_held || '',
-      hours_can_skip: storedData.hours_can_skip || '',
-      hours_needed: storedData.additional_hours_needed || '',
-      total_percentage: storedData.total_percentage || '',
-      subjectwiseSummary: parsedData.subjectwise_summary || [],
-    }));
+      setCachedValues({
+        totalPercentage: storedData.total_percentage || 0,
+        hoursCanSkip: storedData.hours_can_skip || 0,
+        hoursNeeded: storedData.additional_hours_needed || 0,
+      });
 
-    setAttendanceRaw(parsedData);
-    setTodayPeriodsPosted(getAttendanceTodayArray(parsedData));
-  }
+      setData(prev => ({
+        ...prev,
+        present: storedData.total_attended || '',
+        held: storedData.total_held || '',
+        hours_can_skip: storedData.hours_can_skip || '',
+        hours_needed: storedData.additional_hours_needed || '',
+        total_percentage: storedData.total_percentage || '',
+        subjectwiseSummary: parsedData.subjectwise_summary || [],
+      }));
 
-    
-        
-      sendLog();
-    
+      setAttendanceRaw(parsedData);
+      setTodayPeriodsPosted(getAttendanceTodayArray(parsedData));
+    }
+
+
+
+    sendLog();
+
 
   }, [])
 
@@ -364,10 +364,13 @@ const sundayArray = useMemo(() => {
     <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
-      <p className={`pt-16 h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Dont reload the page, click the fetch attendance button below</p>
+      <div className='bg-red-500/10 border border-red-500 rounded mt-15 flex items-center justify-center'>
+
+        <p className={`p-2 h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Break time lo, Lunch break lo okesari 1600+ students use cheyadam, mana college website crash ayindhi, mana app issue kadhu, app 100% work avudhi, be patient darlings okesari andaru vadakandi </p>
+      </div>
 
       <div className='mt-2 mx-1 flex items-center justify-around'>
-        
+
         <div className=' bg-emerald-200 pt-2  text-slate-900 h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
           {
             totalPercentage >= 75 ? (
