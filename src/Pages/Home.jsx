@@ -225,7 +225,8 @@ const sundayArray = useMemo(() => {
 
 
     } catch (error) {
-      // showToast("Failed to fetch data");
+            showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
+
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
 
@@ -283,7 +284,7 @@ const sundayArray = useMemo(() => {
 
 
     } catch (error) {
-      // showToast("Failed to fetch data");
+      showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
       return;
 
     }
