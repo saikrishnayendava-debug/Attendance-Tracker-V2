@@ -225,7 +225,7 @@ const Home = () => {
 
 
     } catch (error) {
-      showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
+      showToast("Failed to fetch attendance");
 
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
@@ -284,7 +284,8 @@ const Home = () => {
 
 
     } catch (error) {
-      showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
+      // showToast("Serverlu crash aypotunai darlings mee requests ki, naa app issue kadhu college website issue, 1 hr tarwartha try cheyandi");
+      showToast("Failed to fetch frnd attendance");
       return;
 
     }
