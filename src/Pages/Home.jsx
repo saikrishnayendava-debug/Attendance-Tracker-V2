@@ -225,7 +225,7 @@ const sundayArray = useMemo(() => {
 
 
     } catch (error) {
-      showToast("Failed to fetch data");
+      // showToast("Failed to fetch data");
       const storedData = localStorage.getItem("latestAttendanceData");
       const lastFetchTime = localStorage.getItem("lastFetchTime");
 
@@ -283,7 +283,7 @@ const sundayArray = useMemo(() => {
 
 
     } catch (error) {
-      showToast("Failed to fetch data");
+      // showToast("Failed to fetch data");
       return;
 
     }
