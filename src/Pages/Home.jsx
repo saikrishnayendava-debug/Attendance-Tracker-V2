@@ -312,36 +312,33 @@ const sundayArray = useMemo(() => {
 
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
 
+    const cached = localStorage.getItem("latestAttendanceData");
+  const parsedData = cached ? JSON.parse(cached) : null;
+
+  if (parsedData?.total_info) {
+    const storedData = parsedData.total_info;
+    
     setCachedValues({
       totalPercentage: storedData.total_percentage || 0,
       hoursCanSkip: storedData.hours_can_skip || 0,
       hoursNeeded: storedData.additional_hours_needed || 0,
     });
-    const cached = JSON.parse(localStorage.getItem("latestAttendanceData"));
-    if (cached?.total_info) {
-      setData(prev => ({
-        ...prev,
-        present: cached.total_info.total_attended || '',
-        held: cached.total_info.total_held || '',
-      }));
-    }
+
     setData(prev => ({
-    ...prev,
-    present: cached.total_info.total_attended || '',
-    held: cached.total_info.total_held || '',
-    hours_can_skip: cached.total_info.hours_can_skip || '',
-    hours_needed: cached.total_info.additional_hours_needed || '',
-    total_percentage: cached.total_info.total_percentage || '',
-    subjectwiseSummary: cached.subjectwise_summary || [],
-  }));
-    if (cached) {
-      setAttendanceRaw(cached);
-      setTodayPeriodsPosted(
-        getAttendanceTodayArray(cached)
-      );
-      // setCnt(getAttendanceCounts(cached));
-      // console.log(getAttendanceCounts(cached))
-    }
+      ...prev,
+      present: storedData.total_attended || '',
+      held: storedData.total_held || '',
+      hours_can_skip: storedData.hours_can_skip || '',
+      hours_needed: storedData.additional_hours_needed || '',
+      total_percentage: storedData.total_percentage || '',
+      subjectwiseSummary: parsedData.subjectwise_summary || [],
+    }));
+
+    setAttendanceRaw(parsedData);
+    setTodayPeriodsPosted(getAttendanceTodayArray(parsedData));
+  }
+
+    
         
       sendLog();
     
