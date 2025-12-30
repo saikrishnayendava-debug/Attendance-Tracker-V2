@@ -364,10 +364,8 @@ const Home = () => {
     <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
-      <div className='bg-red-500/10 border border-red-500 rounded mt-15 flex items-center justify-center'>
+            <p className={`pt-16 h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Dont <span className='text-red-500'>reload</span> the page, click the fetch attendance button below</p>
 
-        <p className={`p-2 h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Break time lo, Lunch break lo okesari 1600+ students use cheyadam, mana college website crash ayindhi, mana app issue kadhu, app 100% work avudhi, be patient darlings okesari andaru vadakandi </p>
-      </div>
 
       <div className='mt-2 mx-1 flex items-center justify-around'>
 
