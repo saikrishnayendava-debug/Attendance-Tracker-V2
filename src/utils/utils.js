@@ -1,15 +1,14 @@
-
-
-
-
 export function get_Date() {
     const now = new Date()
     return now.getDate();
 }
+
 export function getSundays(date) {
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const startDate = date.getDate();
+    const validDate = date instanceof Date ? date : new Date(date);
+    
+    const month = validDate.getMonth();
+    const year = validDate.getFullYear();
+    const startDate = validDate.getDate();
 
     let sundays = [];
     let cnt = 4;
@@ -38,28 +37,43 @@ export function getMaxDaysInMonth(month, year) {
 }
 
 function sameDate(a, b) {
+    // Safety checks to prevent crash
+    if (!a || !b) return false;
+    
+    const dateA = a instanceof Date ? a : new Date(a);
+    const dateB = b instanceof Date ? b : new Date(b);
+    
+    if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) return false;
+    
     return (
-        a.getDate() === b.getDate() &&
-        a.getMonth() === b.getMonth() &&
-        a.getFullYear() === b.getFullYear()
+        dateA.getDate() === dateB.getDate() &&
+        dateA.getMonth() === dateB.getMonth() &&
+        dateA.getFullYear() === dateB.getFullYear()
     );
 }
 
 export function holidayChecker(holidays, date) {
+    if (!holidays || !Array.isArray(holidays)) return false;
     return holidays.some(d => sameDate(d, date));
 }
 
 export function sundayChecker(sun, date) {
+    if (!sun || !Array.isArray(sun)) return false;
+    
+    // Auto-detect Sundays
+    const validDate = date instanceof Date ? date : new Date(date);
+    if (!isNaN(validDate.getTime()) && validDate.getDay() === 0) return true;
+    
     return sun.some(d => sameDate(d, date));
 }
 
 export function absentChecker(leaves, date) {
+    if (!leaves || !Array.isArray(leaves)) return false;
     return leaves.some(d => sameDate(d, date));
 }
 
-
 export function attendencePerform(periodsPresent, totalPeriods) {
+    if (totalPeriods === 0) return 0;
     let attendance = (periodsPresent / totalPeriods) * 100;
     return Number(attendance.toFixed(2));
 }
-
