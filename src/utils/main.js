@@ -27,9 +27,14 @@ function attendenceCalculator(
   ));
 
   for (let i = 0; i < daysToPredict; i++) {
-    const day = new Date(current);
+    const day = new Date(Date.UTC(
+      current.getUTCFullYear(),
+      current.getUTCMonth(),
+      current.getUTCDate()
+    ));
 
-    if (holidayChecker(holidays, day) || sundayChecker(sundays, day)) {
+    // Skip Sundays (automatically detected) and holidays
+    if (sundayChecker(sundays, day) || holidayChecker(holidays, day)) {
       current.setUTCDate(current.getUTCDate() + 1);
       continue;
     }
@@ -44,11 +49,11 @@ function attendenceCalculator(
     }
 
     // Set day as full UTC date string
-    const dayString = day.toUTCString().split(' ').slice(1, 4).join(' '); // "29 Dec 2025"
+    const dayString = day.toUTCString().split(' ').slice(1, 4).join(' ');
 
     result.push({
-      day: dayString,         // <-- item.day will now have full date
-      date: day,              // keep actual Date object too
+      day: dayString,
+      date: day,
       attendence: attendencePerform(present, held),
       absent: absent
     });
