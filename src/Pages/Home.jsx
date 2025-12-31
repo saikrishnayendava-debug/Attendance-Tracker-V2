@@ -311,7 +311,7 @@ const Home = () => {
     }
     setAnimate(true);
     setSelectedPeriods([]);
-
+if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
 
     const cached = localStorage.getItem("latestAttendanceData");
