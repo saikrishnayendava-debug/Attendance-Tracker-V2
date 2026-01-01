@@ -6,6 +6,7 @@ import { MdAccountBox } from "react-icons/md"
 import logo from '../assets/logo.png'
 import FooterComponent from '../Components/FooterComponent';
 import { BsServer } from "react-icons/bs";
+import { setState } from './Home';
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -41,7 +42,7 @@ const Login = () => {
     localStorage.setItem("redgNo", redgNo)
     localStorage.setItem("password", password)
     localStorage.setItem("code", selectedcode)
-    localStorage.setItem("server", server)
+     setState(true)
     if (redgNo && password) {
       navigate("/home");
     }
