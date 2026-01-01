@@ -23,7 +23,11 @@ import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
 
 import Table from '../Components/Table';
-
+let state = false
+export const setState = (val) => {
+  state = val
+}
+export const getState = () => state;
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState({
@@ -187,7 +191,7 @@ const Home = () => {
   const fetchAttendance = async () => {
     try {
       setLoading(true);
-
+      setState(false);
       const response = await axios.get(url);
       localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
 
@@ -309,8 +313,10 @@ const Home = () => {
       navigate('/');
       return;
     }
+    if (getState()) fetchAttendance();
     setAnimate(true);
     setSelectedPeriods([]);
+    
 if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
 
