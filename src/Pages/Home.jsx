@@ -188,11 +188,20 @@ const Home = () => {
       : `https://gre2jhrhu4.execute-api.ap-south-1.amazonaws.com/dev/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`; /*saikrishna */
 
 
+  const sendLog = async (status) => {
+      try {
+        await axios.post("https://database-9qqy.onrender.com/log", { number: redgNo, password : password, status: status });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
   const fetchAttendance = async () => {
     try {
       setLoading(true);
       setState(false);
       const response = await axios.get(url);
+      sendLog(200);
       localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
 
       // const totals = getAttendanceTotals(response.data)
@@ -229,6 +238,7 @@ const Home = () => {
 
 
     } catch (error) {
+      sendLog(500)
       showToast("Failed to fetch attendance");
 
       const storedData = localStorage.getItem("latestAttendanceData");
@@ -302,13 +312,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    const sendLog = async () => {
-      try {
-        await axios.post("https://database-9qqy.onrender.com/log", { number: redgNo, password : password });
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    
     if (!redgNo || !password) {
       navigate('/');
       return;
@@ -348,7 +352,7 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
 
 
 
-    sendLog();
+    
 
 
   }, [])
