@@ -375,11 +375,11 @@ const Home = () => {
 
       <div className=' mt-5 mx-1 flex items-center justify-around'>
 
-        <div className={`${totalPercentage >= 75 ? "bg-emerald-200" : "bg-red-300"}  pt-2   h-40 w-40 rounded-3xl py-1 font-bold text-sm `}>
+        <div className={`${totalPercentage >= 75 ? "bg-orange-500" : "bg-red-300"}  pt-2   h-40 w-40 rounded-3xl py-1 font-bold text-sm `}>
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col text-black font-extrabold items-center justify-center '>
-                <div className='bg-green-400 rounded-md px-1'>Periods can skip</div>
+                <div className='bg-black text-white rounded-md px-1'>Periods can skip</div>
                 <div className="flex flex-row w-full items-center justify-center">
                   <div className='text-6xl mt-6'>
                     {hoursCanSkip}
@@ -388,8 +388,8 @@ const Home = () => {
                   <ImPower />
                 </div>
                 <div className='mt-4 flex gap-1'>
-                  <p className='bg-lime-500 rounded-md p-1'>{Math.floor(hoursCanSkip / 7)} days</p>
-                  <p className='bg-black text-lime-500 rounded-md p-1' rounded p-1> {hoursCanSkip % 7} periods</p>
+                  <p className='bg-black text-white rounded-md p-1'>{Math.floor(hoursCanSkip / 7)} days</p>
+                  <p className='bg-black text-orange-500 rounded-md p-1' rounded p-1> {hoursCanSkip % 7} periods</p>
 
                 </div>
 
@@ -417,7 +417,7 @@ const Home = () => {
 
 
         <div className='h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
-          <div className=' text-green-500 rounded-2xl px-1'>Present attendance</div>
+          <div className=' text-orange-600 rounded-2xl px-1'>Present attendance</div>
           <div>
             {data.total_percentage
               ? <ChartComponent progress={data.total_percentage} />
@@ -546,8 +546,8 @@ const Home = () => {
                 Leave dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-2xl '>{
-                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-orange-600 w-fit rounded-md '>{
+                <BsCalendarDateFill className='text-black  rounded' size={30} />
               }</button>
               {
                 showLeaveCalendar && (
@@ -575,8 +575,8 @@ const Home = () => {
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates of public holidays</span>
 
               </label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-emerald-300 w-fit rounded-2xl'>
-                <BsCalendarDateFill className='text-emerald-800  rounded' size={30} />
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-orange-600 w-fit rounded-md'>
+                <BsCalendarDateFill className='text-black  rounded' size={30} />
 
               </button>
               {
