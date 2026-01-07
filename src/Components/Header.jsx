@@ -21,16 +21,16 @@ const Header = () => {
           <img src={logo} alt="logo" className='rounded-lg' />
         </div>
         <div className='font-bold text-sm lg:text-2xl rounded px-2 '>
-          <span className='text-[#00ce86] '>Attendance</span>
+          <span className='text-orange-600'>Attendance</span>
           <span className='text-slate-300'>Tracker</span>
         </div>
       </Link>
       <>
         {
           (location.pathname != '/') && (
-            <button type='button' onClick={handleClick} className='cursor-pointer  bg-green-400 text-black px-2 font-extrabold text-sm rounded-lg py-1.5  flex gap-1 items-center justify-center'>
+            <button type='button' onClick={handleClick} className='cursor-pointer  bg-orange-600 px-2 font-bold text-sm rounded-lg py-1.5  flex gap-1 items-center justify-center'>
               Logout
-              <MdAccountCircle size={20} color='black'/>
+              <MdAccountCircle size={20} color='white'/>
             </button>
           )
         }
