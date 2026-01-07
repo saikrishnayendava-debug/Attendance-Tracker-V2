@@ -14,7 +14,7 @@ const ToastNotification = () => {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="light"
+      theme="dark"
       transition={Bounce}
     />
   );
@@ -30,7 +30,7 @@ export const showToast = (message) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: "light",
+    theme: "dark",
     transition: Bounce,
   });
 };
