@@ -375,7 +375,7 @@ const Home = () => {
 
       <div className=' mt-5 mx-1 flex items-center justify-around'>
 
-        <div className={`${totalPercentage >= 75 ? "bg-orange-500" : "bg-red-300"}  pt-2   h-40 w-40 rounded-3xl py-1 font-bold text-sm `}>
+        <div className={`${totalPercentage >= 75 ? "bg-sky-400" : "bg-red-300"}  pt-2   h-40 w-40 rounded-3xl py-1 font-bold text-sm `}>
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col text-black font-extrabold items-center justify-center '>
@@ -417,7 +417,7 @@ const Home = () => {
 
 
         <div className='h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
-          <div className=' text-orange-600 rounded-2xl px-1'>Present attendance</div>
+          <div className=' text-white rounded-2xl px-1'>Present attendance</div>
           <div>
             {data.total_percentage
               ? <ChartComponent progress={data.total_percentage} />
