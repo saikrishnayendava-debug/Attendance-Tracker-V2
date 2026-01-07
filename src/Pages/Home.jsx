@@ -375,7 +375,7 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
     <section className=' bg-black min-h-screen-'>
       <ToastNotification />
       <Header />
-            <p className={`pt-16 h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Dont <span className='text-red-500'>reload</span> the page, click the fetch attendance button below</p>
+            <p className={`pt-16 h-fit text-xs font-bold text-center text-slate-200 border border-red-400 rounded`}>College Server issue wait for sometime</p>
 
 
       <div className='mt-2 mx-1 flex items-center justify-around'>
