@@ -91,7 +91,7 @@ const Login = () => {
           <form action="" className='grid p-5 rounded-2xl gap-4' onSubmit={handleSubmit}>
             <div className='flex justify-center items-center gap-1'>
               <img src={logo} alt='logo' className='w-8 h-8 rounded-md' />
-              <p className='font-bold text-orange-600'>Login</p>
+              <p className='font-bold text-emerald-500'>Login</p>
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor="RedgNo" className='font-semibold text-sm'>Registration Number</label>
@@ -107,13 +107,13 @@ const Login = () => {
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor="pass" className='font-semibold text-sm '>Password</label>
-              <div className='border border-[#222528] flex items-center justify-center outline-none focus:outline-none focus:ring-0 focus-visible:outline-none appearance-none'>
+              <div className='border border-[#222528] flex items-center justify-center '>
 
                 <input
                   type={inputType==="password" ? "password" : "text"}
                   id='pass'
                   placeholder='26112007'
-                  className='outline-none border-none bg-black text-center rounded font-semibold px-2 py-1 text-sm'
+                  className=' border-none bg-black text-center rounded font-semibold px-2 py-1 text-sm outline-none focus:outline-none focus:ring-0 focus-visible:outline-none appearance-none'
                   onChange={handleOnChange}
                   name='password'
                   value={data.password}
@@ -139,7 +139,7 @@ const Login = () => {
                 VIEW
               </div>
             </div>
-            <button className='bg-orange-600 text-black cursor-pointer rounded py-1.5 font-bold text-sm'>
+            <button className='bg-emerald-500 text-black cursor-pointer rounded py-1.5 font-bold text-sm'>
               Submit
             </button>
             <div className='font-bold text-center'>Login once, use it forever</div>
@@ -152,9 +152,9 @@ const Login = () => {
         <p className='font-extrabold'>Share to your friends</p>
         <button
           onClick={handleWhatsAppShare}
-          className='flex items-center gap-2 bg-slate-200 text-black p-1.5 rounded-lg font-bold text-xs animate-bounce'
+          className='flex items-center gap-2 bg-green-500 text-black p-1.5 rounded-lg font-bold text-xs animate-bounce'
         >
-          <MessageCircle size={20} color='green' />
+          <MessageCircle size={20} color='black' />
           <span>Share on WhatsApp</span>
         </button>
       </div>
