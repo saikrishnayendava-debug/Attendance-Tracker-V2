@@ -185,7 +185,7 @@ const Home = () => {
   const url =
     code === "VIEW"
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-      : `https://viit-main-api-teal.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`; /*saikrishna */
+      : `https://gre2jhrhu4.execute-api.ap-south-1.amazonaws.com/dev/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`; /*saikrishna */
 
 
   const sendLog = async (status) => {
