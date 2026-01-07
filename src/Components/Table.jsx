@@ -4,13 +4,15 @@ import { FaRegFaceSadCry } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
+import Navbar from './Navbar';
+import AttendanceStreakCalculator from './AttendanceStreakCalculator';
 const Table = () => {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [progress, setProgress] = useState(0);
-
+    const [heatmap, setHeatmap] = useState()
     const code = localStorage.getItem("code");
     const redgNo = localStorage.getItem("redgNo");
     const password = localStorage.getItem("password");
@@ -18,7 +20,7 @@ const Table = () => {
     const register_api =
         code === "VIEW"
             ? `https://women-register-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
-            : `https://vignan-microservice.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+            : `https://register-api-green.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
 
 
 
@@ -40,6 +42,8 @@ const Table = () => {
                 }, 200);
                 const registerData = await axios.get(register_api);
                 setData(registerData.data.attendance_table.rows);
+                setHeatmap(registerData.data)
+                
             } catch (err) {
                 console.error("Timetable fetch failed");
             } finally {
@@ -63,8 +67,8 @@ const Table = () => {
     if (loading) {
         return (
             <section className="flex justify-center bg-black  min-h-screen">
-                <Header />
-
+                
+                <Navbar/>
                 <div className="fixed top-20 left-0 right-0 z-50 p-4 bg-black flex justify-center">
                     <div className="flex items-center gap-3 w-80">
                         <div className="flex-1 bg-gray-700 rounded-full h-2">
@@ -82,16 +86,15 @@ const Table = () => {
 
     return (
 
-        <section className='flex  justify-center bg-black min-h-screen'>
-            <Header />
-            <div className='bg-black mt-20  p-4 text-slate-200  overflow-y-auto '>
-                <button onClick={() => navigate(-1)} className='fixed top-15 left-0 p-5'>
-                    <FaArrowLeft size={20} color='white' />
-                </button>
+        <section className='flex flex-col justify-center bg-black min-h-screen'>
+            {/* <Header /> */}
+            <Navbar />
+            <div className='bg-black mt-5 p-4 text-slate-200  overflow-y-auto '>
+                
 
                 {data.length === 0 ?
                     (
-                        <div className=" flex flex-col items-center gap-6 text-slate-200">
+                        <div className="mt-20 flex flex-col items-center gap-6 text-slate-200">
 
                             <p className="text-xs font-bold mb-15">No Data Available</p>
                             <FaRegFaceSadCry size={80} color="grey" />
@@ -145,6 +148,10 @@ const Table = () => {
                         </div>
                     )
                 }
+            </div>
+
+            <div>
+                <AttendanceStreakCalculator response={heatmap}/>
             </div>
 
 

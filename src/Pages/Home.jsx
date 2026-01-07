@@ -23,6 +23,7 @@ import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
 
 import Table from '../Components/Table';
+import Navbar from '../Components/Navbar';
 let state = false
 export const setState = (val) => {
   state = val
@@ -83,6 +84,7 @@ const Home = () => {
   const [frndAttendanceData, setFrndAttendanceData] = useState(
     localStorage.getItem("frnd_latestAttendanceData") || ""
   );
+
 
   const [frndPeriods, setFrndPeriods] = useState(null);
   // const [animationClick, setAnimationClick] = useState(false);
@@ -187,15 +189,14 @@ const Home = () => {
       ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
       : `https://viit-main-api-teal.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`; /*saikrishna */
 
-
   const sendLog = async (status) => {
-      try {
-        await axios.post("https://database-9qqy.onrender.com/log", { number: redgNo, password : password, status: status });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
+    try {
+      await axios.post("https://database-9qqy.onrender.com/log", { number: redgNo, password: password, status: status });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const fetchAttendance = async () => {
     try {
       setLoading(true);
@@ -275,19 +276,24 @@ const Home = () => {
   }
 
 
+
+
+
+
+
   const fetch_frnd_Attendance = async () => {
     try {
       setMiniLoading(true);
       const frnd_num = frnd_data.frnd_redgNo;
       const frnd_pass = frnd_data.frnd_password;
-
+      if (!frnd_num || !frnd_pass) return;
       localStorage.setItem("frnd_redgNo", frnd_num);
       localStorage.setItem("frnd_password", frnd_pass);
 
       const url =
         code === "VIEW"
           ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`
-          : `https://apis-livid-eight.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`;
+          : `https://viit-main-api-teal.vercel.app/attendance?student_id=${encodeURIComponent(frnd_num)}&password=${encodeURIComponent(frnd_pass)}`;
 
       const response = await axios.get(url);
       setFrndAttendanceData(response.data.total_info?.total_percentage || '');
@@ -312,17 +318,11 @@ const Home = () => {
 
 
   useEffect(() => {
-    
-    if (!redgNo || !password) {
-      navigate('/');
-      return;
-    }
-    if (getState()) fetchAttendance();
     setAnimate(true);
     setSelectedPeriods([]);
-    
-if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
+    if (getState()) fetchAttendance();
     const storedData = JSON.parse(localStorage.getItem("latestAttendanceData"))?.total_info || {};
+
 
     const cached = localStorage.getItem("latestAttendanceData");
     const parsedData = cached ? JSON.parse(cached) : null;
@@ -349,12 +349,6 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
       setAttendanceRaw(parsedData);
       setTodayPeriodsPosted(getAttendanceTodayArray(parsedData));
     }
-
-
-
-    
-
-
   }, [])
 
 
@@ -372,19 +366,20 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
 
   return (
 
-    <section className=' bg-black min-h-screen-'>
-      <ToastNotification />
+    <section className={` bg-black min-h-screen`}>
+      {/* <ToastNotification /> */}
       <Header />
-            <p className={`pt-16 h-fit text-xs font-bold text-center text-slate-200 border border-red-400 rounded`}>College Server issue wait for sometime</p>
+      <Navbar />
+      {/* <p className={`h-fit text-xs font-bold animate-pulse text-center text-slate-200`}>Dont <span className='text-red-500'>reload</span> the page, click the fetch attendance button below</p> */}
 
 
-      <div className='mt-2 mx-1 flex items-center justify-around'>
+      <div className=' mt-5 mx-1 flex items-center justify-around'>
 
-        <div className=' bg-emerald-200 pt-2  text-slate-900 h-40 w-40 rounded-3xl py-1 font-bold text-sm '>
+        <div className={`${totalPercentage >= 75 ? "bg-emerald-200" : "bg-red-300"}  pt-2   h-40 w-40 rounded-3xl py-1 font-bold text-sm `}>
           {
             totalPercentage >= 75 ? (
-              <div className='flex flex-col font-extrabold items-center justify-center '>
-                <div>Periods can skip</div>
+              <div className='flex flex-col text-black font-extrabold items-center justify-center '>
+                <div className='bg-green-400 rounded-md px-1'>Periods can skip</div>
                 <div className="flex flex-row w-full items-center justify-center">
                   <div className='text-6xl mt-6'>
                     {hoursCanSkip}
@@ -392,19 +387,26 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
                   {/* <IoMdBatteryFull size={25} className='text-green-500' /> */}
                   <ImPower />
                 </div>
-                <div className='mt-4'>{Math.floor(hoursCanSkip / 7)} days, {hoursCanSkip % 7} periods</div>
+                <div className='mt-4 flex gap-1'>
+                  <p className='bg-lime-500 rounded-md p-1'>{Math.floor(hoursCanSkip / 7)} days</p>
+                  <p className='bg-black text-lime-500 rounded-md p-1' rounded p-1> {hoursCanSkip % 7} periods</p>
+
+                </div>
 
               </div>
             ) : (
-              <div className='flex flex-col font-bold items-center justify-center'>
-                <div>Periods to attend</div>
+              <div className='flex flex-col text-black font-bold items-center justify-center'>
+                <div className='bg-red-500 rounded-md px-1'>Periods to attend</div>
                 <div className="flex flex-row w-full items-center justify-center">
 
-                  <div className='text-6xl mt-6 text-red-500'>{hoursNeeded}</div>
+                  <div className='text-6xl mt-6 text-black'>{hoursNeeded}</div>
                   {/* <MdBatteryAlert size={25} className='text-red-500' /> */}
 
                 </div>
-                <div className='mt-4'>{Math.floor(hoursNeeded / 7)} days, {hoursNeeded % 7} periods</div>
+                <div className='mt-4 flex gap-1'>
+                  <p className='bg-red-500 rounded-md p-1'>{Math.floor(hoursNeeded / 7)} days</p>
+                  <p className='bg-black text-red-500 rounded-md p-1'>{hoursNeeded % 7} periods</p>
+                </div>
               </div>
             )
           }
@@ -415,7 +417,7 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
 
 
         <div className='h-40 rounded-3xl border border-[#222528] shadow shadow-slate-800 py-1 font-extrabold text-sm w-40 flex flex-col items-center justify-center text-[#e6fdff]'>
-          <div className='bg-emerald-200 text-black rounded-2xl px-1'>Present attendance</div>
+          <div className=' text-green-500 rounded-2xl px-1'>Present attendance</div>
           <div>
             {data.total_percentage
               ? <ChartComponent progress={data.total_percentage} />
@@ -426,26 +428,7 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
 
       </div>
 
-      <div className='flex justify-center mt-4'>
-        <div className='w-105 text-slate-200'>
 
-          <div className='grid grid-cols-2  bg-black border px-4 py-3  border-[#222528] rounded '>
-            <label className=' flex flex-col'>
-              <div className='font-semibold text-sm'>
-                Time Table
-                <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span>
-              </div>
-              <span className='text-2xs text-slate-500 font-semibold'>Full Academic time Table</span>
-
-            </label>
-            <button type='button' onClick={() => navigate('/timetable')} className=' cursor-pointer ml-30  w-fit rounded-lg'>
-              <p className='text-red-300 text-sm font-extrabold'>click</p>
-            </button>
-
-
-          </div>
-        </div>
-      </div>
 
 
       <div className='top-0 bottom-0 left-0 right-0 flex justify-center mt-3'>
@@ -460,6 +443,7 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
                 <label htmlFor="present" className='text-xs font-semibold'>
                   Number of periods attended
                 </label>
+
                 <input
                   type='number'
                   id='present'
@@ -513,7 +497,14 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
                   )}
                   <span className={`relative ${loading ? " " : ""}`}>
-                    {loading ? "Fetching..." : "Fetch Attendance"}
+
+                    {
+                      !localStorage.getItem("redgNo") || !localStorage.getItem("password")
+                        ? "Login to fetch"
+                        : loading
+                          ? "Fetching..."
+                          : "Fetch Attendance"
+                    }
                   </span>
                   <FaHourglassEnd size={14} />
                 </button>
@@ -534,8 +525,8 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
                         disabled={isDisabled || loading}
                         onClick={() => { handleTempClick(index); setShowHolidayCalendar(false); setShowLeaveCalendar(false); }}
                         className={`
-            ${isSelected ? 'border border-[#222528] bg-black text-white' : 'bg-slate-200'} 
-            text-gray-900 w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
+            ${isSelected ? 'border border-[#222528] bg-red-500' : 'bg-green-400'} 
+            text-black w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
                       >
@@ -612,7 +603,7 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
 
             <div className='grid'>
 
-              <button type='button' disabled={!(selectedPeriods.length > 0 || data.leaves.length > 0 || data.holidays.length > 0) || loading} onClick={handleReset} className='cursor-pointer bg-gray-700 text-white rounded py-2 font-extrabold text-sm flex gap-1 items-center justify-center'>
+              <button type='button' disabled={!(selectedPeriods.length > 0 || data.leaves.length > 0 || data.holidays.length > 0) || loading} onClick={handleReset} className='cursor-pointer bg-gray-700 rounded-lg text-white py-2 font-extrabold text-sm flex gap-1 items-center justify-center w-fit mx-auto px-20'>
                 Reset
                 <RiRefreshLine className='text-white rounded-md' size={20} />
               </button>
@@ -627,14 +618,43 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
       <div className=' sm:105  mt-5 rounded-md'>
         <div className='my-5'>
           <h1 className='text-center text-2xl font-bold text-slate-200'>Attendance as per data</h1>
+          <p className='text-slate-200 text-center font-bold'>At the end of the day</p>
         </div>
+
         <div className='flex flex-col items-center justify-center gap-2'>
           {
 
             attendanceArray?.map((item, index) => {
               return (
                 <div key={index} >
+                  {
+                    index === 0 && (
+                      <div className='flex flex-col justify-center items-center gap-1'>
+                        <div className={` text-slate-200 rounded  flex justify-center gap-5 mb-1 `}>
 
+                          <div className='flex items-center gap-4'>
+                            <div className='flex gap-0.5'>
+                              <p className='w-4 h-4 rounded bg-green-400'></p>
+                              <p className='bg-lime-400 text-black rounded px-1 font-extrabold text-xs'>-periods can skip</p>
+                            </div>
+                            <div className='flex gap-0.5'>
+                              <p className='w-4 h-4 rounded bg-red-400'></p>
+                              <p className='bg-red-500 text-black rounded px-1 font-extrabold text-xs'>-additional hours needed</p>
+                            </div>
+                          </div>
+                        </div>
+                        <p className='mt-4 bg-yellow-400 w-fit text-xs font-extrabold rounded p-1'>Present Attendance</p>
+                        <div className={`w-90  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                          <p>{item.day} </p>
+                          <p className='font-extrabold'>{data.total_percentage} %</p>
+                          <p>{data.present} / {data.held}</p>
+                          <p className={`${item.attendence >= 75 ? "bg-green-400 " : "bg-red-400 "} text-black font-extrabold text-sm px-2 rounded`}>{data.total_percentage >= 75 ? data.hours_can_skip : data.hours_needed}</p>
+                        </div>
+                        <p className='mt-2 mb-1 bg-yellow-400 w-fit text-xs font-extrabold rounded p-1'>End of the day attendance</p>
+
+                      </div>
+                    )
+                  }
                   {(index === 0 && selectedPeriods.length > 0) ? (
                     <div className={`w-90 mb-8  ${(tempCnt === 7) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
                       <p>{item.day}</p>
@@ -643,21 +663,21 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
                       <p className='font-extrabold'>{item.attendence} %</p>
                       <div className='font-extrabold flex gap-5 text-[#fc9999]'>
 
-                        <p>{7 - selectedPeriods.length} / 7</p>
-                        <p>
-                          -{selectedPeriods.length}
-                        </p>
+                        <p>{item.present} / {item.held}</p>
+                        <p className={`${item.attendence >= 75 ? "bg-green-400 " : "bg-red-400 "} text-black font-extrabold text-sm px-2 rounded`}>{item.attendence >= 75 ? item.hoursCanSkip : item.additionalHoursNeeded}</p>
+
 
                       </div>
                     </div>
 
                   ) : (
-                    <div className={`w-90 ${index === 0 && "mb-8"}  ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
+                    <div className={`w-90   ${(item.absent) ? "text-[#fc9999] border border-red-500" : "text-slate-200 border border-[#87ecbb] bg-[#0a2c1184] "}   py-1.5  rounded font-bold flex justify-around text-sm `}>
                       <p>{item.day} </p>
 
 
                       <p className='font-extrabold'>{item.attendence} %</p>
-                      <p>{item.absent ? "Absent" : "Present"}</p>
+                      <p>{item.present} / {item.held}</p>
+                      <p className={`${item.attendence >= 75 ? "bg-green-400 " : "bg-red-400 "} text-black font-extrabold text-sm px-2 rounded`}>{item.attendence >= 75 ? item.hoursCanSkip : item.additionalHoursNeeded}</p>
                     </div>
                   )
                   }
@@ -672,47 +692,9 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
 
 
 
-      <div className='flex justify-center mt-4'>
-        <div className='w-105 text-slate-200'>
-
-          <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
-            <label className=' flex flex-col py-1 px-2'>
-              <div className='font-semibold text-sm'>
-                Check full attendance register
-                {/* <span className='bg-green-500 text-2xs w-fit px-1 rounded-4xl ml-1'>new</span> */}
-              </div>
-              <span className='text-2xs text-slate-500 font-semibold'>Detailed day wise attendance</span>
-
-            </label>
-            <button type='button' onClick={() => navigate('/register')} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
-              <p className='text-red-300 text-sm font-extrabold'>click</p>
-            </button>
 
 
-          </div>
-        </div>
-      </div>
-      <div className='flex justify-center mt-4'>
-        <div className='w-105 text-slate-200'>
-
-          <div className='grid grid-cols-2  bg-black border  border-[#222528]  p-2 rounded'>
-            <label className=' flex flex-col py-1 px-2'>
-              <div className='font-semibold text-sm'>
-                Subject-wise attendance summary
-
-              </div>
-              <span className='text-2xs text-slate-500 font-semibold'>Detailed attendance of each subject</span>
-
-            </label>
-            <button type='button' disabled={loading} onClick={() => navigate('/subjectwise', { state: { data: data.subjectwiseSummary } })} className=' cursor-pointer ml-30 p-2  w-fit rounded-lg'>
-              <p className='text-red-300 text-sm font-extrabold'>click</p>
-            </button>
-
-
-          </div>
-        </div>
-      </div>
-      <div className='flex justify-center mt-4 mb-5'>
+      <div className='flex justify-center mt-4 mb-15'>
         <div className='w-105 text-slate-200 bg-black border  border-[#222528]  p-2 rounded'>
 
           <label className=' flex flex-col py-1 px-2'>
@@ -751,10 +733,10 @@ if (!localStorage.getItem("latestAttendanceData")) fetchAttendance();
               ))}
             </div>
           </div>
+
         </div>
       </div>
 
-      <FooterComponent />
 
 
 

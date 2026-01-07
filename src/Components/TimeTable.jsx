@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
 import ImageComponent from "./ImageComponent";
+import Navbar from "./Navbar";
 
 const TimeTable = () => {
   const navigate = useNavigate();
@@ -82,10 +83,9 @@ const TimeTable = () => {
   if (loading) {
     return (
       <section className="flex justify-center bg-black min-h-screen">
-        <Header />
-        <button onClick={() => navigate(-1)} className="fixed top-20 left-0 p-5">
-          <FaArrowLeft size={20} color="white" />
-        </button>
+        
+        <Navbar/>
+        
         <div className="fixed top-20 left-0 right-0 z-50 p-4 bg-black flex justify-center">
           <div className="flex items-center gap-3 w-80">
             <div className="flex-1 bg-gray-700 rounded-full h-2">
@@ -104,12 +104,11 @@ const TimeTable = () => {
   if (!timetable || timetable.length === 0) {
     return (
       <section className="flex justify-center bg-black min-h-screen">
-        <Header />
+        
+        <Navbar/>
 
         <div className="mt-24 flex flex-col items-center gap-6 text-slate-200">
-          <button onClick={() => navigate(-1)} className="fixed top-15 left-0 p-5">
-            <FaArrowLeft size={20} color="white" />
-          </button>
+          
           <p className="text-xs font-bold mb-15">No Data Available</p>
           <FaRegFaceSadCry size={80} color="grey" />
         </div>
@@ -121,11 +120,11 @@ const TimeTable = () => {
 
   return (
     <section className="flex justify-center bg-black min-h-screen">
-      <Header />
-      <div className="bg-black mt-15 p-4 text-slate-200 overflow-y-auto">
-        <button onClick={() => navigate(-1)} className="fixed top-15 left-0 p-5">
-          <FaArrowLeft size={20} color="white" />
-        </button>
+      {/* <Header /> */}
+        <Navbar/>
+
+      <div className="bg-black mt-5 p-4 text-slate-200 overflow-y-auto">
+        
 
         <h2 className="text-xl font-bold mb-3 text-center">Time Table</h2>
 

@@ -47,7 +47,19 @@ function attendenceCalculator(
       present += periods_per_day;
       held += periods_per_day;
     }
+    const attendancePercentage = attendencePerform(present, held);
+    let hoursCanSkip = 0;
+    let additionalHoursNeeded = 0;
 
+    if (attendancePercentage < 75) {
+      additionalHoursNeeded = Math.ceil(
+        ((0.75 * held) - present) / 0.25
+      );
+    } else {
+      hoursCanSkip = Math.floor(
+        (present - 0.75 * held) / 0.75
+      );
+    }
     // Set day as full UTC date string
     const dayString = day.toUTCString().split(' ').slice(1, 4).join(' ');
 
@@ -55,7 +67,11 @@ function attendenceCalculator(
       day: dayString,
       date: day,
       attendence: attendencePerform(present, held),
-      absent: absent
+      absent: absent,
+      held : held,
+      present: present,
+      hoursCanSkip: hoursCanSkip,
+      additionalHoursNeeded: additionalHoursNeeded
     });
 
     current.setUTCDate(current.getUTCDate() + 1);
