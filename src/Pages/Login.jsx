@@ -99,21 +99,21 @@ const Login = () => {
                 type='text'
                 id='RedgNo'
                 placeholder='22L31A05O8'
-                className='bg-black border border-[#222528] text-center font-semibold rounded px-2 py-1 text-sm'
+                className=' bg-black border border-[#222528] outline-none focus:outline-none focus:ring-0 focus-visible:outline-none appearance-none text-center font-semibold rounded px-2 py-1 text-sm'
                 onChange={handleOnChange}
                 name="redgNo"
                 value={data.redgNo}
               />
             </div>
             <div className='flex flex-col gap-2'>
-              <label htmlFor="pass" className='font-semibold text-sm'>Password</label>
-              <div className='border border-[#222528] flex items-center justify-center'>
+              <label htmlFor="pass" className='font-semibold text-sm '>Password</label>
+              <div className='border border-[#222528] flex items-center justify-center outline-none focus:outline-none focus:ring-0 focus-visible:outline-none appearance-none'>
 
                 <input
                   type={inputType==="password" ? "password" : "text"}
                   id='pass'
                   placeholder='26112007'
-                  className='border-none bg-black text-center rounded font-semibold px-2 py-1 text-sm'
+                  className='outline-none border-none bg-black text-center rounded font-semibold px-2 py-1 text-sm'
                   onChange={handleOnChange}
                   name='password'
                   value={data.password}
