@@ -379,7 +379,7 @@ const Home = () => {
           {
             totalPercentage >= 75 ? (
               <div className='flex flex-col text-black font-extrabold items-center justify-center '>
-                <div className='bg-black text-white rounded-md px-1'>Periods can skip</div>
+                <div className='px-1'>Periods can skip</div>
                 <div className="flex flex-row w-full items-center justify-center">
                   <div className='text-6xl mt-6'>
                     {hoursCanSkip}
@@ -396,7 +396,7 @@ const Home = () => {
               </div>
             ) : (
               <div className='flex flex-col text-black font-bold items-center justify-center'>
-                <div className='bg-red-500 rounded-md px-1'>Periods to attend</div>
+                <div className='px-1'>Periods to attend</div>
                 <div className="flex flex-row w-full items-center justify-center">
 
                   <div className='text-6xl mt-6 text-black'>{hoursNeeded}</div>
@@ -525,7 +525,7 @@ const Home = () => {
                         disabled={isDisabled || loading}
                         onClick={() => { handleTempClick(index); setShowHolidayCalendar(false); setShowLeaveCalendar(false); }}
                         className={`
-            ${isSelected ? 'border border-[#222528] bg-red-500' : 'bg-green-400'} 
+            ${isSelected ? 'border border-[#222528] bg-red-500' : 'bg-white'} 
             text-black w-6 h-6 rounded flex justify-center items-center font-extrabold text-sm 
             ${isDisabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer'}
           `}
@@ -546,7 +546,7 @@ const Home = () => {
                 Leave dates
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates you wish to put leaves</span>
               </label>
-              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-orange-600 w-fit rounded-md '>{
+              <button type='button' onClick={() => setShowLeaveCalendar(!showLeaveCalendar)} className=' cursor-pointer ml-30 p-2 bg-orange-700 w-fit rounded-lg '>{
                 <BsCalendarDateFill className='text-black  rounded' size={30} />
               }</button>
               {
@@ -575,7 +575,7 @@ const Home = () => {
                 <span className='text-2xs text-slate-500 font-semibold'>Select dates of public holidays</span>
 
               </label>
-              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-orange-600 w-fit rounded-md'>
+              <button type='button' onClick={() => setShowHolidayCalendar(!showHolidayCalendar)} className=' cursor-pointer ml-30 p-2 bg-orange-700 w-fit rounded-lg'>
                 <BsCalendarDateFill className='text-black  rounded' size={30} />
 
               </button>
@@ -713,7 +713,7 @@ const Home = () => {
 
             </div>
             <div className='flex flex-col gap-3'>
-              <button disabled={loading} className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-emerald-500 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
+              <button disabled={loading} className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-orange-700 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
               <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500 text-white' value={frndAttendanceData} readOnly />
             </div>
 
