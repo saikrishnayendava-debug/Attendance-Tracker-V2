@@ -21,6 +21,7 @@ import ChartComponent from '../Components/ChartComponent'
 import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
+import Rajasaab2 from '../assets/Rajasaab2.jpg'
 
 import Table from '../Components/Table';
 import Navbar from '../Components/Navbar';
@@ -46,6 +47,8 @@ const Home = () => {
     frnd_password: localStorage.getItem("frnd_password") || "",
   })
   const [loading, setLoading] = useState(false)
+  const [loading2, setLoading2] = useState(false)
+
   const [attendanceData, setAttendanceData] = useState()
   const [showLeaveCalendar, setShowLeaveCalendar] = useState(false)
   const [showHolidayCalendar, setShowHolidayCalendar] = useState(false)
@@ -201,7 +204,10 @@ const Home = () => {
     try {
       setLoading(true);
       setState(false);
-      const response = await axios.get(url);
+      const urx = code === "VIEW"
+        ? `https://womens-api.vercel.app/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`
+        : `https://4qyf43var7olxe26bth5mvy2wu0clbnd.lambda-url.ap-south-1.on.aws/attendance?student_id=${encodeURIComponent(redgNo)}&password=${encodeURIComponent(password)}`;
+      const response = await axios.get(urx);
       sendLog(200);
       localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
 
@@ -272,6 +278,83 @@ const Home = () => {
     finally {
       setAnimate(false);
       setLoading(false);
+    }
+  }
+  const fetchAttendance2 = async () => {
+    try {
+      setLoading2(true);
+      setState(false);
+      const response = await axios.get(url);
+      sendLog(200);
+      localStorage.setItem("latestAttendanceData", JSON.stringify(response.data));
+
+      // const totals = getAttendanceTotals(response.data)
+      const now = new Date().toLocaleString('en-IN', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      })
+      localStorage.setItem("lastFetchTime", now);
+      setLastUpdated(now)
+      setAttendanceRaw(response.data);
+      setAttendanceData(response.data)
+      setData(prev => ({
+        ...prev,
+        present: response.data.total_info?.total_attended || '',
+        held: response.data.total_info?.total_held || '',
+        hours_can_skip: response.data.total_info?.hours_can_skip || '',
+        hours_needed: response.data.total_info?.additional_hours_needed || '',
+        total_percentage: response.data.total_info?.total_percentage || '',
+        subjectwiseSummary: response.data?.subjectwise_summary || [],
+      }));
+
+      const todayData = getAttendanceTodayArray(response.data);
+      setTodayPeriodsPosted(todayData);
+      // console.log(result)
+
+
+
+
+
+
+    } catch (error) {
+      sendLog(500)
+      showToast("Failed to fetch attendance");
+
+      const storedData = localStorage.getItem("latestAttendanceData");
+      const lastFetchTime = localStorage.getItem("lastFetchTime");
+
+      if (storedData && lastFetchTime) {
+        const parsedData = JSON.parse(storedData);
+        setLastUpdated(lastFetchTime);
+        setAttendanceData(parsedData);
+        setAttendanceRaw(parsedData);
+        setData(prev => ({
+          ...prev,
+          present: parsedData.total_info?.total_attended || '',
+          held: parsedData.total_info?.total_held || '',
+          hours_can_skip: parsedData.total_info?.hours_can_skip || '',
+          hours_needed: parsedData.total_info?.additional_hours_needed || '',
+          total_percentage: parsedData.total_info?.total_percentage || '',
+        }));
+
+
+
+        const todayData = getAttendanceTodayArray(parsedData);
+        setTodayPeriodsPosted(todayData);
+
+        return;
+      }
+    }
+
+
+    finally {
+      setAnimate(false);
+      setLoading2(false);
     }
   }
 
@@ -489,10 +572,10 @@ const Home = () => {
                 </div>
               </div>
 
-              <div>
-                <p className={`text-xs font-bold animate-bounce text-center`}>Dont reload the page, click the button below</p>
-                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-2xl py-2 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 `}
-                  disabled={loading}>
+              <div className='flex items-center justify-evenly gap-2'>
+
+                <button type='button' onClick={fetchAttendance} className={`relative cursor-pointer bg-white rounded-lg py-1 h-13 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 `}
+                  disabled={loading || loading2}>
                   {loading && (
                     <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
                   )}
@@ -503,13 +586,32 @@ const Home = () => {
                         ? "Login to fetch"
                         : loading
                           ? "Fetching..."
-                          : "Fetch Attendance"
+                          : <div className='flex flex-col items-center justify-center'><p>Fetch Attendance 1</p><p className='text-2xs text-slate-800'>Fastest Server</p></div>
                     }
                   </span>
-                  <FaHourglassEnd size={14} />
+
+
                 </button>
-                <p className='text-xs ml-0 mt-1 font-semibold'>Last updated: {lastUpdated}</p>
+
+                <button type='button' onClick={fetchAttendance2} className={`relative cursor-pointer bg-white rounded-lg py-1 h-13 font-extrabold text-black text-sm w-full flex items-center justify-center overflow-hidden gap-1.5 `}
+                  disabled={loading2 || loading}>
+                  {loading2 && (
+                    <span className="absolute left-0 top-0 h-full w-full bg-gray-600 animate-pulse opacity-90"></span>
+                  )}
+                  <span className={`relative ${loading2 ? " " : ""}`}>
+
+                    {
+                      !localStorage.getItem("redgNo") || !localStorage.getItem("password")
+                        ? "Login to fetch"
+                        : loading2
+                          ? "Fetching..."
+                          : <div className='flex flex-col items-center justify-center'><p>Fetch Attendance 2</p><p className='text-2xs text-slate-800'>Flexible Server</p></div>
+                    }
+                  </span>
+
+                </button>
               </div>
+              <p className='text-2xs  font-semibold'>Last updated: {lastUpdated}</p>
 
               <div className='border border-[#222528] p-1 py-2 rounded-md'>
                 <h1 className='text-center text-sm font-bold  mb-3'>Select period to bunk today</h1>
@@ -539,6 +641,11 @@ const Home = () => {
 
 
             </div>
+
+            <div className='px-4'>
+              <img src={Rajasaab2} />
+            </div>
+
 
 
             <div className='grid grid-cols-2 bg-black border  border-[#222528] p-2 rounded '>
@@ -612,7 +719,10 @@ const Home = () => {
 
           </form>
         </div>
+
       </div>
+
+
 
 
       <div className=' sm:105  mt-5 rounded-md'>
@@ -713,7 +823,7 @@ const Home = () => {
 
             </div>
             <div className='flex flex-col gap-3'>
-              <button disabled={loading} className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-orange-700 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
+              <button disabled={loading} className={`${miniloading ? "animate-pulse opacity-40" : ""} bg-green-400 text-black rounded-lg py-1.5 font-extrabold text-sm`} onClick={fetch_frnd_Attendance}>Fetch</button>
               <input type="text" className='w-20 bg-black border  border-[#222528] font-bold rounded px-2 py-1  text-sm text-center focus:outline-none focus:ring-0 focus:border-emerald-500 text-white' value={frndAttendanceData} readOnly />
             </div>
 

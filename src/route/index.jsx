@@ -7,6 +7,7 @@ import Table from "../Components/Table";
 import SubjectWiseComponent from "../Components/SubjectWiseComponent";
 
 import App from "../App";
+import Material from "../Components/Material";
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         path: "subjectwise",
         element: <SubjectWiseComponent />,
       },
+      {
+        path : "material",
+        element : <Material/>
+      }
     ],
   },
 ]);
