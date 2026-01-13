@@ -642,9 +642,7 @@ const Home = () => {
 
             </div>
 
-            <div className='px-4'>
-              <img src={Rajasaab2} />
-            </div>
+            >
 
 
 
