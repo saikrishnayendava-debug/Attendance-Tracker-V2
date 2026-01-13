@@ -198,7 +198,7 @@ const TimeTable = () => {
         </div>
 
 
-        <ImageComponent />
+        
       </div>
     </section>
     
