@@ -21,7 +21,6 @@ import ChartComponent from '../Components/ChartComponent'
 import { RiRefreshLine } from "react-icons/ri";
 import SubjectWiseComponent from '../Components/SubjectWiseComponent';
 import { ImPower } from "react-icons/im";
-import Rajasaab2 from '../assets/Rajasaab2.jpg'
 
 import Table from '../Components/Table';
 import Navbar from '../Components/Navbar';

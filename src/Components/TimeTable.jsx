@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaRegFaceSadCry } from "react-icons/fa6";
-import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Header from "./Header";
-import ImageComponent from "./ImageComponent";
 import Navbar from "./Navbar";
 
 const TimeTable = () => {
@@ -22,7 +19,7 @@ const TimeTable = () => {
   const password = localStorage.getItem("password");
 
   const timetable_api =
-  
+
     code === "VIEW"
       ? `https://women-timetable-microservice.onrender.com/attendance?student_id=${encodeURIComponent(
         redgNo
@@ -83,9 +80,9 @@ const TimeTable = () => {
   if (loading) {
     return (
       <section className="flex justify-center bg-black min-h-screen">
-        
-        <Navbar/>
-        
+
+        <Navbar />
+
         <div className="fixed top-20 left-0 right-0 z-50 p-4 bg-black flex justify-center">
           <div className="flex items-center gap-3 w-80">
             <div className="flex-1 bg-gray-700 rounded-full h-2">
@@ -104,11 +101,11 @@ const TimeTable = () => {
   if (!timetable || timetable.length === 0) {
     return (
       <section className="flex justify-center bg-black min-h-screen">
-        
-        <Navbar/>
+
+        <Navbar />
 
         <div className="mt-24 flex flex-col items-center gap-6 text-slate-200">
-          
+
           <p className="text-xs font-bold mb-15">No Data Available</p>
           <FaRegFaceSadCry size={80} color="grey" />
         </div>
@@ -121,10 +118,10 @@ const TimeTable = () => {
   return (
     <section className="flex justify-center bg-black min-h-screen">
       {/* <Header /> */}
-        <Navbar/>
+      <Navbar />
 
       <div className="bg-black mt-5 p-4 text-slate-200 overflow-y-auto">
-        
+
 
         <h2 className="text-xl font-bold mb-3 text-center">Time Table</h2>
 
@@ -198,10 +195,10 @@ const TimeTable = () => {
         </div>
 
 
-        
+
       </div>
     </section>
-    
+
   );
 };
 
