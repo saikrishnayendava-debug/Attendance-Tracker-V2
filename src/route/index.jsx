@@ -8,6 +8,11 @@ import SubjectWiseComponent from "../Components/SubjectWiseComponent";
 
 import App from "../App";
 import Material from "../Components/Material";
+import Year from "../Components/Year";
+import Pdfs from "../Components/Pdfs";
+import Form from "../Components/Form";
+import Subject from "../Components/Subject";
+
 
 
 const router = createBrowserRouter([
@@ -38,6 +43,18 @@ const router = createBrowserRouter([
       {
         path : "material",
         element : <Material/>
+      },
+      {
+        path : "material/:branch",
+        element : <Year/>
+      },
+      {
+        path :"material/:branch/:year",
+        element : <Pdfs/>
+      },
+      {
+        path : "material/:branch/:year/:subject",
+        element : <Subject/>
       }
     ],
   },
