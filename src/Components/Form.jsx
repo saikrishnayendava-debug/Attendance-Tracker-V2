@@ -39,7 +39,7 @@ const Form = ({ close }) => {
             formData.append("file", file);
 
             const response = await axios.post(
-                "http://localhost:8000/pdf/upload",
+                "https://database-9qqy.onrender.com/pdf/upload",
                 formData
             );
 
@@ -60,7 +60,7 @@ const Form = ({ close }) => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
-            const response = await axios.post("http://localhost:8000/pdf/submit", {
+            const response = await axios.post("https://database-9qqy.onrender.com/pdf/submit", {
                 Branch: data.branch,
                 Year: data.year,
                 Subject: data.subject,
