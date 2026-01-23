@@ -80,10 +80,7 @@ const Form = ({ close }) => {
         try {
             e.preventDefault();
             
-            if (data.branch.length === 0) {
-                toast.error('Please select at least one branch');
-                return;
-            }
+            
 
             const promises = data.branch.map(selectedBranch =>
                 axios.post("https://database-9qqy.onrender.com/pdf/submit", {
