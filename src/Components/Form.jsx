@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { FaFilePdf } from "react-icons/fa";
 import { LoaderIcon } from 'lucide-react';
 import LoadingSpinner from './LoadingSpinner';
+
 const Form = ({ close }) => {
     const [loading, setLoading] = useState(false);
     const params = useParams();
@@ -14,7 +15,7 @@ const Form = ({ close }) => {
     const year = params.year;
     const subject = params.subject;
     const [data, setData] = useState({
-        branch: branch,
+        branch: branch ? [branch] : [],
         year: year,
         subject: subject,
     })
@@ -29,6 +30,24 @@ const Form = ({ close }) => {
             }
         })
     }
+
+    const handleBranchChange = (e) => {
+        const selectedBranch = e.target.value;
+        if (selectedBranch && !data.branch.includes(selectedBranch)) {
+            setData((prev) => ({
+                ...prev,
+                branch: [...prev.branch, selectedBranch]
+            }));
+        }
+    }
+
+    const removeBranch = (branchToRemove) => {
+        setData((prev) => ({
+            ...prev,
+            branch: prev.branch.filter(b => b !== branchToRemove)
+        }));
+    }
+
     const handleFileChange = async (e) => {
         setLoading(true);
         const file = e.target.files[0];
@@ -39,7 +58,7 @@ const Form = ({ close }) => {
             formData.append("file", file);
 
             const response = await axios.post(
-                "http://localhost:8000/pdf/upload",
+                "https://database-9qqy.onrender.com/pdf/upload",
                 formData
             );
 
@@ -59,20 +78,29 @@ const Form = ({ close }) => {
 
     const handleSubmit = async (e) => {
         try {
-            e.preventDefault()
-            const response = await axios.post("http://localhost:8000/pdf/submit", {
-                Branch: data.branch,
-                Year: data.year,
-                Subject: data.subject,
-                Title: data.title,
-                Url: data.file,
-                RedgNo: localStorage.getItem("redgNo")
-            });
-           
-        } catch (error) {
+            e.preventDefault();
+            
+            if (data.branch.length === 0) {
+                toast.error('Please select at least one branch');
+                return;
+            }
 
-        }
-        finally {
+            const promises = data.branch.map(selectedBranch =>
+                axios.post("https://database-9qqy.onrender.com/pdf/submit", {
+                    Branch: selectedBranch,
+                    Year: data.year,
+                    Subject: data.subject,
+                    Title: data.title,
+                    Url: data.file,
+                    RedgNo: localStorage.getItem("redgNo")
+                })
+            );
+
+            await Promise.all(promises);
+            toast.success('Uploaded successfully!');
+        } catch (error) {
+            toast.error('Upload failed');
+        } finally {
             close();
         }
     }
@@ -104,12 +132,11 @@ const Form = ({ close }) => {
                                 <select
                                     id='branch'
                                     className='bg-black border border-[#222528] outline-none focus:outline-none focus:ring-0 focus-visible:outline-none appearance-none text-center font-semibold rounded px-2 py-1 text-sm w-30'
-                                    onChange={handleOnChange}
-                                    name="branch"
-                                    value={data.branch || ""}
+                                    onChange={handleBranchChange}
+                                    value=""
                                 >
                                     <option className='text-xs font-bold' value="" disabled>Select Branch</option>
-                                    <option className='text-xs font-bold' defaultValue={true} value="CSE">CSE</option>
+                                    <option className='text-xs font-bold' value="CSE">CSE</option>
                                     <option className='text-xs font-bold' value="ECE">ECE</option>
                                     <option className='text-xs font-bold' value="EEE">EEE</option>
                                     <option className='text-xs font-bold' value="MECH">MECH</option>
@@ -123,6 +150,25 @@ const Form = ({ close }) => {
                                 </select>
                             )}
                         </div>
+                        
+                        {!branch && data.branch.length > 0 && (
+                            <div className='flex flex-wrap gap-2'>
+                                {data.branch.map((selectedBranch) => (
+                                    <span
+                                        key={selectedBranch}
+                                        className='bg-emerald-500 text-black px-3 py-1 rounded-full text-xs font-bold flex items-center gap-2'
+                                    >
+                                        {selectedBranch}
+                                        <MdCancel
+                                            size={16}
+                                            className='cursor-pointer'
+                                            onClick={() => removeBranch(selectedBranch)}
+                                        />
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+
                         <div className='grid grid-cols-2 w-full'>
                             <label htmlFor="year" className='font-semibold text-sm'>Year</label>
                             {
